@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="leaveBean" type="com.mftcc.interior.oa.leave.bean.LeaveBean" />
+	<typeAlias alias="approveBean" type="com.mftcc.interior.oa.leave.bean.ApproveBean" />
+	<resultMap id="leave_resultMap" class="leaveBean">
+		<result column="leave_no" property="leaveNo" jdbcType="VARCHAR"/>
+		<result column="leave_type" property="leaveType" jdbcType="VARCHAR" />
+		<result column="br_no" property="brNo" jdbcType="VARCHAR" />
+		<result column="br_name" property="brName" jdbcType="VARCHAR" />
+		<result column="op_no" property="opNo" jdbcType="VARCHAR" />
+		<result column="op_name" property="opName" jdbcType="VARCHAR" />
+		<result column="leave_begintime" property="leaveBeginTime" jdbcType="VARCHAR" />
+		<result column="leave_endtime" property="leaveEndTime" jdbcType="VARCHAR" />
+		<result column="leave_applytime" property="leaveApplyTime" jdbcType="VARCHAR" />
+		<result column="leave_sum" property="leaveSum" jdbcType="VARCHAR" />
+		<result column="leave_detail" property="leaveDetail" jdbcType="VARCHAR" />
+		<result column="leave_state" property="leaveState" jdbcType="VARCHAR" />		
+	</resultMap>
+	
+
+	
+	<!--查询 -->
+	<select id="selectLeave" parameterClass="com.mftcc.method.bean.Ipage" resultMap="leave_resultMap" >
+
+		select * from ac_oa_leave 
+		where op_no=#parm0# 
+		 
+ 		<isNotNull prepend="and" property="searchFiled">
+			 CONCAT(leave_no,leave_type,leave_state) LIKE CONCAT('%',#searchFiled#,'%')
+		</isNotNull>
+		ORDER BY
+		ac_oa_leave.leave_applytime DESC
+	    LIMIT #searchStart#,#pageNumber#
+	    
+	</select>	
+	
+	<!-- 查询page -->
+ <select id="selectLeaveListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT  COUNT(*) FROM ac_oa_leave
+ 		where op_no=#parm0# 
+ 		<isNotNull prepend="and" property="searchFiled">
+			CONCAT(leave_no,leave_type,leave_state) LIKE CONCAT('%',#searchFiled#,'%')
+		</isNotNull>
+ </select>
+	
+	<!--添加 -->
+	 
+	<insert id="insert_leave" parameterClass="leaveBean" >
+		 
+ 		insert into ac_oa_leave(
+		leave_no,
+		leave_type,
+		br_no,
+		br_name,
+		op_no,
+		op_name,
+		leave_beginTime,
+		leave_endTime,
+		leave_applyTime,
+		leave_sum,
+		leave_detail,
+		leave_state
+		)values
+		(
+		#leaveNo#,
+		#leaveType#,
+		#brNo#,
+		#brName#,
+		#opNo#,
+		#opName#,
+		#leaveBeginTime#,
+		#leaveEndTime#,
+		#leaveApplyTime#,
+		#leaveSum#,
+		#leaveDetail#,
+		#leaveState#
+		
+		)
+    
+	</insert>	
+	
+	
+	
+	
+	<!--删除 -->	
+	<delete id="delete_leave" parameterClass="leaveBean">
+		delete from ac_oa_leave where leave_no=#leaveNo#
+	</delete>
+	
+	<!--删除 -->	
+	<delete id="delete_approve" parameterClass="leaveBean">
+		delete from ac_oa_approve where leave_no=#leaveNo#
+	</delete>
+	
+	
+	<!--按ID查找 -->
+	<select id="leave_no" resultMap="leave_resultMap" parameterClass="leaveBean">
+		select *from ac_oa_leave 
+		where leave_no=#leaveNo#
+	</select>
+	
+	<!--更新 -->
+	<update id="update_leave" parameterClass="leaveBean" >
+		update ac_oa_leave
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="leaveType">
+				leave_type = #leaveType#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="leaveBeginTime">
+				leave_begintime = #leaveBeginTime#
+			</isNotNull>
+			<isNotNull prepend="," property="leaveEndTime">
+				leave_endtime = #leaveEndTime#
+			</isNotNull>
+			<isNotNull prepend="," property="leaveApplyTime">
+				leave_applytime = #leaveApplyTime#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="leaveSum">
+				leave_sum = #leaveSum#
+			</isNotNull>
+			<isNotNull prepend="," property="leaveState">
+				leave_state = #leaveState#
+			</isNotNull>
+			<isNotNull prepend="," property="leaveDetail">
+				leave_detail = #leaveDetail#
+			</isNotNull>
+			
+		</dynamic>
+		where leave_no=#leaveNo#
+	</update>
+
+
+</sqlMap>

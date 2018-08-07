@@ -1,0 +1,181 @@
+.file_icon{
+    width: 26px;
+    height:26px;
+    float:left;
+	background-image:url(../img/page-file.png);
+	 background-repeat:no-repeat;}
+.chm{background-position: -0px -0px;}
+.zip,.rar{background-position: -0px -34px;}
+.doc{background-position: -0px -139px;}
+.exe{background-position: -0px -173px;}
+.ppt{background-position: -0px -207px;}
+.viso{background-position: -0px -241px;}
+.pdf{background-position: -0px -275px;}
+.adir{background-position: -0px -653px;}
+.txt{background-position: -0px -581px;}
+.apk{background-position: -0px -309px;}
+.mp3{background-position: -0px -923px;}
+.avi{background-position: -0px -957px;}
+.html,.htm{background:url(../file_icon/html.png) no-repeat;}
+.js{background:url(../file_icon/js.png) no-repeat;}
+.png,.jpg,.gif{background-position: -0px -889px;}
+
+/* 网盘的工具栏目 */
+.tools
+{
+	position: relative;
+    z-index: 4;
+    background-color: #FFF;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 4px 0 30px;
+}
+
+#disk_tool_button{
+	white-space: nowrap;
+    position: relative;
+	height: 33px;
+    padding: 11px 10px;
+    float:left;
+}
+
+.tool_button {
+	display:block;
+	margin: 0 10px;
+    vertical-align: top;
+    height: 32px;
+    line-height: 32px;
+    padding-right: 10px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #3b8cff;
+    border-radius: 4px;
+    float:left;
+}
+
+.tool_button .tool_png
+{
+	line-height: 22px;
+    height: 22px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 20px;
+    float:left;
+}
+.tool_button .tool_name{
+	display: inline-block;
+	font-size: 13px;
+    margin-left: 5px;
+    margin-right: 10px;
+    vertical-align: baseline;
+    float:left;
+ }
+
+.upload{
+	color:#fff;
+	background-color:#3c8dbc;
+}
+
+.upload .tool_png{
+	background:url(../img/upload20.png) no-repeat;
+}
+
+.newFolder{
+	color:#3c8dbc;
+	background-color:#ffffff;
+}
+
+.newFolder .tool_png{
+	background:url(../img/newFolder_20.png) no-repeat;
+}
+
+/* 文件路径 */
+#file_path{
+	font-size:15px;
+	overflow:hidden;
+	white-space: nowrap; 
+}
+
+#path_wrap{margin:4px;padding:1px 0;}
+#root,#children_path{
+	display:inline-block;
+}
+#file_path span{
+	border:1px solid white;	
+}
+#file_path span,#tools_bar span{
+	display:inline-block;
+	margin:0 1px;
+	padding:0 2px;
+	cursor:pointer;
+	transition: all 0.3s ease 0s;
+}
+
+#root span{
+	background:url(../img/home.png) no-repeat 1px center;
+	padding-left:23px;
+}
+
+#tools_bar span:hover,#file_path span:hover,#tools_bar a:hover{
+	box-shadow: 0 1px 3px rgba(200, 200, 200, 0.6);
+	border-color:#4D90FE;
+}
+#file_path {
+	color:#3c8dbc;
+	margin-top:20px;
+}
+#path_wrap{background:white;}
+#file_path span{border:1px solid white;}
+#root span{padding-left:23px;}
+#tools_bar span:hover,#file_path span:hover,#tools_bar a:hover{
+	box-shadow: 0 1px 3px rgba(200, 200, 200, 0.6);
+	background-color:#EAF4FE;
+	border-color:#4D90FE;
+}
+
+/* 文件姓名 */
+.file_link{
+	float:left;
+	margin-left:30px;
+	color:#3c8dbc;
+}
+
+.file_link:hover
+{
+	text-decoration:underline;
+	color:#004080;
+}
+
+/* 文件图标 */
+.lock_1 .lock,.lock_2 .lock,.share_1 .share{
+	display:block;
+	width:16px;
+	height:16px;
+}
+.lock_1 .lock{background:url(../img/lock.png) no-repeat ;}
+.share_1 .share{background:url(../img/share.png) no-repeat;}
+
+/* 文件的操作样式 */
+.Op{
+	width:60px;
+	height:30px;
+	
+}
+
+.fileOp{
+	width:30px;
+	height:30px;
+}
+
+.fileOp:hover{
+	cursor:pointer;
+}
+
+.file:hover .fileOp
+{
+	background-image:url(../img/fileOp.png);
+	 background-repeat:no-repeat;}
+
+

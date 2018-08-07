@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap>
+	<typeAlias alias="FilePriv" type="com.mftcc.interior.disk.bean.FilePriv" />
+	<resultMap id="filePriv_resultMap" class="FilePriv">
+		<result column="id" property="id" jdbcType="INT" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="file_id" property="fileId" jdbcType="INT" />
+		<result column="file_priv" property="filePriv" jdbcType="VARCHAR" />
+		<result column="priv_type" property="privType" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+<!--表字段 -->
+	<sql id="filePriv_column">
+		id,
+		user_id,
+		file_id,
+		file_priv,
+		priv_type
+	</sql> 
+	
+<!--查询条件 -->
+	<sql id="filePriv_where">
+		<dynamic prepend="where">
+	       <isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+	       <isNotNull prepend="and" property="userId">
+				user_id = #userId#
+			</isNotNull>
+		    <isNotNull prepend="and" property="fileId">
+				file_id = #fileId#
+			</isNotNull>			
+			<isNotNull prepend="and" property="filePriv">
+				file_priv = #filePriv#
+			</isNotNull>
+			<isNotNull prepend="and" property="privType">
+				priv_type = #privType#
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+<!-- 插入 -->
+	<!-- keyProperty="id" useGeneratedKey="true" -->
+      <insert id="insertFilePriv" parameterClass="FilePriv"  >
+		insert into ac_file_priv(
+		id,
+		user_id,
+		file_id,
+		file_priv,
+		priv_type
+		)
+		values
+		(
+		#userId#,
+		#fileId#,
+		#filePriv#,
+		#privType#)
+ 		<selectKey keyProperty="id" resultClass="java.lang.Long">
+			select @@IDENTITY as id
+		</selectKey>
+ 
+	</insert>
+<!-- 删除	-->
+	<delete id="deleteFilePriv">
+		DELETE FROM ac_file_priv
+		where id= #id#
+	</delete>
+		
+<!--查询-->
+       <select id="selectFilePriv" resultMap="filePriv_resultMap" parameterClass="FilePriv">
+		SELECT 
+		<include refid="filePriv_column" />
+		<![CDATA[
+			 FROM ac_file_priv
+		]]>
+		<include refid="filePriv_where" />
+	</select>
+	
+	  <select id="getFilePrivByUser" resultMap="filePriv_resultMap" parameterClass="java.lang.String">
+		SELECT
+		id,
+		user_id,
+		file_id,
+		file_priv,
+		priv_type
+			FROM ac_file_priv
+		where user_id=#userId#
+	</select>
+	
+	
+	 <select id="getFilePrivById" resultMap="filePriv_resultMap" parameterClass="java.lang.Long">
+		SELECT
+		id,
+		user_id,
+		file_id,
+		file_priv,
+		priv_type
+			FROM ac_file_priv
+		where file_id=#id#
+	</select>
+	
+	
+
+<!--更新  -->	
+	
+	
+	
+</sqlMap>

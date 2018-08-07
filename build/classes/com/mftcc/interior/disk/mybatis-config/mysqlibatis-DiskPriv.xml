@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap>
+	<typeAlias alias="DiskPriv" type="com.mftcc.interior.disk.bean.DiskPriv" />
+	<resultMap id="diskPriv_resultMap" class="DiskPriv">
+		<result column="priv_id" property="id" jdbcType="INT" />
+		<result column="priv_user_id" property="privUserId" jdbcType="VARCHAR" />
+		<result column="priv_disk_id" property="privDiskId" jdbcType="INT" />
+		<result column="priv_file_id" property="privFileId" jdbcType="INT" />
+		<result column="priv_context" property="privContext" jdbcType="VARCHAR" />
+		<result column="priv_type" property="privType" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+<!--表字段 -->
+	<sql id="diskPriv_column">
+		priv_id,
+		priv_user_id,
+		priv_disk_id,
+		priv_file_id,
+		priv_context,
+		priv_type
+	</sql> 
+	
+<!--查询条件 -->
+	<sql id="diskPriv_where">
+		<dynamic prepend="where">
+	       <isNotNull prepend="and" property="privId">
+				priv_id = #privId#
+			</isNotNull>
+	       <isNotNull prepend="and" property="privUserId">
+				priv_user_id = #privUserId#
+			</isNotNull>
+		    <isNotNull prepend="and" property="privDiskId">
+				priv_disk_id = #privDiskId#
+			</isNotNull>
+			<isNotNull prepend="and" property="privFileId">
+				priv_file_id = #privFileId#
+			</isNotNull>			
+			<isNotNull prepend="and" property="privContext">
+				priv_context = #privContext#
+			</isNotNull>
+			<isNotNull prepend="and" property="privType">
+				priv_type = #privType#
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+<!-- 插入 -->
+	<!-- keyProperty="id" useGeneratedKey="true" -->
+      <insert id="insertDiskPriv" parameterClass="DiskPriv"  >
+		insert into ac_disk_priv(
+		priv_user_id,
+		priv_disk_id,
+		priv_file_id,
+		priv_context,
+		priv_type
+		)
+		values
+		(
+		#privUserId#,
+		#privDiskId#,
+		#privFileId#,
+		#privContext#,
+		#privType#
+		)
+ 		<selectKey keyProperty="id" resultClass="java.lang.Long">
+			select @@IDENTITY as id
+		</selectKey>
+ 
+	</insert>
+<!-- 删除	-->
+	<delete id="deleteDiskPriv">
+		DELETE FROM ac_disk_priv
+		where priv_id= #privId#
+	</delete>
+		
+<!--查询-->
+       <select id="selectDiskPriv" resultMap="diskPriv_resultMap" parameterClass="DiskPriv">
+		SELECT 
+		<include refid="diskPriv_column" />
+		<![CDATA[
+			 FROM ac_disk_priv
+		]]>
+		<include refid="diskPriv_where" />
+	</select>
+	
+	  <select id="getDiskPrivByUser" resultMap="diskPriv_resultMap" parameterClass="java.lang.String">
+		SELECT
+		priv_id,
+		priv_user_id,
+		priv_disk_id,
+		priv_file_id,
+		priv_context,
+		priv_type
+			FROM ac_disk_priv
+		where priv_user_id=#privUserId#
+	</select>
+	
+	
+	 <select id="getDiskPrivById" resultMap="diskPriv_resultMap" parameterClass="java.lang.Long">
+		SELECT
+		priv_id,
+		priv_user_id,
+		priv_disk_id,
+		priv_file_id,
+		priv_context,
+		priv_type
+			FROM ac_disk_priv
+		where priv_id=#privId#
+	</select>
+	
+	
+
+<!--更新  -->	
+	
+	
+	
+</sqlMap>
+
+	
+  		
+  		
+  		
+  		

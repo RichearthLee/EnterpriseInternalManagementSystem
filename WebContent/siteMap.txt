@@ -1,0 +1,12 @@
+﻿http://m.mftcc.cn/home.html
+http://m.mftcc.cn/gueproduct.html
+http://m.mftcc.cn/gueadvantage.html
+http://m.mftcc.cn/loanproduct.html
+http://m.mftcc.cn/loanadvantage.html
+http://m.mftcc.cn/p2pproduct.html
+http://m.mftcc.cn/p2padvantage.html
+http://m.mftcc.cn/appproduct.html
+http://m.mftcc.cn/appadvantage.html
+http://m.mftcc.cn/comsummary.html
+http://m.mftcc.cn/contact.html
+http://m.mftcc.cn/events.html

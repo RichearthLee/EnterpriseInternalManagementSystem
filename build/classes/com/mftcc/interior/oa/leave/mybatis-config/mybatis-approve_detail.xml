@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	
+	<typeAlias alias="approveBean" type="com.mftcc.interior.oa.leave.bean.ApproveBean" />
+	
+	<resultMap id="approve_resultMap" class="approveBean">
+		<result column="approve_no" property="approveNo" jdbcType="VARCHAR"/>
+		<result column="approve_type" property="approveType" jdbcType="VARCHAR"/>
+		<result column="leave_no" property="leaveNo" jdbcType="VARCHAR"/>
+		<result column="leave_type" property="leaveType" jdbcType="VARCHAR" />
+		<result column="br_no" property="brNo" jdbcType="VARCHAR" />
+		<result column="br_name" property="brName" jdbcType="VARCHAR" />
+		<result column="op_no" property="opNo" jdbcType="VARCHAR" />
+		<result column="op_name" property="opName" jdbcType="VARCHAR" />
+		<result column="leave_begintime" property="leaveBeginTime" jdbcType="VARCHAR" />
+		<result column="leave_endtime" property="leaveEndTime" jdbcType="VARCHAR" />
+		<result column="leave_sum" property="leaveSum" jdbcType="VARCHAR" />
+		<result column="leave_applytime" property="leaveApplyTime" jdbcType="VARCHAR" />
+		<result column="leave_detail" property="leaveDetail" jdbcType="VARCHAR" />
+		<result column="approve_detail" property="approveDetail" jdbcType="VARCHAR"/>
+		<result column="approve_time" property="approveTime" jdbcType="VARCHAR" />
+		<result column="leave_state" property="leaveState" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="selectApprove" parameterClass="com.mftcc.method.bean.Ipage" resultMap="approve_resultMap">
+		select 
+		approve_no,
+		approve_type,
+		l.op_name,
+		a.leave_no,
+		l.op_no,
+		
+		br_no,
+		br_name,
+		leave_applytime,
+		leave_begintime,
+		leave_endtime,
+		leave_detail,
+		leave_sum,
+		leave_state,
+		approve_time,
+		leave_type ,
+		approve_detail
+		FROM ac_oa_approve a,ac_oa_leave l
+		WHERE a.leave_no=l.leave_no
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(l.op_name,leave_type,leave_state) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+		
+		
+		
+	    LIMIT #searchStart#,#pageNumber#
+	    
+	</select>
+	
+	<select id="selectApproveListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT   COUNT(*) FROM 
+		(
+		 select 
+		 approve_no,
+		 approve_type,
+		 l.op_name,
+		 a.leave_no,
+		 l.op_no,
+		 br_no,
+		 br_name,
+		 leave_applytime,
+		 leave_begintime,
+		 leave_endtime,
+		 leave_detail,
+		 leave_sum,
+		 leave_state,
+		 approve_time,
+		 leave_type,
+		 approve_detail 
+		 FROM ac_oa_approve a,ac_oa_leave l
+		 WHERE a.leave_no=l.leave_no
+		 
+		)a
+        
+
+ </select>
+	<insert id="insert_approve" parameterClass="approveBean" >
+		
+ 		insert into ac_oa_approve(
+		approve_no,
+		approve_type,
+		
+		leave_no
+		)values
+		(
+		#approveNo#,
+		#approveType#,
+	
+	
+		#leaveNo#
+
+		
+		)
+    
+	</insert>	
+	
+	<!--按ID查找 -->
+	<select id="approve_no" resultMap="approve_resultMap" parameterClass="approveBean">
+		
+		select 
+		approve_no,
+		approve_type,
+		l.op_name,
+		a.leave_no,
+		l.op_no,
+		br_no,
+		br_name,
+		leave_applytime,
+		leave_begintime,
+		leave_endtime,
+		leave_detail,
+		leave_sum,
+		leave_state,
+		approve_time,
+		leave_type ,
+		approve_detail
+		FROM ac_oa_approve a,ac_oa_leave l
+		WHERE a.leave_no=l.leave_no and approve_no=#approveNo#
+		
+	</select>
+	
+	<!--更新 -->
+	<update id="update_approve" parameterClass="approveBean">
+		update ac_oa_leave 
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="leaveState">
+				leave_state = #leaveState#
+			</isNotNull>
+				
+		</dynamic>
+		where leave_no= #leaveNo# 
+		
+	</update>
+	
+	<update id="update_approve1" parameterClass="approveBean">
+		update ac_oa_approve
+		<dynamic prepend="set">
+			
+			<isNotNull prepend="," property="opNo1">
+				op_no = #opNo1# 
+			</isNotNull>
+			<isNotNull prepend="," property="opName1">
+				op_name = #opName1#
+			</isNotNull>
+			<isNotNull prepend="," property="approveDetail">
+				approve_detail = #approveDetail#
+			</isNotNull>	
+				</dynamic>
+		where approve_no= #approveNo# 
+		
+	</update>
+	
+	
+	
+	
+	
+</sqlMap>

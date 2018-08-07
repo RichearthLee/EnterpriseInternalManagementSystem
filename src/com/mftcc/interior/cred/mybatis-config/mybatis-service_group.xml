@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+<typeAlias alias="accredservicegroupDou" type="com.mftcc.interior.cred.bean.AcCredServiceGroup"/>
+<resultMap id="accredservicegroupDou_resultMap" class="accredservicegroupDou" >
+  <result column="serialno" property="serialno" jdbcType="VARCHAR"/>
+  <result column="trace_no" property="traceNo" jdbcType="VARCHAR"/>
+  <result column="business_code" property="businessCode" jdbcType="VARCHAR"/>
+  <result column="business_name" property="businessName" jdbcType="VARCHAR"/>
+  <result column="tlrno" property="tlrno" jdbcType="VARCHAR"/>
+  <result column="tlrname" property="tlrname" jdbcType="VARCHAR"/>
+  <result column="create_date" property="createDate" jdbcType="VARCHAR"/>
+  <result column="occ_time" property="occTime" jdbcType="VARCHAR"/>
+  <result column="sts" property="sts" jdbcType="VARCHAR"/>
+  <result column="pid" property="pid" jdbcType="VARCHAR"/>
+  <result column="level" property="level" jdbcType="VARCHAR"/>
+  <result column="parent" property="parent" jdbcType="VARCHAR"/>
+  <result column="childen" property="childen" jdbcType="VARCHAR"/>
+  
+</resultMap>
+
+<!--表字段-->
+<sql id="accredservicegroupDou_column">
+  serialno,
+  trace_no,
+  business_code,
+  business_name,
+  tlrno,
+  tlrname,
+  create_date,
+  occ_time,
+  sts,
+  pid,
+  level,
+  parent,
+  childen
+</sql>
+
+<!--查询条件-->
+<sql id="accredservicegroupDou_where">
+<dynamic prepend="where" >
+ <isNotNull prepend="and" property="serialno" >
+ serialno = #serialno#
+ </isNotNull>
+ <isNotNull prepend="and" property="cifAccount" >
+ trace_no = #traceNo#
+ </isNotNull>
+ <isNotNull prepend="and" property="companyname" >
+ business_code = #businessCode#
+ </isNotNull>
+ <isNotNull prepend="and" property="merchantNo" >
+ business_name = #businessName#
+ </isNotNull>
+ <isNotNull prepend="and" property="merchantName" >
+ tlrno = #tlrno#
+ </isNotNull>
+ <isNotNull prepend="and" property="itemType" >
+ tlrname = #tlrname#
+ </isNotNull>
+ <isNotNull prepend="and" property="itemNo" >
+ create_date = #createDate#
+ </isNotNull>
+ <isNotNull prepend="and" property="itemName" >
+ occ_time = #occTime#
+ </isNotNull>
+ <isNotNull prepend="and" property="priceAmt" >
+ sts = #sts#
+ </isNotNull>
+ <isNotNull prepend="and" property="deftAmt" >
+ pid = #pid#
+ </isNotNull>
+ <isNotNull prepend="and" property="sts" >
+ level = #level#
+ </isNotNull>
+ </dynamic>
+</sql>
+
+
+
+<select id="getAllSerGroups" resultClass="java.util.HashMap" parameterClass="com.mftcc.method.bean.Ipage">
+SELECT serialno,business_code businessCode,business_name businessName,tlrname,sts,create_date createDate FROM ac_cred_service_group WHERE 1=1 
+<isNotEmpty prepend="and" property="searchFiled">
+INSTR(CONCAT(business_name,if(sts='Y','启用','禁用')),#searchFiled#)
+</isNotEmpty>
+<isNotEmpty prepend="and" property="parm0">
+	business_code=#parm0#
+</isNotEmpty>
+<isNotEmpty prepend="and" property="parm4">
+	level=#parm4#
+</isNotEmpty>
+<isNotEmpty prepend="and" property="parm5">
+	pid=#parm5#
+</isNotEmpty>
+ORDER BY create_date desc
+LIMIT #searchStart#,#pageNumber#
+</select>
+
+
+
+
+<!-- 获取所有服务 组信息 不分页-->
+
+<select id="getAllServiceGroups" resultClass="java.util.HashMap" parameterClass="Map">
+SELECT 
+	serialno serialno,business_code businessCode,business_name businessName,tlrname tlrname,sts sts,create_date createDate ,pid pid,level level
+FROM 
+	ac_cred_service_group 
+WHERE 
+	1=1  
+<isNotEmpty prepend="and" property="sts">
+	sts=#sts#
+</isNotEmpty>
+</select>
+<!-- 获取服务 组信息 -->
+<select id="getSerGroupByid" resultClass="java.util.HashMap" parameterClass="String">
+SELECT serialno,business_code businessCode,business_name businessName,tlrname,sts,create_date createDate,pid,level FROM ac_cred_service_group WHERE  serialno=#serialno#
+</select>
+<!-- 服务组总条数 -->
+<select id="getAllSerGroupsCnt" resultClass="java.lang.Integer" parameterClass="com.mftcc.method.bean.Ipage">
+SELECT COUNT(1) FROM ac_cred_service_group WHERE 1=1
+<isNotEmpty prepend="and" property="searchFiled">
+	INSTR(CONCAT(business_name,if(sts='Y','启用','禁用')),#searchFiled#)
+</isNotEmpty>
+<isNotEmpty prepend="and" property="parm0">
+	business_code=#parm0#
+</isNotEmpty>
+<isNotEmpty prepend="and" property="parm4">
+	level=#parm4#
+</isNotEmpty>
+<isNotEmpty prepend="and" property="parm5">
+	pid=#parm5#
+</isNotEmpty>
+</select>
+<!-- 删除服务组 -->
+<delete id="deletServiceGroup" parameterClass="java.lang.String">
+DELETE FROM ac_cred_service_group WHERE business_code=#businessCode#
+</delete>
+<!-- 删除服务组明细 -->
+<delete id="deleteServGroupDetail" parameterClass="java.lang.String">
+DELETE FROM ac_cred_service_group_detail WHERE service_group_code=#businessCode#
+</delete>
+<!-- 新增服务组 -->
+<insert id="addServiceGroup" parameterClass="java.util.Map">
+INSERT INTO ac_cred_service_group (serialno, trace_no, business_code, business_name, tlrno, tlrname, create_date,occ_time, sts,pid,level) VALUES 
+(#serialno#, #traceNo#, #businessCode#, #businessName#,#tlrno#, #tlrname#, #createDate#, #occTime#, #sts#,#pid#,#level#);
+</insert>
+<!-- 根据服务组编码获取其服务项编号 -->
+<select id="getGroupServItemNos" parameterClass="java.lang.String" resultClass="java.util.HashMap">
+SELECT item_no itemNo FROM ac_cred_service_group_detail WHERE service_group_code=#businessCode#
+</select>
+<!-- 获取所有的服务项，不分页 -->
+<select id="getServItemsBySearchFiled" parameterClass="java.util.Map" resultClass="java.util.HashMap">
+SELECT item_no itemNo,merchant_name merchantName,item_name itemName FROM basic_service_items WHERE 1=1
+<isNotEmpty prepend="and" property="searchFiled">
+	INSTR(CONCAT(item_name,merchant_name),#searchFiled#)
+</isNotEmpty>
+ORDER BY merchant_no,create_date
+</select>
+<update id="updateServiceGroup" parameterClass="java.util.Map">
+UPDATE ac_cred_service_group SET business_name=#businessName#, occ_time=#occTime#, sts=#sts# WHERE serialno=#serialno#
+</update>
+<insert id="addServiceGroupDetail" parameterClass="java.util.Map">
+INSERT INTO ac_cred_service_group_detail(serialno, trace_no,service_group_code,item_no,open_date,tlrno,tlrname) VALUES (#serialno#,#traceNo#,#businessCode#,#itemNo#,#openDate#,#tlrno#,#tlrname#)
+</insert>
+
+</sqlMap>

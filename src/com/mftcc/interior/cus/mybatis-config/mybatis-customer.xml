@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="followInfo" type="com.mftcc.interior.cus.bean.cus_follow" />	
+	<typeAlias alias="cusLinkman" type="com.mftcc.interior.cus.bean.cusLinkman"/>
+	<typeAlias alias="cusReview" type="com.mftcc.interior.cus.bean.CusReview"/>
+
+	<resultMap id="followinfo_resultMap" class="followInfo">
+		<result column="feed_id" property="feedid" jdbcType="VARCHAR" />
+		<result column="cus_id" property="cusid" jdbcType="VARCHAR" />
+		<result column="user_id" property="userid" jdbcType="VARCHAR" />
+		<result column="feedback" property="feedback" jdbcType="VARCHAR" />
+		<result column="feedtype" property="feedtype" jdbcType="VARCHAR" />
+		<result column="date" property="date" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR"/>
+	</resultMap>
+	<resultMap class="cusLinkman" id="cuslinkman_resultMap">
+		<result column="link_id" property="linkId" jdbcType="VARCHAR"/>
+		<result column="link_name" property="linkName" jdbcType="VARCHAR"/>
+		<result column="location" property="location" jdbcType="VARCHAR"/>
+		<result column="marketer_id" property="marketerId" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="telphone" property="telphone" jdbcType="VARCHAR"/>
+		<result column="e_mail" property="email" jdbcType="VARCHAR"/>
+	</resultMap>
+	<resultMap class="cusReview" id="cusreview_resultMap">
+		<result column="eva_id" property="evaId" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="cus_id" property="cusId" jdbcType="VARCHAR"/>
+		<result column="feed_id" property="feedId" jdbcType="VARCHAR"/>
+		<result column="eva_content" property="evaContent" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+
+	<!--新增跟踪信息 -->
+	<insert id="insertFollowInfo" parameterClass="followInfo">
+	 insert into  ac_cus_follow(
+		 feed_id,cus_id,user_id,feedback,feedtype,date,location
+		)values
+		(
+		#feedid#,
+		#cusid#,
+		#userid#,
+		#feedback#,
+		#feedtype#,
+		#date#,
+		#location#
+		)
+	</insert>
+	<!-- 根据Userid和Cusid查询跟踪信息 -->
+	<select id="selectByUserCus" resultMap="followinfo_resultMap" parameterClass="followInfo">
+		select feed_id,cus_id,user_id,feedback,feedtype,date,location
+		from ac_cus_follow where user_id=#userid# and cus_id=#cusid#
+	</select>
+	<!-- 根据followid查询跟踪信息 -->
+	<select id="selectOneById" resultMap="followinfo_resultMap" parameterClass="String">
+		SELECT * FROM ac_cus_follow where feed_id=#followId#
+	</select>
+	<!-- 查询所有跟踪信息 -->
+	<select id="selectInfoAll" resultMap="followinfo_resultMap">
+		select feed_id,cus_id,user_id,feedback,feedtype,date,location
+		from ac_cus_follow
+	</select>
+	<!-- 查询客户联系人 -->
+	<select id="selectLinkByCus" resultMap="cuslinkman_resultMap" parameterClass="String">
+		select * from ac_cus_linkman where marketer_id=#marketerId#
+	</select>
+	<!-- 查询客户所有联系人 -->
+	<select id="getAllLink" resultMap="cuslinkman_resultMap" parameterClass="String">
+		select * from ac_cus_linkman
+	</select>
+	<!-- 插入客户联系人 -->
+	<insert id="insertLink" parameterClass="cusLinkman">
+		insert into ac_cus_linkman(link_id,link_name,location,marketer_id,title,phone,telphone,e_mail) 
+		values (#linkId#,#linkName#,#location#,#marketerId#,#title#,#phone#,#telphone#,#email#)
+	</insert>
+	<!-- 插入评论信息 -->
+	<insert id="insertReview" parameterClass="cusReview">
+		insert into ac_cus_evaluate(eva_id,user_id,cus_id,feed_id,eva_content) 
+		values (#evaId#,#userId#,#cusId#,#feedId#,#evaContent#)
+	</insert>
+	<!-- 查询评论信息 -->
+	<select id="selectByFeed" parameterClass="String" resultMap="cusreview_resultMap">
+		select * from ac_cus_evaluate where feed_id=#feedId#
+	</select>
+</sqlMap>

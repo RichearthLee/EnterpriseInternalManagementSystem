@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+						"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+<typeAlias alias="pmsUserFilter"  type="com.mftcc.interior.report.filter.bean.PmsUserFilter"/> 
+	<!-- <resultMap id="BaseResultMap" class="pmsUserFilter">
+		<result column="op_no" property="opNo" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="jsp" property="jsp" jdbcType="VARCHAR" />
+		<result column="filter_no" property="filterNo" jdbcType="VARCHAR" />
+		<result column="filter_name" property="filterName" jdbcType="VARCHAR" />
+		<result column="filter_content" property="filterContent" jdbcType="VARCHAR" />
+		<result column="use_flag" property="useFlag" jdbcType="VARCHAR" />
+		<result column="lst_mod_time" property="lstModTime" jdbcType="VARCHAR" />
+		<result column="opt_type" property="optType" jdbcType="VARCHAR" />
+	</resultMap>
+	可重用的SQL代码段
+	<sql id="Base_Column_List">
+		op_no,
+		url,
+		jsp,
+		filter_no,
+		filter_name,
+		filter_content,
+		use_flag,
+		lst_mod_time,
+		opt_type
+		
+	</sql>
+	
+	<delete id="delete"  parameterClass="pmsUserFilter">
+		delete from ac_user_filter 
+		where 
+			op_no = #{opNo}
+			and 	url = #{url}
+			and jsp = #{jsp}
+			and filter_No = #{filterNo}
+	</delete> -->
+	<!-- <insert id="insert" parameterClass="pmsUserFilter">
+		<selectKey keyProperty="filterNo" resultClass="java.lang.String" order="BEFORE">
+        	select nextval('PMS_FILTER_SEQ') from dual
+    	</selectKey>
+    	<selectKey keyProperty="filterNo" resultClass="java.lang.String" >
+    		<![CDATA[select nextval]]>('PMS_FILTER_SEQ') from dual
+    	</selectKey>
+		 insert into pms_user_filter (
+			<include refid="Base_Column_List"></include> 
+		 ) values (
+	   	 	#{opNo},
+	    	#{url},
+	    	#{jsp},
+			#{filterNo,jdbcType=VARCHAR},
+			#{filterName,jdbcType=VARCHAR},
+			#{filterContent,jdbcType=VARCHAR},
+			#{useFlag},
+		    #{lstModTime},
+		    #{optType}
+	    )
+	</insert>
+	
+	<update id="update"  parameterClass="pmsUserFilter">
+		update ac_user_filter
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="filterName">filter_name = #filterName: VARCHAR#</isNotNull>  
+      		<isNotNull prepend="," property="filterContent">filter_content = #filterContent: INTEGER#</isNotNull>   
+      		<isNotNull prepend="," property="useFlag">use_flag = #useFlag: TIMESTAMP#</isNotNull>   
+      		<isNotNull prepend="," property="lstModTime">lst_mod_time = #lstModTime: INTEGER#</isNotNull>  
+      		<isNotNull prepend="," property="optType">opt_type = #optType: INTEGER#</isNotNull>  
+		  <set>
+			<if test="filterName != null and filterName != '' ">
+			filter_name = #{filterName,jdbcType=VARCHAR},
+			</if>
+			<if test="filterContent != null and filterContent != '' ">
+			filter_content = #{filterContent,jdbcType=VARCHAR},
+			</if>
+			<if test="useFlag != null and useFlag != '' ">
+				use_flag=#{useFlag},
+			</if>
+			<if test="lstModTime != null and lstModTime != '' ">
+		    	lst_mod_time=#{lstModTime},
+		    </if>
+			<if test="optType != null and optType != '' ">
+		    	opt_type=#{optType}
+		    </if>
+		  </set>
+		</dynamic>
+		
+		where 
+			op_no = #{opNo}
+			and url = #{url}
+			and jsp = #{jsp}
+			and filter_No = #{filterNo}
+	</update>
+	
+	<select  id="getById" resultMap="BaseResultMap" parameterClass="pmsUserFilter">
+		select 
+		<include refid="Base_Column_List"></include> 
+		from ac_user_filter 
+		where 
+			op_no = #{opNo}
+			and 	url = #{url}
+			and jsp = #{jsp}
+			and filter_No = #{filterNo}
+	</select>
+	<select  id="findByList" resultMap="BaseResultMap" parameterClass="pmsUserFilter">
+		select 
+		<include refid="Base_Column_List"></include> 
+		from ac_user_filter 
+		where 
+			(op_no = #{opNo} or op_no = '')
+			and 	url = #{url}
+			and jsp = #{jsp}
+			
+			ORDER BY use_flag DESC,lst_mod_time ASC
+		
+	</select>
+	自定义筛选代码生成
+	<select  id="getTableName" resultMap="BaseResultMap" parameterClass="pmsUserFilter">
+		SELECT TABLE_NAME as filter_no,TABLE_COMMENT as filter_name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = (select database())
+	</select>
+	<select  id="getTableColumn" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		select COLUMN_NAME as filter_no,COLUMN_COMMENT as filter_name from information_schema.columns where table_name=#{filterName}  AND TABLE_SCHEMA = (select database())
+	</select>
+	<select  id="getParmDic" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT opt_code as filter_no,opt_name as filter_name FROM parm_dic_all WHERE key_name=#{filterName}
+	</select> -->
+</sqlMap>

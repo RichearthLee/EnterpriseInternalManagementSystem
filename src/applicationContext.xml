@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+   xmlns:p="http://www.springframework.org/schema/p"  
+	
+	xsi:schemaLocation="
+	 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd  
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd  
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd  
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+		
+	 <context:component-scan base-package="com.mftcc"/>    
+
+	<!-- 链接数据库连接池 先开启事物，再链接数据库 -->
+ 
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	    <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+	    <property name="driverClass" value="${jdbc.driverClass}"></property>
+	    <property name="user" value="${jdbc.user}"></property>
+	    <property name="password" value="${jdbc.password}"></property>
+	</bean>
+	
+	<bean id="transactionManager"
+	 class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 事务拦截器 配置哪些方法是有那周事物传播属性-->
+    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager" ref="transactionManager"/>
+     	<property name="transactionAttributes">
+			<props>
+			<!-- -Exception 表示有Exception时回滚事务 dao和service上都不要处理异常一直让异常信息抛到控制层在统一处理 -->
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="*">readOnly</prop>  
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 事务代理 对所有以ServiceImpl结尾的类使用事物-->
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+ 		<property name="beanNames">
+ 			<list>
+ 			  <value>*ServiceImpl</value>
+ 			</list>
+ 		</property>
+ 		<property name="interceptorNames">     
+           <list>
+               <value>transactionInterceptor</value>
+           </list>     
+       </property>
+ 	</bean>
+ 	 
+ 		<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+			<property name="configLocation" value="classpath:sql-map-config.xml" />
+			<property name="mappingLocations">
+				<list>
+					<value>classpath*:/com/mftcc/method/ibatis-config/*.xml</value>
+					<value>classpath*:/com/mftcc/interior/*/mybatis-config/*.xml</value>
+					<value>classpath*:/com/mftcc/interior/*/*/mybatis-config/*.xml</value>
+				</list>
+			</property>
+			<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+ 		<!-- ibatis 配置结束-->
+ 
+ 		<!-- 引入redis属性配置文件 -->
+<!--      <import resource="classpath:spring-redis.xml"/>
+ --> 
+  <context:property-placeholder location="classpath:config.properties"/>
+ 	<bean id="poolConfig"  class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"></property>
+        <property name="minIdle" value="${redis.minIdle}"></property>
+        <property name="maxTotal" value="${redis.maxTotal}"></property>
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"></property>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>
+    </bean>
+    <!--链接redis-->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.host}"></property>
+        <property name="port" value="${redis.port}"></property>
+        <property name="password" value="${redis.password}"></property>
+        <property name="poolConfig" ref="poolConfig"></property>
+    </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connection-factory-ref="connectionFactory" >
+        <!--以下针对各种数据进行序列化方式的选择-->
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <!--<property name="hashValueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>-->
+    </bean>
+</beans>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	
+	<typeAlias alias="leaveDaysFinalBean" type="com.mftcc.interior.report.bean.LeaveDaysFinalBean" />
+	<typeAlias alias="attendenceBean" type="com.mftcc.interior.oa.leave.bean.AttendenceBean" />
+	<resultMap id="count_resultMap" class="leaveDaysFinalBean">
+		<result column="op_no" property="op_no" jdbcType="VARCHAR"/>
+		<result column="op_name" property="op_name" jdbcType="VARCHAR"/>
+		<result column="br_no" property="br_no" jdbcType="VARCHAR"/>
+		<result column="br_name" property="br_name" jdbcType="VARCHAR" />
+		<result column="br_no" property="br_no" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="yearmonth" property="yearmonth" jdbcType="VARCHAR" />
+		<result column="casual" property="casual" jdbcType="double" />
+		<result column="marriage" property="marriage" jdbcType="double" />
+		<result column="bereavement" property="bereavement" jdbcType="double" />
+		<result column="annual" property="annual" jdbcType="double" />
+		<result column="paternity" property="paternity" jdbcType="double" />
+		<result column="sick" property="sick" jdbcType="double" />
+		<result column="maternity" property="maternity" jdbcType="double"/>
+		<result column="exchange" property="exchange" jdbcType="double" />
+		<result column="sumdays" property="sumdays" jdbcType="double" />
+	</resultMap>
+	
+	<resultMap id="attendence_resultMap" class="attendenceBean">
+		<result column="empNo" property="empNo" jdbcType="VARCHAR"/>
+		<result column="empName" property="empName" jdbcType="VARCHAR"/>
+		<result column="brName" property="brName" jdbcType="VARCHAR"/>
+		<result column="workTime" property="workTime" jdbcType="VARCHAR" />
+		<result column="workTimeTotal" property="workTimeTotal" jdbcType="VARCHAR" />
+		<result column="lateTimes" property="lateTimes" jdbcType="VARCHAR" />
+		<result column="lateMarks" property="lateMarks" jdbcType="VARCHAR" />
+		<result column="eLeaveTimes" property="eLeaveTimes" jdbcType="VARCHAR" />
+		<result column="eLeaveMarks" property="eLeaveMarks" jdbcType="VARCHAR" />
+		<result column="nExtraWork" property="nExtraWork" jdbcType="VARCHAR" />
+		<result column="sExtraWork" property="sExtraWork" jdbcType="VARCHAR" />
+		<result column="attendenceDays" property="attendenceDays" jdbcType="VARCHAR" />
+		<result column="goOut" property="goOut" jdbcType="VARCHAR" />
+		<result column="neglect" property="neglect" jdbcType="VARCHAR"/>
+		<result column="yearMonthDate" property="yearMonth" jdbcType="VARCHAR" />
+	
+	</resultMap>
+	
+	<!-- -->
+	<select id="count" resultMap="count_resultMap" parameterClass="leaveDaysFinalBean">
+		SELECT*
+
+		FROM
+		ac_leave_sum
+		WHERE
+		op_no =#op_no#
+		ORDER BY
+		ac_leave_sum.yearmonth ASC
+
+	</select>
+	
+	<insert id="insertlAttendenceBeans" parameterClass="attendenceBean">
+      	insert into ac_attendence
+       	(empNo,
+       	empName,
+       	brName,
+       	workTime,
+       	workTimeTotal,
+       	lateTimes,
+       	lateMarks,
+       	eLeaveTimes,
+       	eLeaveMarks,
+       	nExtraWork,
+       	sExtraWork,
+       	attendenceDays,
+       	goOut,
+       	neglect,
+       	yearMonthDate	
+       	)
+       	values
+       	(   #empNo#,
+       		#empName#,
+       		#brName#,
+       		#workTime#,
+       		#workTimeTotal#,
+       		#lateTimes#,
+       		#lateMarks#,
+       		#eLeaveTimes#,
+       		#eLeaveMarks#,
+       		#nExtraWork#,
+       		#sExtraWork#,
+       		#attendenceDays#,
+       		#goOut#,
+       		#neglect#,
+       		#yearMonth#
+       	)
+     
+</insert>
+
+	
+	
+	<!--fenye -->
+	<select id="selectAttendence" parameterClass="com.mftcc.method.bean.Ipage" resultMap="attendence_resultMap" >
+
+		select * from ac_attendence 
+		<dynamic prepend="where">
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(empNo,empName,brName,yearMonthDate) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		</dynamic>
+		
+	    LIMIT #searchStart#,#pageNumber#
+	</select>	
+	
+	<!-- 查询page -->
+    <select id="selectAttendenceListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT  COUNT(*) FROM ac_attendence
+ 		<dynamic prepend="where">
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(empNo,empName,brName,yearMonthDate) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		</dynamic>
+
+    </select>
+	
+	<select id="empName" resultMap="attendence_resultMap" parameterClass="attendenceBean">
+		select *from ac_attendence 
+		where empName=#empName#
+		ORDER BY
+		ac_attendence.yearMonthDate ASC
+	</select>
+	<select id="emp" resultMap="attendence_resultMap" parameterClass="attendenceBean">
+		select *from ac_attendence 
+		where empNo=#empNo# and yearMonthDate=#yearMonth#
+		
+	</select>
+	
+	<!--更新 -->
+	<update id="update_attendence" parameterClass="attendenceBean" >
+		update ac_attendence
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="workTimeTotal">
+				workTimeTotal = #workTimeTotal#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="lateTimes">
+				lateTimes = #lateTimes#
+			</isNotNull>
+			<isNotNull prepend="," property="neglect">
+				neglect = #neglect#
+			</isNotNull>
+			<isNotNull prepend="," property="attendenceDays">
+				attendenceDays = #attendenceDays#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="eLeaveTimes">
+				eLeaveTimes = #eLeaveTimes#
+			</isNotNull>
+			<isNotNull prepend="," property="sExtraWork">
+				sExtraWork = #sExtraWork#
+			</isNotNull>
+			
+			
+		</dynamic>
+		where empName=#empName# and yearMonthDate=#yearMonth#
+	</update>
+	
+</sqlMap>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap>
+	<typeAlias alias="DiskInfo" type="com.mftcc.interior.disk.bean.DiskInfo" />
+	<resultMap id="disk_resultMap" class="DiskInfo">
+		<result column="disk_id" property="id" jdbcType="INT" />
+		<result column="disk_user_id" property="user_id" jdbcType="VARCHAR" />
+		<result column="disk_totalsize" property="totalSize" jdbcType="INT" />
+		<result column="disk_usedsize" property="usedSize" jdbcType="INT" />
+		<result column="disk_filenumber" property="fileNumber" jdbcType="INT" />
+	    <result column="disk_name" property="diskname" jdbcType="VARCHAR" />
+	    <result column="disk_status" property="diskStatus" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="disk_priv_resultMap" class="DiskInfo">
+		<result column="disk_id" property="id" jdbcType="INT" />
+		<result column="disk_user_id" property="user_id" jdbcType="VARCHAR" />
+		<result column="disk_totalsize" property="totalSize" jdbcType="INT" />
+		<result column="disk_usedsize" property="usedSize" jdbcType="INT" />
+		<result column="disk_filenumber" property="fileNumber" jdbcType="INT" />
+	    <result column="disk_name" property="diskname" jdbcType="VARCHAR" />
+	    <result column="disk_status" property="diskStatus" jdbcType="VARCHAR" />
+	     <result column="priv_context" property="privContext" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+<!--表字段 -->
+	<sql id="disk_column">
+		disk_id,
+		disk_user_id,
+		disk_totalsize,
+		disk_usedsize,
+		disk_filenumber,
+		disk_name,
+		disk_status
+	</sql> 
+	
+<!--查询条件 -->
+	<sql id="disk_where">
+		<dynamic prepend="where">
+	       <isNotNull prepend="and" property="id">
+				disk_id = #id#
+			</isNotNull>
+	       <isNotNull prepend="and" property="user_id">
+				disk_user_id = #user_id#
+			</isNotNull>
+		    <isNotNull prepend="and" property="totalSize">
+				disk_totalsize = #totalSize#
+			</isNotNull>			
+			<isNotNull prepend="and" property="usedSize">
+				disk_usedsize = #usedSize#
+			</isNotNull>
+			<isNotNull prepend="and" property="fileNumber">
+				disk_filenumber = #fileNumber#
+			</isNotNull>
+			<isNotNull prepend="and" property="diskname">
+				disk_name = #diskname#
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+<!-- 插入 -->
+	<!-- keyProperty="id" useGeneratedKey="true" -->
+      <insert id="insertDisk" parameterClass="DiskInfo"  >
+		insert into ac_disk_info(
+		disk_user_id,
+		disk_totalsize,
+		disk_usedsize,
+		disk_filenumber,
+		disk_name,
+		disk_status
+		)
+		values
+		(
+		#user_id#,
+		#totalSize#,
+		#usedSize#,
+		#fileNumber#,
+		#diskname#,
+		#diskStatus#)
+ 		<selectKey keyProperty="id" resultClass="java.lang.Long">
+			select @@IDENTITY as id
+		</selectKey>
+ 
+	</insert>
+<!-- 删除	-->
+	<delete id="deleteDisk">
+		DELETE FROM ac_disk_info
+		where disk_id= #id#
+	</delete>
+		
+<!--查询-->
+       <select id="selectDisk" resultMap="disk_resultMap" parameterClass="DiskInfo">
+		SELECT 
+		<include refid="disk_column" />
+		<![CDATA[
+			 FROM ac_disk_info
+		]]>
+		<include refid="disk_where" />
+	</select>
+	
+	  <select id="getDiskByUser" resultMap="disk_resultMap" parameterClass="java.lang.String">
+		SELECT
+		disk_id,
+		disk_user_id,
+		disk_totalsize,
+		disk_usedsize,
+		disk_filenumber,
+		disk_name,
+		disk_status
+			FROM ac_disk_info
+		where disk_user_id=#user_id#
+	</select>
+	
+	
+	 <select id="getDiskById" resultMap="disk_resultMap" parameterClass="java.lang.Long">
+		SELECT
+		disk_id,
+		disk_user_id,
+		disk_totalsize,
+		disk_usedsize,
+		disk_filenumber,
+		disk_name,
+		disk_status
+			FROM ac_disk_info
+		where disk_id=#id#
+	</select>
+	
+	<select id="getDiskByUserStatus" resultMap="disk_resultMap" parameterClass="DiskInfo">
+		SELECT
+		disk_id,
+		disk_user_id,
+		disk_totalsize,
+		disk_usedsize,
+		disk_filenumber,
+		disk_name,
+		disk_status
+			FROM ac_disk_info 
+		where disk_user_id=#user_id#
+		and disk_status=#diskStatus#
+	</select>
+	
+	<select id="getGroupDiskByPrivIpage" resultMap="disk_priv_resultMap" parameterClass="com.mftcc.method.bean.Ipage">
+	   SELECT
+		disk_id,
+		disk_user_id,
+		disk_totalsize,
+		disk_usedsize,
+		disk_filenumber,
+		disk_name,
+		disk_status,
+		priv_context
+		FROM ac_disk_info,ac_disk_priv
+	
+		where disk_id=priv_disk_id and priv_user_id=#parm0#
+		<!-- <isNotNull prepend="and" property="parm1">
+		 disk_user_id=#parm1#
+		</isNotNull> -->
+<!-- 		<isNotNull prepend="and" property="searchFiled">
+					CONCAT(disk_name,share_time,share_status) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull> -->	
+		LIMIT #searchStart#,#pageNumber# 
+	</select>
+	 
+	 
+	<select id="getGroupDiskByPrivCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_disk_priv,ac_disk_info
+		 where disk_id=priv_disk_id and priv_user_id=#parm0# 
+		<!--  <isNotNull prepend="and" property="parm1">
+		 disk_user_id=#parm1#
+		</isNotNull> -->
+ 			<!-- <isNotNull prepend="and" property="searchFiled">
+					CONCAT(share_url,share_time,share_status) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull> -->
+ 		
+      
+	</select>
+	
+
+<!--更新  -->	
+	<update id="updateDiskById" parameterClass="DiskInfo">
+		update ac_disk_info set
+				disk_usedsize = #usedSize#,
+				disk_filenumber = #fileNumber# 
+		where disk_id = #id#
+	</update>
+	
+	<update id="updateDiskSize" parameterClass="DiskInfo">
+	update ac_disk_info set disk_usedsize = disk_usedsize + #usedSize# 
+	where disk_id = #id#
+	</update>
+	
+	<update id="updateDiskFile" parameterClass="DiskInfo">
+	update ac_disk_info set disk_filenumber = disk_filenumber + 1 
+	where disk_id = #id#
+	</update>
+	
+</sqlMap>
+
+	
+  		
+  		
+  		
+  		

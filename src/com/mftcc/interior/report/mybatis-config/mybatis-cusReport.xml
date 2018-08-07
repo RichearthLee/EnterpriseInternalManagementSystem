@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+						"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap> 
+	<typeAlias alias="cusReportBean" type="com.mftcc.interior.report.bean.CusReportBean"/>
+	<resultMap id="cusReportBean_resultMap" class="cusReportBean" >
+		<result column="customer_id" property="customerId" jdbcType="varchar"/>
+		<result column="customer_name" property="customerName" jdbcType="varchar"/>
+		<result column="customer_type" property="customerType" jdbcType="varchar"/>
+		<result column="province" property="province" jdbcType="varchar"/>
+		<result column="city" property="city" jdbcType="varchar"/>
+		<result column="area" property="area" jdbcType="varchar"/>
+		<result column="location" property="location" jdbcType="varchar"/>
+		<result column="entry_date" property="entryDate" jdbcType="varchar"/>
+		<result column="marketer_id" property="marketerId" jdbcType="varchar"/>
+		<result column="marketer_name" property="marketerName" jdbcType="varchar"/>
+		<result column="br_no" property="brNo" jdbcType="varchar"/>
+		<result column="br_name" property="brName" jdbcType="varchar"/>
+		<result column="br_province" property="brProvince" jdbcType="varchar"/>
+		<result column="br_city" property="brCity" jdbcType="varchar"/>
+		<!-- <result column="br_area" property="brArea" jdbcType="varchar"/> -->
+		<result column="link_name" property="linkName" jdbcType="varchar"/>
+		<result column="title" property="title" jdbcType="varchar"/>
+		<result column="phone" property="phone" jdbcType="varchar"/>
+		<result column="telphone" property="telphone" jdbcType="varchar"/>
+		<result column="e_mail" property="email" jdbcType="varchar"/>
+	</resultMap>
+	<select id="selectCusAndLinkMan" resultMap="cusReportBean_resultMap">
+		SELECT
+			b.customer_id,
+			b.customer_name,
+			b.customer_type,
+			b.province,
+			b.city,
+			b.area,
+			b.location,
+			b.entry_date,
+			b.marketer_id,
+			b.marketer_name,
+			b.br_no,
+			aso.br_name,
+			aso.br_area AS br_province,
+			aso.br_addr AS br_city,
+			b.link_name,
+			b.title,
+			b.phone,
+			b.telphone,
+			b.e_mail
+		FROM
+			(
+				SELECT
+					a.customer_id,
+					a.customer_name,
+					a.customer_type,
+					a.province,
+					a.city,
+					a.area,
+					a.location,
+					a.entry_date,
+					a.marketer_id,
+					asu.op_name AS marketer_name,
+					asu.br_no,
+					a.link_name,
+					a.title,
+					a.phone,
+					a.telphone,
+					a.e_mail
+				FROM
+					(
+						SELECT
+							customer_id,
+							customer_name,
+							customer_type,
+							province,
+							city,
+							area,
+							apci.location,
+							entry_date,
+							apci.marketer_id,
+							link_name,
+							title,
+							phone,
+							telphone,
+							e_mail
+						FROM
+							ac_pact_customer_info apci
+						LEFT JOIN (SELECT
+			*
+		FROM
+			ac_cus_linkman
+		WHERE
+			link_id in(
+				SELECT
+					MAX(link_id)
+				FROM
+					ac_cus_linkman
+				GROUP BY
+					marketer_id
+			)) acl ON apci.customer_id = acl.marketer_id
+					) a
+				LEFT JOIN ac_sys_user asu ON a.marketer_id = asu.op_no
+			) b
+		LEFT JOIN ac_sys_org aso ON aso.br_no = b.br_no
+	</select>
+	<insert id="insertCusAndLinkMan" parameterClass="cusReportBean">
+		insert into 
+		ac_cus_report(
+			customer_id,
+			customer_name,
+			customer_type,
+			province,
+			city,
+			area,
+			location,
+			entry_date,
+			marketer_id,
+			marketer_name,
+			br_no,
+			br_name,
+			br_province,
+			br_city,
+			<!-- br_area, -->
+			link_name,
+			title,
+			phone,
+			telphone,
+			e_mail
+			)
+		values(
+			#customerId#,
+			#customerName#,
+	        #customerType#,
+			#province#,
+			#city#,
+			#area#,
+			#location#,
+			#entryDate#,
+			#marketerId#,
+			#marketerName#,
+			#brNo#,
+			#brName#,
+			#brProvince#,
+			#brCity#,
+			<!-- #brArea#, -->
+			#linkName#,
+			#title#,
+			#phone#,
+			#telphone#,
+			#email#
+			)
+	</insert>
+</sqlMap>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap>
+	<typeAlias alias="DiskFile" type="com.mftcc.interior.disk.bean.DiskFile" />
+	<resultMap id="file_resultMap" class="DiskFile">
+		<result column="file_id" property="id" jdbcType="INT" />
+		<result column="file_disk_id" property="disk_id" jdbcType="INT" />
+		<result column="file_user_id" property="user_id" jdbcType="VARCHAR" />
+		<result column="file_parent_id" property="parent_id" jdbcType="INT" />
+		<result column="file_name" property="name" jdbcType="VARCHAR" />
+		<result column="file_size" property="size" jdbcType="MEDIUMTEXT" />
+		<result column="file_type" property="type" jdbcType="VARCHAR" />
+		<result column="file_path" property="path" jdbcType="VARCHAR" />
+		<result column="createdate" property="createDate" jdbcType="VARCHAR" />
+		<result column="file_password" property="password" jdbcType="VARCHAR" />
+		<result column="file_islock" property="isLock" jdbcType="VARCHAR" />
+		<result column="file_isshare" property="isShare" jdbcType="VARCHAR" />
+		<result column="file_sharedownload" property="shareDownload" jdbcType="VARCHAR" />
+		<result column="file_location" property="location" jdbcType="VARCHAR" />
+		<result column="file_shareurl" property="shareUrl" jdbcType="VARCHAR" />
+		<result column="file_md5" property="md5" jdbcType="VARCHAR" />
+		<result column="file_description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	
+	<!--表字段 -->
+	<sql id="file_column">
+		file_id,
+		file_disk_id,
+		file_user_id,
+		file_parent_id,
+		file_name,
+		file_size,
+		file_type,
+		file_path,
+		createdate,
+		file_password,
+		file_islock,
+		file_isshare,
+		file_sharedownload,
+		file_location,
+		file_shareurl,
+		file_md5,
+		file_description 			
+	</sql> 
+	<!-- 
+				#id#,
+				#user_id#,
+				#parent_id#,
+				#name#,
+				#size#,
+				#type#,
+				#path#,
+				#createDate#,
+				#password#,
+				#isLock#,
+				#isShare#,
+				#shareDownload#,
+				#location#,
+				#md5#,
+				#description# -->
+	
+		<!--查询条件 -->
+	<sql id="file_where">
+		<dynamic prepend="where">
+	       <isNotNull prepend="and" property="id">
+				file_id = #id#
+			</isNotNull>
+	       <isNotNull prepend="and" property="user_id">
+				file_user_id = #user_id#
+			</isNotNull>
+		    <isNotNull prepend="and" property="parent_id">
+				file_parent_id = #parent_id#
+			</isNotNull>			
+			<isNotNull prepend="and" property="name">
+				file_name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="type">
+				file_type = #type#
+			</isNotNull>
+			<isNotNull prepend="and" property="path">
+				file_path = #path#
+			</isNotNull>
+			<isNotNull prepend="and" property="createDate">
+				createdate = #createDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="password">
+				file_password = #password#
+			</isNotNull>
+			<isNotNull prepend="and" property="isLock">
+				file_islock = #isLock#
+			</isNotNull>
+			<isNotNull prepend="and" property="isShare">
+				file_isshare = #isShare#
+			</isNotNull>
+			<isNotNull prepend="and" property="location">
+				file_location = #location#
+			</isNotNull>
+			<isNotNull prepend="and" property="location">
+				file_shareurl = #shareUrl#
+			</isNotNull>
+			<isNotNull prepend="and" property="md5">
+				file_md5 = #md5#
+			</isNotNull>
+			<isNotNull prepend="and" property="description">
+				file_description = #description#
+			</isNotNull>
+		</dynamic>
+	</sql>
+	
+	
+	<!-- keyProperty="id" useGeneratedKey="true" -->
+      <insert id="insertFile" parameterClass="DiskFile"  >
+		insert into ac_disk_file(
+		file_disk_id,
+		file_user_id,
+		file_parent_id,
+		file_name,
+		file_size,
+		file_type,
+		file_path,
+		createdate,
+		file_password,
+		file_islock,
+		file_isshare,
+		file_sharedownload,
+		file_location,
+		file_shareurl,
+		file_md5,
+		file_description )
+		values
+		(
+		#disk_id#,
+		#user_id#,
+		#parent_id#,
+		#name#,
+		#size#,
+		#type#,
+		#path#,
+		#createDate#,
+		#password#,
+		#isLock#,
+		#isShare#,
+		#shareDownload#,
+		#location#,
+		#shareUrl#,
+		#md5#,
+		#description#)
+		<selectKey keyProperty="id" resultClass="java.lang.Long">
+			select @@IDENTITY as id
+		</selectKey>
+	</insert>
+	
+	
+<!-- 删除	-->
+	<delete id="deleteFile">
+		DELETE FROM ac_disk_file
+		where file_id= #id#
+	</delete>	
+
+<!-- 更新 -->	
+	<update id="updateFile" parameterClass="DiskFile">
+	    update ac_disk_file 
+	    <dynamic prepend="set"> 
+	       <isNotNull prepend="and" property="user_id">
+				file_user_id = #user_id#
+			</isNotNull>			
+			<isNotNull prepend="and" property="name">
+				file_name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="type">
+				file_type = #type#
+			</isNotNull>
+			<isNotNull prepend="and" property="path">
+				file_path = #path#
+			</isNotNull>
+			<isNotNull prepend="and" property="createDate">
+				createdate = #createDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="password">
+				file_password = #password#
+			</isNotNull>
+			<isNotNull prepend="and" property="isLock">
+				file_islock = #isLock#
+			</isNotNull>
+			<isNotNull prepend="and" property="isShare">
+				file_isshare = #isShare#
+			</isNotNull>
+			<isNotNull prepend="and" property="location">
+				file_location = #location#
+			</isNotNull>
+			<isNotNull prepend="and" property="md5">
+				file_md5 = #md5#
+			</isNotNull>
+			<isNotNull prepend="and" property="description">
+				file_description = #description#
+			</isNotNull>
+			</dynamic>
+	    where file_id = #id#
+	</update>
+	
+	<update id="updateFileLock" parameterClass="DiskFile">
+		update ac_disk_file set
+		file_islock = #isLock#,
+		file_password = #password#
+		where file_id = #id#
+	
+	</update>
+	
+	<update id="updateFileShare" parameterClass="DiskFile">
+		update ac_disk_file set
+		file_isshare = #isShare#,
+		file_shareurl = #shareUrl#
+		where file_id = #id#
+	</update>
+	
+<!--查询-->
+       <!-- 根据关键字 -->
+       <select id="selectFile" resultMap="file_resultMap" parameterClass="DiskFile">
+		SELECT 
+		<include refid="file_column" />
+		<![CDATA[
+			 FROM ac_disk_file
+		]]>
+		<include refid="file_where" />
+		</select>
+		
+		<!-- 根据路径模糊查询 -->
+       <select id="selectFilePath" resultMap="file_resultMap" parameterClass="java.lang.String">
+		SELECT * FROM ac_disk_file 
+		where file_path LIKE #path#
+			   and file_type!='adir'
+			   order by file_id desc
+		</select>
+		
+		 <select id="getDiskFileById" resultMap="file_resultMap" parameterClass="DiskFile">
+		SELECT * FROM ac_disk_file
+         where file_id=#id#
+		</select>
+		
+		
+<!-- 统计 -->
+	    <select id="selectFileCount" parameterClass="DiskFile" resultClass="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ac_disk_file
+		where file_user_id=#user_id#
+		      and file_type !='adir'
+	    </select>
+	    
+	    <select id="selectFileSizeSum" parameterClass="DiskFile" resultClass="java.lang.Integer">
+		SELECT sum(file_size)
+		FROM ac_disk_file
+		where file_user_id=#user_id#
+	    </select>
+	    
+	    <select id="getFileNumByDisk" parameterClass="DiskFile" resultClass="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ac_disk_file
+		where file_disk_id=#disk_id#
+		      and file_type !='adir'
+	    </select>
+	    
+	    <select id="getSizeSumByDisk" parameterClass="DiskFile" resultClass="java.lang.Integer">
+		SELECT sum(file_size)
+		FROM ac_disk_file
+		where file_disk_id=#disk_id#
+	    </select>
+	    
+<!--  业务功能-->
+		<update id="updateFolder" parameterClass="java.util.Map">
+	    update ac_disk_file set
+			file_path = replace(file_path,#soupath#,#tarpath#) where file_path LIKE CONCAT(#likepath#,'%')
+		</update>
+		
+		<update id="moveFile" parameterClass="java.util.Map">
+	    update ac_disk_file set
+			file_parent_id=#tarid# , file_path = #tarpath# 
+		where file_id =#souid#
+		</update>
+		
+	
+	
+	
+</sqlMap>

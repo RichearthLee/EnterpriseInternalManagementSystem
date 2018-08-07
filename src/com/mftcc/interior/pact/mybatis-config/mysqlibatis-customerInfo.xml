@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+<typeAlias alias="CustomerInfo" type="com.mftcc.interior.pact.bean.CustomerInfo"/>
+	
+	<resultMap id="pactCustomerInfo_resultMap" class="com.mftcc.interior.pact.bean.CustomerInfo" >
+	  <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR"/>
+	  <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR"/>
+	  <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR"/>
+	 <result column="PROVINCE" property="province" jdbcType="VARCHAR"/>
+	 <result column="CITY" property="city" jdbcType="VARCHAR"/>
+	 <result column="AREA" property="area" jdbcType="VARCHAR"/>
+	  <result column="LOCATION" property="location" jdbcType="VARCHAR"/>
+	  <result column="ENTRY_DATE" property="entryDate" jdbcType="VARCHAR"/>
+	  <result column="MARKETER_ID" property="marketerId" jdbcType="VARCHAR"/>
+	</resultMap>
+ 
+ <!--表字段-->
+<sql id="pactCustomerInfo_column">
+  CUSTOMER_ID,
+  CUSTOMER_NAME,
+  CUSTOMER_TYPE,
+  PROVINCE,
+  CITY,
+  AREA,
+  LOCATION,
+  ENTRY_DATE,
+  MARKETER_ID
+  
+</sql>
+
+<!--新增 -->
+	<insert id="insertPactCustomerInfo" parameterClass="CustomerInfo">
+		insert into ac_pact_customer_info(
+		<include refid="pactCustomerInfo_column" />
+		)values
+		(
+		#customerId#,
+		#customerName#,
+		#customerType#,
+		#province#,
+		#city#,
+		#area#,	
+		#location#,
+		#entryDate#,
+		#marketerId#
+		)
+	</insert>
+
+
+<!--查询-->
+<select id="getPactCustomerInfo" resultMap="pactCustomerInfo_resultMap"  parameterClass="com.mftcc.interior.pact.bean.CustomerInfo">
+SELECT
+<include refid="pactCustomerInfo_column"/>
+	<![CDATA[
+	 FROM ac_pact_customer_info
+]]>
+ 
+ </select>	
+<!--更新-->
+<update id="updatePactCustomerInfo" parameterClass="CustomerInfo">
+  update ac_pact_customer_info
+ <dynamic prepend="set" >
+<isNotNull prepend="," property="customerName" >
+  CUSTOMER_NAME = #customerName#
+</isNotNull>
+
+<isNotNull prepend="," property="customerType" >
+  CUSTOMER_TYPE = #customerType#
+</isNotNull>
+<isNotNull prepend="," property="province" >
+  PROVINCE = #province#
+</isNotNull>
+<isNotNull prepend="," property="city" >
+  CITY = #city#
+</isNotNull>
+<isNotNull prepend="," property="area" >
+ AREA = #area#
+</isNotNull>
+
+
+
+<isNotNull prepend="," property="location" >
+  LOCATION = #location#
+</isNotNull>
+<isNotNull prepend="," property="entryDate" >
+  ENTRY_DATE = #entryDate#
+</isNotNull>
+<isNotNull prepend="," property="marketerId" >
+  MARKETER_ID = #marketerId#
+</isNotNull>
+</dynamic>
+where CUSTOMER_ID = #customerId#
+</update>
+ 
+	 
+</sqlMap>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="employeeInfo" type="com.mftcc.interior.employee.bean.EmployeeInfo" />	
+
+	<resultMap id="employeeInfo_resultMap" class="employeeInfo">
+		<result column="employee_id" property="EmployeeId" jdbcType="VARCHAR" />
+		<result column="employee_name" property="EmployeeName" jdbcType="VARCHAR" />
+		<result column="employee_phone" property="EmployeePhone" jdbcType="VARCHAR" />
+		<result column="employee_email" property="EmployeeEmail" jdbcType="VARCHAR" />
+		<result column="employee_department" property="EmployeeDepartment" jdbcType="VARCHAR" />
+		<result column="employee_departmentid" property="EmployeeDepartmentId" jdbcType="VARCHAR" />
+		<result column="employee_marks" property="EmployeeMarks" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectEmployeeInfoCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM employee_info
+		 WHERE CONCAT(employee_name) LIKE CONCAT('%',#searchFiled#,'%')
+	 </select>
+		
+	<select id="selectEmployeeInfoPage" parameterClass="com.mftcc.method.bean.Ipage" resultMap="employeeInfo_resultMap">
+		SELECT employee_id,employee_name ,employee_phone,employee_email,employee_department,
+		employee_departmentid,employee_marks FROM employee_info 
+		 WHERE CONCAT(employee_name) LIKE CONCAT('%',#searchFiled#,'%')
+		ORDER BY employee_id DESC
+		LIMIT #searchStart#,#pageNumber# 
+	</select>
+			
+	<!--新增员工 -->
+	<insert id="insertEmployeeInfo" parameterClass="employeeInfo">
+	 insert into  employee_info(
+		 employee_name ,employee_phone,employee_email,employee_department, employee_departmentid,employee_marks
+		)values
+		(
+		#EmployeeName#,
+		#EmployeePhone#,
+		#EmployeeEmail#,
+		#EmployeeDepartment#,
+		#EmployeeDepartmentId#,
+		#EmployeeMarks#
+		)
+	</insert>
+
+	 <!--  查询员工通过ID -->
+	<select id="selectEmployeeInfoById"  resultMap="employeeInfo_resultMap" parameterClass="java.lang.String" >
+		SELECT employee_id,employee_name ,employee_phone,employee_email,employee_department,
+		employee_departmentid,employee_marks FROM employee_info 
+		WHERE   employee_id =#EmployeeId#
+	</select>	
+	
+		<!--新增员工 -->
+	<update id="updateEmployeeInfo" parameterClass="employeeInfo">
+	 UPDATE employee_info SET 
+		 employee_name = #EmployeeName# ,
+		  employee_department = #EmployeeDepartment# , 
+		 employee_departmentid = #EmployeeDepartmentId# ,
+		  employee_marks=  #EmployeeMarks# ,
+		 employee_phone = #EmployeePhone# ,
+		 employee_email = #EmployeeEmail#  
+		WHERE   employee_id =#EmployeeId#
+	</update>	
+	
+	<delete id="deleteEmployeeInfo" >
+	DELETE FROM employee_info  WHERE employee_id = #EmployeeId#
+	</delete>
+	
+			
+ </sqlMap>

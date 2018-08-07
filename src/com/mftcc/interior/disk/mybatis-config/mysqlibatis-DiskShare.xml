@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap>
+	<typeAlias alias="DiskShare" type="com.mftcc.interior.disk.bean.DiskShare" />
+	<resultMap id="share_resultMapPluse" class="DiskShare">
+		<result column="share_id" property="shareId" jdbcType="VARCHAR" />
+		<result column="share_url" property="shareUrl" jdbcType="VARCHAR" />
+		<result column="share_is_del" property="shareIsDel" jdbcType="VARCHAR" />
+		<result column="share_time" property="shareStTime" jdbcType="VARCHAR" />
+		<result column="share_end_time" property="shareEnTime" jdbcType="VARCHAR" />
+		<result column="share_file_id" property="fileId" jdbcType="INT" />
+	    <result column="share_status" property="shareStatus" jdbcType="VARCHAR" />
+	    <result column="share_user" property="user_id" jdbcType="VARCHAR" />
+	    <result column="share_pwd" property="sharePwd" jdbcType="VARCHAR" />
+	    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+	    <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="share_resultMap" class="DiskShare">
+		<result column="share_id" property="shareId" jdbcType="VARCHAR" />
+		<result column="share_url" property="shareUrl" jdbcType="VARCHAR" />
+		<result column="share_is_del" property="shareIsDel" jdbcType="VARCHAR" />
+		<result column="share_time" property="shareStTime" jdbcType="VARCHAR" />
+		<result column="share_end_time" property="shareEnTime" jdbcType="VARCHAR" />
+		<result column="share_file_id" property="fileId" jdbcType="INT" />
+	    <result column="share_status" property="shareStatus" jdbcType="VARCHAR" />
+	    <result column="share_user" property="user_id" jdbcType="VARCHAR" />
+	    <result column="share_pwd" property="sharePwd" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+<!--表字段 -->
+	<sql id="share_column">
+		share_id,
+		share_url,
+		share_is_del,
+	    share_time,
+		share_end_time,
+		share_file_id,
+	    share_status,
+	    share_user,
+	    share_pwd
+	</sql> 
+
+
+<!-- 基本的增删该查  -->
+
+<!-- 插入 -->
+	<!-- keyProperty="id" useGeneratedKey="true" -->
+      <insert id="addDiskShare" parameterClass="DiskShare"  >
+		insert into ac_disk_share(
+		share_id,
+		share_url,
+		share_is_del,
+	    share_time,
+		share_end_time,
+		share_file_id,
+	    share_status,
+	    share_user,
+	    share_pwd
+		)
+		values
+		(
+		#shareId#,
+		#shareUrl#,
+		#shareIsDel#,
+	    #shareStTime#,
+		#shareEnTime#,
+		#fileId#,
+	    #shareStatus#,
+	    #user_id#,
+	    #sharePwd#)
+	</insert>
+<!-- 删除	-->
+	<delete id="deleteShareById" parameterClass="java.lang.String">
+		DELETE FROM ac_disk_share
+		where share_id= #shareId#
+	</delete>
+		
+<!--查询-->
+     <select id="getShareById" resultMap="share_resultMap" parameterClass="DiskShare">
+		SELECT * FROM ac_disk_share
+         where share_id= #shareId#
+     </select>
+     
+     <select id="getShareByUser" resultMap="share_resultMap" parameterClass="DiskShare">
+		SELECT * FROM ac_disk_share
+         where share_user= #user_id#
+     </select>
+     
+     <select id="getShareByStatus" resultMap="share_resultMap" parameterClass="DiskShare">
+		SELECT * FROM ac_disk_share
+         where share_status= #shareStatus#
+     </select>
+     
+     <select id="getShareByUserPage" parameterClass="com.mftcc.method.bean.Ipage" resultMap="share_resultMapPluse">
+		SELECT 
+		share_id,
+		share_url,
+		share_is_del,
+	    share_time,
+		share_end_time,
+		share_file_id,
+	    share_status,
+	    share_user,
+	    share_pwd,
+	    file_name,
+	    file_type
+		FROM ac_disk_share,ac_disk_file
+		where share_user=#parm0# and share_file_id=file_id
+ 			<isNotNull prepend="and" property="searchFiled">
+					CONCAT(share_url,share_time,share_status) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		
+ 		
+		LIMIT #searchStart#,#pageNumber# 
+	</select>
+	
+	<select id="getShareByUserCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_disk_share
+		 where share_user=#parm0#
+ 			<isNotNull prepend="and" property="searchFiled">
+					CONCAT(share_url,share_time,share_status) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		
+      
+	</select>
+
+<!--更新  -->	
+	<update id="updateShareSatus" parameterClass="DiskShare">
+		update ac_disk_share set
+			share_status=#shareStatus#,
+		where share_id= #shareId#
+	</update>
+	<update id="updateSharePwd" parameterClass="DiskShare">
+		update ac_disk_share set
+			share_pwd=#sharePwd#,
+		where share_id= #shareId#
+	</update>
+	<update id="updateShareById" parameterClass="DiskShare">
+		update ac_disk_share 
+			<dynamic prepend="set"> 			
+			<isNotNull prepend="," property="user_id">
+				share_user = #user_id#
+			</isNotNull>
+			<isNotNull prepend="," property="shareEnTime">
+				share_end_time = #shareEnTime#
+			</isNotNull>
+			<isNotNull prepend="," property="shareIsDel">
+				share_is_del = #shareIsDel#
+			</isNotNull>
+			<isNotNull prepend="," property="shareUrl">
+				share_url = #shareUrl#
+			</isNotNull>
+			<isNotNull prepend="," property="shareStatus">
+				share_status = #shareStatus#
+			</isNotNull>
+			<isNotNull prepend="," property="sharePwd">
+				share_pwd = #sharePwd#
+			</isNotNull>
+			</dynamic>
+		where share_id= #shareId#
+	</update>
+	
+	
+<!--  -->
+	
+</sqlMap>

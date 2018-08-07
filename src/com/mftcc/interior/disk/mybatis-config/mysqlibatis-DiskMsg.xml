@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap>
+	<typeAlias alias="DiskMsg" type="com.mftcc.interior.disk.bean.DiskMsg" />
+	<resultMap id="msg_resultMap" class="DiskMsg">
+		<result column="msg_id" property="id" jdbcType="INT" />
+		<result column="user_id" property="user_id" jdbcType="VARCHAR" />
+		<result column="msg_email" property="email" jdbcType="VARCHAR" />
+		<result column="msg_username" property="username" jdbcType="VARCHAR" />
+		<result column="msg_title" property="title" jdbcType="VARCHAR" />
+		<result column="msg_content" property="content" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+<!--表字段 -->
+	<sql id="msg_column">
+		msg_id,
+		user_id,
+		msg_email,
+		msg_username,
+		msg_title,
+		msg_content
+	</sql> 
+	
+<!--查询条件 -->
+	<sql id="msg_where">
+		<dynamic prepend="where">
+	       <isNotNull prepend="and" property="id">
+				msg_id = #id#
+			</isNotNull>
+	       <isNotNull prepend="and" property="user_id">
+				user_id = #user_id#
+			</isNotNull>
+		    <isNotNull prepend="and" property="email">
+				msg_email = #email#
+			</isNotNull>			
+			<isNotNull prepend="and" property="username">
+				msg_username = #username#
+			</isNotNull>
+			<isNotNull prepend="and" property="title">
+				msg_title = #title#
+			</isNotNull>
+			<isNotNull prepend="and" property="content">
+				msg_content = #content#
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+<!-- 基本的增删该查  -->
+
+<!-- 插入 -->
+	<!-- keyProperty="id" useGeneratedKey="true" -->
+      <insert id="insertMsg" parameterClass="DiskMsg"  >
+		insert into ac_disk_info(
+		msg_id,
+		user_id,
+		msg_email,
+		msg_username,
+		msg_title,
+		msg_content
+		)
+		values
+		(
+		#id#,
+		#user_id#,
+		#email#,
+		#username#,
+		#title#,
+		#content#)
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			select @@IDENTITY as id
+		</selectKey>
+
+	</insert>
+<!-- 删除	-->
+	<delete id="deleteMsg">
+		DELETE FROM ac_disk_Msg
+		where msg_id= #id#
+	</delete>
+		
+<!--查询-->
+       <select id="selectMsg" resultMap="msg_resultMap" parameterClass="DiskMsg">
+		SELECT 
+		<include refid="msg_column" />
+		<![CDATA[
+			 FROM ac_disk_msg
+		]]>
+		<include refid="msg_where" />
+	</select>
+
+<!--更新  -->	
+	<update id="updateMsg" parameterClass="DiskMsg">
+		update ac_disk_info set
+			user_id=#user_id#,
+			msg_email=#email#,
+			msg_username=#username#,
+			msg_title=#title#
+		where msg_id = #id#
+	</update>
+	
+<!--  -->
+	
+</sqlMap>
+
+	
+  		
+  		
+  		
+  		

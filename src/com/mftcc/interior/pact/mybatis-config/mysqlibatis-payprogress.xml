@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="payProgress"	type="com.mftcc.interior.pact.bean.PayProgressInfo" />
+	<resultMap id="pactPayprogress_resultMap" class="payProgress">
+		<result column="PACT_ID" property="pactId" jdbcType="VARCHAR" />
+		<result column="PAYYET" property="payyet" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME1" property="customerName"	jdbcType="VARCHAR" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+		<result column="MARKET_MONEY" property="marketMoney" jdbcType="VARCHAR" />
+		<result column="PROCEED_MONEY" property="proceedMoney" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_MONEY" property="customerMoney" jdbcType="VARCHAR" />
+		<result column="MARKET_DATE" property="marketDate" jdbcType="VARCHAR" />
+		<result column="MARKETER_ID1" property="marketerId" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="FINANCIALTYPE" property="financialtype"	jdbcType="VARCHAR" />
+		<result column="RECEIPT_PATH" property="receiptPath" jdbcType="VARCHAR" />
+		<result column="FINANCIAL_MONEY" property="financialMoney"	jdbcType="VARCHAR" />
+		<result column="FINANCIAL_RESULT" property="financialResult"	jdbcType="VARCHAR" />
+		<result column="FINANCIAL_DATE" property="financialDate"	jdbcType="VARCHAR" />
+		<result column="FINCALPERSION" property="fincalpersion"	jdbcType="VARCHAR" />
+		<result column="INVOICE" property="invoice" jdbcType="VARCHAR" />
+		<result column="INVOICE_ALL" property="invoiceAll" jdbcType="VARCHAR" />
+		<result column="INVOICE_MONEY" property="invoiceMoney"	jdbcType="VARCHAR" />
+		<result column="INVOICE_ID" property="invoiceId" jdbcType="VARCHAR" />
+		<result column="REMIT_DATE" property="remitDate" jdbcType="VARCHAR" />
+		<result column="REMIT_PERSION" property="remitPersion"	jdbcType="VARCHAR" />
+		<result column="REMIT_BANK" property="remitBank" jdbcType="VARCHAR" />
+		<result column="PAY_PERCENT_NOW" property="payPercentNow"	jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--表字段 -->
+	<sql id="pactPayprogress_column">
+		PACT_ID,
+		PAYYET,
+		CUSTOMER_NAME,
+		PRODUCT_NAME,
+		MARKET_MONEY,
+		PROCEED_MONEY,
+		CUSTOMER_MONEY,
+		MARKET_DATE,
+		MARKETER_ID,
+		DESCRIPTION,
+		FINANCIALTYPE,
+		RECEIPT_PATH,
+		FINANCIAL_MONEY,
+		FINANCIAL_RESULT,
+		FINANCIAL_DATE,
+		FINCALPERSION,
+		INVOICE,
+		INVOICE_ALL,
+		INVOICE_MONEY,
+		INVOICE_ID,
+		REMIT_DATE,
+		REMIT_PERSION,
+		REMIT_BANK,
+		PAY_PERCENT_NOW
+	</sql>
+
+	<!--查询条件 -->
+	<sql id="pactPayprogress_where">
+		<dynamic prepend="where">
+			<isNotNull prepend="and" property="pactId">
+				PACT_ID = #pactId#
+			</isNotNull>
+			<isNotNull prepend="and" property="payyet">
+				PAYYET = #payyet#
+			</isNotNull>
+			<isNotNull prepend="and" property="customerName">
+				CUSTOMER_NAME = #customerName#
+			</isNotNull>
+			<isNotNull prepend="and" property="productName">
+				PRODUCT_NAME = #productName#
+			</isNotNull>
+			<isNotNull prepend="and" property="marketMoney">
+				MARKET_MONEY = #marketMoney#
+			</isNotNull>
+			<isNotNull prepend="and" property="proceedMoney">
+				PROCEED_MONEY = #proceedMoney#
+			</isNotNull>
+			<isNotNull prepend="and" property="customerMoney">
+				CUSTOMER_MONEY = #customerMoney#
+			</isNotNull>
+			<isNotNull prepend="and" property="marketDate">
+				MARKET_DATE = #marketDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="marketerId">
+				MARKETER_ID = #marketerId#
+			</isNotNull>
+			<isNotNull prepend="and" property="description">
+				DESCRIPTION = #description#
+			</isNotNull>
+			<isNotNull prepend="and" property="financialtype">
+				FINANCIALTYPE = #financialtype#
+			</isNotNull>
+			<isNotNull prepend="and" property="receiptPath">
+				RECEIPT_PATH = #receiptPath#
+			</isNotNull>
+			<isNotNull prepend="and" property="financialMoney">
+				FINANCIAL_MONEY = #financialMoney#
+			</isNotNull>
+			<isNotNull prepend="and" property="financialResult">
+				FINANCIAL_RESULT = #financialResult#
+			</isNotNull>
+			<isNotNull prepend="and" property="financialDate">
+				FINANCIAL_DATE = #financialDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="fincalpersion">
+				FINCALPERSION = #fincalpersion#
+			</isNotNull>
+			<isNotNull prepend="and" property="invoice">
+				INVOICE = #invoice#
+			</isNotNull>
+			<isNotNull prepend="and" property="invoiceAll">
+				INVOICE_ALL = #invoiceAll#
+			</isNotNull>
+			<isNotNull prepend="and" property="invoiceMoney">
+				INVOICE_MONEY = #invoiceMoney#
+			</isNotNull>
+			<isNotNull prepend="and" property="invoiceId">
+				INVOICE_ID = #invoiceId#
+			</isNotNull>
+			<isNotNull prepend="and" property="remitDate">
+				REMIT_DATE = #remitDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="remitPersion">
+				REMIT_PERSION = #remitPersion#
+			</isNotNull>
+			<isNotNull prepend="and" property="remitBank">
+				REMIT_BANK = #remitBank#
+			</isNotNull>
+		</dynamic>
+	</sql>
+
+	<!--新增 -->
+	<insert id="insertPactPayprogress" parameterClass="payProgress">
+		insert into ac_pact_payprogress(
+		<include refid="pactPayprogress_column" />
+		)values
+		(
+		#pactId#,
+		#payyet#,
+		#customerName#,
+		#productName#,
+		#marketMoney#,
+		#proceedMoney#,
+		#customerMoney#,
+		#marketDate#,
+		#marketerId#,
+		#description#,
+		#financialtype#,
+		#receiptPath#,
+		#financialMoney#,
+		#financialResult#,
+		#financialDate#,
+		#fincalpersion#,
+		#invoice#,
+		#invoiceAll#,
+		#invoiceMoney#,
+		#invoiceId#,
+		#remitDate#,
+		#remitPersion#,
+		#remitBank#,
+		#payPercentNow#
+		)
+	</insert>
+
+
+	<!--更新 -->
+	<update id="updatePactPayprogress" parameterClass="payProgress">
+		update ac_pact_payprogress
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="customerName">
+				CUSTOMER_NAME = #customerName#
+			</isNotNull>
+			<isNotNull prepend="," property="productName">
+				PRODUCT_NAME = #productName#
+			</isNotNull>
+			<isNotNull prepend="," property="marketMoney">
+				MARKET_MONEY = #marketMoney#
+			</isNotNull>
+			<isNotNull prepend="," property="proceedMoney">
+				PROCEED_MONEY = #proceedMoney#
+			</isNotNull>
+			<isNotNull prepend="," property="customerMoney">
+				CUSTOMER_MONEY = #customerMoney#
+			</isNotNull>
+			<isNotNull prepend="," property="marketDate">
+				MARKET_DATE = #marketDate#
+			</isNotNull>
+			<isNotNull prepend="," property="marketerId">
+				MARKETER_ID = #marketerId#
+			</isNotNull>
+			<isNotNull prepend="," property="description">
+				DESCRIPTION = #description#
+			</isNotNull>
+			<isNotNull prepend="," property="financialtype">
+				FINANCIALTYPE = #financialtype#
+			</isNotNull>
+			<isNotNull prepend="," property="receiptPath">
+				RECEIPT_PATH = #receiptPath#
+			</isNotNull>
+			<isNotNull prepend="," property="financialMoney">
+				FINANCIAL_MONEY = #financialMoney#
+			</isNotNull>
+			<isNotNull prepend="," property="financialResult">
+				FINANCIAL_RESULT = #financialResult#
+			</isNotNull>
+			<isNotNull prepend="," property="financialDate">
+				FINANCIAL_DATE = #financialDate#
+			</isNotNull>
+			<isNotNull prepend="," property="fincalpersion">
+				FINCALPERSION = #fincalpersion#
+			</isNotNull>
+			<isNotNull prepend="," property="invoice">
+				INVOICE = #invoice#
+			</isNotNull>
+			<isNotNull prepend="," property="invoiceAll">
+				INVOICE_ALL = #invoiceAll#
+			</isNotNull>
+			<isNotNull prepend="," property="invoiceMoney">
+				INVOICE_MONEY = #invoiceMoney#
+			</isNotNull>
+			<isNotNull prepend="," property="invoiceId">
+				INVOICE_ID = #invoiceId#
+			</isNotNull>
+			<isNotNull prepend="," property="remitDate">
+				REMIT_DATE = #remitDate#
+			</isNotNull>
+			<isNotNull prepend="," property="remitPersion">
+				REMIT_PERSION = #remitPersion#
+			</isNotNull>
+			<isNotNull prepend="," property="remitBank">
+				REMIT_BANK = #remitBank#
+			</isNotNull>
+			<isNotEmpty prepend="," property="payPercentNow">
+				PAY_PERCENT_NOW = #payPercentNow#
+			</isNotEmpty>
+		</dynamic>
+		where PACT_ID = #pactId# and PAYYET = #payyet#
+	</update>
+
+	<!--查询 -->
+	<select id="selectPactPayprogress" resultMap="pactPayprogress_resultMap"
+		parameterClass="payProgress">
+		SELECT ac_pact_payprogress.*,ac_pact_payprogress.CUSTOMER_NAME AS
+		CUSTOMER_NAME1,ac_pact_payprogress.MARKETER_ID AS MARKETER_ID1
+	<![CDATA[
+	 FROM ac_pact_payprogress
+]]>
+		<include refid="pactPayprogress_where" />
+		ORDER BY FINANCIAL_RESULT DESC
+	</select>
+
+
+	<!--获得一页的款项信息 -->
+	<select id="selectPayProgressPage" resultMap="pactPayprogress_resultMap"
+		parameterClass="com.mftcc.interior.pact.bean.Ipage">
+		SELECT ac_pact_payprogress.*,ac_pact_customer_info.CUSTOMER_NAME AS
+		CUSTOMER_NAME1,users.NAME AS MARKETER_ID1
+		FROM ac_pact_payprogress
+		LEFT
+		JOIN ac_pact_info ON ac_pact_info.PACT_ID = ac_pact_payprogress.PACT_ID
+		LEFT
+		JOIN ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID =
+		ac_pact_customer_info.CUSTOMER_ID
+		LEFT JOIN users ON
+		ac_pact_payprogress.MARKETER_ID = users.USER_NO
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="and" property="searchFiled">
+				CONCAT(ac_pact_customer_info.CUSTOMER_NAME,users.NAME,ac_pact_payprogress.PRODUCT_NAME)
+				LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curUserNo">
+				ac_pact_payprogress.MARKETER_ID = #curUserNo#
+			</isNotEmpty>
+			<!--如果softType这个字段不为空，表示查询未确认的记录 -->
+			<isNotEmpty prepend="and" property="softType">
+				ac_pact_payprogress.FINANCIAL_DATE IS NULL
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY ac_pact_payprogress.FINANCIAL_DATE IS NOT
+		NULL,ac_pact_payprogress.FINANCIAL_DATE DESC
+		LIMIT #searchStart#,#pageNumber#
+	</select>
+
+	<!-- 查询所有款项信息总和 -->
+	<select id="selectPayProgressCount" parameterClass="com.mftcc.interior.pact.bean.Ipage"
+		resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_pact_payprogress
+		LEFT JOIN ac_pact_info ON
+		ac_pact_info.PACT_ID = ac_pact_payprogress.PACT_ID
+		LEFT JOIN
+		ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID =
+		ac_pact_customer_info.CUSTOMER_ID
+		LEFT JOIN users ON
+		ac_pact_payprogress.MARKETER_ID = users.USER_NO
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="and" property="searchFiled">
+				CONCAT(ac_pact_customer_info.CUSTOMER_NAME,users.NAME,ac_pact_payprogress.PRODUCT_NAME)
+				LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curUserNo">
+				ac_pact_payprogress.MARKETER_ID = #curUserNo#
+			</isNotEmpty>
+			<!--如果softType这个字段不为空，表示查询未确认的记录 -->
+			<isNotEmpty prepend="and" property="softType">
+				ac_pact_payprogress.FINANCIAL_DATE IS NULL
+			</isNotEmpty>
+		</dynamic>
+	</select>
+</sqlMap>

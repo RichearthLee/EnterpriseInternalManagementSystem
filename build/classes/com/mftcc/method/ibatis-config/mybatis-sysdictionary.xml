@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap  >
+	<typeAlias alias="SysDictionary" type="com.mftcc.method.bean.SysDictionary" />	
+
+	<resultMap id="dictionary_ResultMap" class="SysDictionary">
+		 <result column="dic_key"  property="dicKey"  jdbcType="VARCHAR" />
+		<result column="dic_value" property="dicValue" jdbcType="VARCHAR" />
+		<result column="dic_type" property="dicType" jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+ 	<!--查询条件 -->
+	<sql id="dictionary_where">
+		<dynamic prepend="where">
+			<isNotNull prepend="and" property="dicKey">
+				dic_key = #dicKey#
+			</isNotNull>
+			<isNotNull prepend="and" property="dicValue">
+				dic_value = #dicValue#
+			</isNotNull>
+			<isNotNull prepend="and" property="dicType">
+				dic_type = #dicType#
+			</isNotNull>
+		</dynamic>
+	</sql>
+ 		<!--查询 -->
+	<select id="selectAllSysDictionary" resultMap="dictionary_ResultMap" parameterClass="SysDictionary">
+		SELECT 	dic_key , dic_value , dic_type
+			 FROM ac_sys_dictionary
+		<include refid="dictionary_where" />
+	</select>
+	
+ </sqlMap>

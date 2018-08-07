@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	
+	<typeAlias alias="kpiBean" type="com.mftcc.interior.oa.leave.bean.KpiBean" />
+	<typeAlias alias="kpiFlagBean" type="com.mftcc.interior.oa.leave.bean.KpiFlagBean" />
+	<typeAlias alias="pactKpiBean" type="com.mftcc.interior.oa.leave.bean.PactKpiBean" />
+	<resultMap id="kpi_resultMap" class="kpiBean">
+		<result column="empNo" property="empNo" jdbcType="VARCHAR"/>
+		<result column="empName" property="empName" jdbcType="VARCHAR"/>
+		<result column="br_no" property="brNo" jdbcType="VARCHAR"/>
+		<result column="br_name" property="brName" jdbcType="VARCHAR" />
+		<result column="sumdays" property="leaveMarks" jdbcType="VARCHAR" />
+		<result column="lateMarks" property="lateMarks" jdbcType="VARCHAR" />
+		<result column="yearMonthDate" property="yearMonth" jdbcType="VARCHAR" />
+		<result column="eleaveMarks" property="eleaveMarks" jdbcType="VARCHAR" />
+		<result column="sExtraWork" property="extraWorkMarks" jdbcType="VARCHAR" />
+		<result column="neglect" property="neglectMarks" jdbcType="VARCHAR" />
+		<result column="goOut" property="goOutMarks" jdbcType="VARCHAR" />
+		<result column="workTimeTotal" property="workTimeMarks" jdbcType="VARCHAR" />
+		<result column="leaveMarksFlag" property="leaveMarksFlag" jdbcType="VARCHAR" />
+		<result column="lateMarksFlag" property="lateMarksFlag" jdbcType="VARCHAR" />
+		<result column="eleaveMarksFlag" property="eleaveMarksFlag" jdbcType="VARCHAR"/>	
+		<result column="extraWorkMarksFlag" property="extraWorkMarksFlag" jdbcType="VARCHAR"/>	
+		<result column="neglectMarksFlag" property="neglectMarksFlag" jdbcType="VARCHAR" />
+		<result column="goOutMarksFlag" property="goOutMarksFlag" jdbcType="VARCHAR" />
+		<result column="workTimeMarksFlag" property="workTimeMarksFlag" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="kpiFlag_resultMap" class="kpiFlagBean">
+		
+		<result column="leaveMarksFlag" property="leaveMarksFlag" jdbcType="VARCHAR" />
+		<result column="lateMarksFlag" property="lateMarksFlag" jdbcType="VARCHAR" />
+		<result column="eleaveMarksFlag" property="eleaveMarksFlag" jdbcType="VARCHAR"/>	
+		<result column="extraWorkMarksFlag" property="extraWorkMarksFlag" jdbcType="VARCHAR"/>	
+		<result column="neglectMarksFlag" property="neglectMarksFlag" jdbcType="VARCHAR" />
+		<result column="goOutMarksFlag" property="goOutMarksFlag" jdbcType="VARCHAR" />
+		<result column="workTimeMarksFlag" property="workTimeMarksFlag" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="pactKpi_resultMap" class="pactKpiBean">
+		
+		<result column="MARKET_NO" property="opNo" jdbcType="VARCHAR" />
+		<result column="MARKET_NAME" property="opName" jdbcType="VARCHAR" />
+		<result column="MARKET_DATE" property="yearMonth" jdbcType="VARCHAR"/>	
+		<result column="CUSTOMER_NAME" property="pactCompany" jdbcType="VARCHAR"/>	
+		<result column="INVOICE_MONEY" property="bonusFact" jdbcType="VARCHAR" />
+		<result column="PACT_FEE" property="bonus" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	<!--fenye -->
+	<select id="selectkpi" parameterClass="com.mftcc.method.bean.Ipage" resultMap="kpi_resultMap" >
+
+		SELECT
+     	*	FROM
+	(
+		SELECT
+			*
+		FROM
+			ac_attendence aa
+		LEFT JOIN ac_leave_sum als ON als.op_no = aa.empNo
+		AND als.yearmonth = aa.yearMonthDate
+		
+	) a,
+	ac_oa_kpi_flag
+
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(empNo,empName) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull> 
+		
+	    LIMIT #searchStart#,#pageNumber#
+	</select>	
+	
+	<!-- 查询page -->
+    <select id="selectKpiListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+    SELECT   COUNT(*) FROM (
+		SELECT
+     	*	FROM
+	(
+		SELECT
+			*
+		FROM
+			ac_attendence aa
+		LEFT JOIN ac_leave_sum als ON als.op_no = aa.empNo
+		AND als.yearmonth = aa.yearMonthDate
+		
+	) a,
+	ac_oa_kpi_flag
+
+		)b
+ 		<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(empNo,empName) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull> 
+ 		
+
+    </select>
+	
+	<select id="flag" resultMap="kpiFlag_resultMap" parameterClass="kpiFlagBean">
+		select *from ac_oa_kpi_flag
+		
+	</select>
+	
+	<!--更新 -->
+	<update id="update_flag" parameterClass="kpiFlagBean" >
+		update ac_oa_kpi_flag
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="leaveMarksFlag">
+				leaveMarksFlag = #leaveMarksFlag#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="lateMarksFlag">
+				lateMarksFlag = #lateMarksFlag#
+			</isNotNull>
+			<isNotNull prepend="," property="eleaveMarksFlag">
+				eleaveMarksFlag = #eleaveMarksFlag#
+			</isNotNull>
+			<isNotNull prepend="," property="extraWorkMarksFlag">
+				extraWorkMarksFlag = #extraWorkMarksFlag#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="neglectMarksFlag">
+				neglectMarksFlag = #neglectMarksFlag#
+			</isNotNull>
+			<isNotNull prepend="," property="goOutMarksFlag">
+				goOutMarksFlag = #goOutMarksFlag#
+			</isNotNull>
+			<isNotNull prepend="," property="workTimeMarksFlag">
+				workTimeMarksFlag = #workTimeMarksFlag#
+			</isNotNull>
+			
+		</dynamic>
+		
+	</update>
+	
+	<!--fenye -->
+	<select id="selectpactkpi" parameterClass="com.mftcc.method.bean.Ipage" resultMap="pactKpi_resultMap" >
+
+		SELECT
+     	*	FROM
+	ac_pact_invoice
+
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(MARKET_NAME,MARKET_DATE) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull> 
+		
+	    LIMIT #searchStart#,#pageNumber#
+	</select>	
+	
+	<!-- 查询page -->
+    <select id="selectPactKpiListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+    SELECT   COUNT(*) FROM (
+		SELECT
+     	*	FROM
+	ac_pact_invoice
+
+		)b
+ 		<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(MARKET_NAME,MARKET_DATE) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull> 
+ 		
+
+    </select>
+	
+</sqlMap>

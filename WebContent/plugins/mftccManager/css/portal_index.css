@@ -1,0 +1,194 @@
+*{
+   padding:0px;
+   margin-top:0px;
+   margin-bottom:0px;
+}
+
+
+html, body {
+	height: 100%;
+}
+
+body{
+   background:#ffffff;
+   cursor: default;
+    font-size:12px;
+}
+
+.background {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+	.background { width: 0; }
+}
+
+.screen ul {
+   padding: 60px 50px 0 50px;
+   height:100%;
+}
+.screen ul li{
+   width:120px;   
+}
+
+#container{
+}
+.slidebox {
+	position: relative;
+	z-index: 2;	
+}
+.block{
+   float:left;
+   display:block;
+   height:132px;
+   padding-top:20px;
+   text-align:center;
+  
+   
+   
+}
+/**ͳ�ƴ�������**/
+.count{
+   position:absolute;
+  /** right:-20px;**/
+   top:-10px;
+   left:50px;
+   *left:40px;
+   width:100%;
+   height:18px;
+   white-space:nowrap;
+   
+  
+}
+.count_left{
+   width:18px;
+   height:33px;
+   background: url(../shareimg/waittodo/count01.png) no-repeat;
+}
+.count_center{
+	width:auto;
+   	height:33px;
+	line-height:33px;
+	color:#fff;
+	font-size:15px;
+	text-align:center;
+   	background: url(../shareimg/waittodo/count02.png) repeat-x center;
+	
+}
+.count_right{
+	width:18px;
+   	height:33px;
+   	background: url(../shareimg/waittodo/count03.png) no-repeat;
+}
+/**����ı�����**/
+.icon-text{
+   cursor: pointer;
+	margin-top: 3px;
+	
+	height: 20px;
+	display: inline-block;
+	text-decoration:none;
+	/* background: url('images/icon_text_l.png') 0px 0px no-repeat; */
+}
+
+.icon-text span{
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	color: #000;
+	font-family:SimSun;
+	padding: 3px 8px 3px 8px;
+	white-space:nowrap;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width:100px;
+	font-size:13px;
+}
+
+li.block .img{
+	height: 86px;
+	width: 86px;
+	line-height:86px;
+	cursor:pointer;
+	position:relative;
+	margin:0px auto;
+   text-align:center; 
+}
+
+li.block .img p{
+   position:static;   
+   +position:absolute;   
+   top:50%       
+}
+
+li.block .img p img {
+	max-height:86px;
+	max-width:86px;
+   position:static;   
+   +position:relative;   
+   top:-50%;left:-50%;   
+   vertical-align:middle   
+ }   
+li.block .img p:after {   
+   content:".";font-size:1px;   
+   visibility:hidden   
+ }   
+
+
+#trash {
+	position: absolute;
+	left: 50%;
+	width: 128px;
+	height: 128px;
+	bottom: 10px;
+	display: none;
+	background: url(images/slidebox/trash.png) no-repeat center top transparent;
+}
+
+#trash.hover { 
+	background: url(images/slidebox/trash_hover.png) no-repeat center top transparent;
+}
+
+
+#control { 
+   height: 26px; 
+   position: absolute; 
+   top: 10px; 
+   left: 0; 
+   z-index: 3; 
+   width: 100%; 
+}
+
+
+
+.control-r { 
+   padding-right: 15px; 
+   height: 26px; 
+  
+   background: url('../shareimg/waittodo/slide_bar_r.png') no-repeat right top transparent; 
+} 
+
+.control-l { 
+   width: 15px; 
+   height: 26px; 
+   background: url('../shareimg/waittodo/slide_bar_l.png') no-repeat left top transparent; 
+} 
+
+#control a { 
+   top: 0px; 
+   float: left; 
+   width: 26px; 
+   height: 26px; 
+   background: url('../shareimg/waittodo/btn.png') no-repeat center top transparent; 
+   display: block; 
+} 
+
+#control a.active { 
+   background: url('../shareimg/waittodo/btn_active.png') no-repeat center top transparent; 
+} 
+

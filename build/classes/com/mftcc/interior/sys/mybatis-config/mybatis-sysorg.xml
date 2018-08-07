@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="sysOrg" type="com.mftcc.interior.sys.bean.SysOrg" />	
+
+	<resultMap id="SysOrgResultMap" class="sysOrg">
+	    <result property="brNo" column="br_no" />
+	    <result property="brName" column="br_name" />
+	    <result property="brLev" column="br_lev" />
+	    <result property="upOne" column="up_one" />
+	    <result property="upTwo" column="up_two" />
+	    
+	     <result property="brTel" column="br_tel" />
+	    <result property="brType" column="br_type" />
+	    <result property="brAddr" column="br_addr" />
+	    <result property="brPost" column="br_post" />
+	    <result property="brSts" column="br_sts" />
+	    
+	    <result property="brArea" column="br_area" />
+	    <result property="brAliasNo" column="br_alias_no" />
+	    <result property="brNoFull" column="br_no_full" />  
+    
+	</resultMap>
+	<!-- 可重用的SQL代码段  -->
+	<sql id="SysOrg_Column_List">
+         br_no,
+         br_name,
+         BR_LEV,
+         UP_ONE,
+         UP_TWO,
+         
+         BR_TEL,
+         BR_TYPE,
+         BR_ADDR,
+         BR_POST,
+         
+         BR_STS,
+         BR_AREA,
+         br_alias_no,
+         BR_NO_FULL
+         
+    </sql>
+    
+    
+	<!-- 表查询   查询 部门所有  -->
+    <select id="getSysOrgAll"  resultMap="SysOrgResultMap" >
+        SELECT <include refid="SysOrg_Column_List"/>
+        <![CDATA[
+             FROM ac_SYS_ORG
+        ]]>
+     </select>
+		
+		<!--  表查询  最大部门编号的值	 -->
+   	 <select id="getMaxBrNo"  resultClass="java.lang.String" >
+        SELECT   max(br_no) 
+             FROM ac_SYS_ORG
+     </select>
+     
+	
+ 		<!--  表插入	 -->
+       <insert id="insertSysOrg" parameterClass="sysOrg">
+         insert into  ac_sys_org(
+         br_no,
+         br_name,
+         BR_LEV,
+         UP_ONE,
+         UP_TWO,
+         
+         BR_TEL,
+         BR_TYPE,
+         BR_ADDR,
+         BR_POST,
+         BR_STS,
+         
+         BR_AREA,
+         br_alias_no,
+         BR_NO_FULL
+         
+         )VALUES(
+         #brNo#,
+         #brName#,
+         #brLev#,
+         #upOne#,
+         #upTwo#,
+         
+         #brTel#,
+         #brType#,
+         #brAddr#,
+         #brPost#,
+         #brSts#,
+         
+         #brArea#,
+         #brAliasNo#,
+         #brNoFull#
+         )
+    </insert>  
+    
+    	<!-- 表查询ByUpOne 查孩子  查询部门下的所有字表 -->
+    <select id="getChild"  resultMap="SysOrgResultMap" >
+        SELECT <include refid="SysOrg_Column_List"/>
+        <![CDATA[
+             FROM ac_SYS_ORG
+         WHERE 
+             UP_ONE = #{upOne}   AND br_sts=#{brSts}
+        ]]>
+     </select>
+    <!--  表查询getTreeTop  查树根	 -->
+    <select id="getTreeTop"  resultMap="SysOrgResultMap" parameterClass="java.lang.String"  >
+        SELECT  <include refid="SysOrg_Column_List"/>  
+        <![CDATA[
+             FROM ac_SYS_ORG
+         WHERE 
+             UP_ONE= #upOne#  
+        ]]>
+     </select>
+      <!-- 表查询getParent  查询上一级机构  -->
+    <select id="getParent"  resultMap="SysOrgResultMap"  >
+        
+        SELECT <include refid="SysOrg_Column_List"/>
+    	 <![CDATA[
+         FROM ac_sys_org 
+         WHERE br_no =
+		(SELECT up_one FROM ac_sys_org
+		WHERE br_no = #{brNo} AND br_sts=#{brSts} )
+			 ]]>
+     </select>
+	 
+ 
+</sqlMap>

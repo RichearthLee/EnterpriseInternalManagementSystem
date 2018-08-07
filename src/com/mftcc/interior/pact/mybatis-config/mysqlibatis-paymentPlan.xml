@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+<typeAlias alias="pactPaymentPlan" type="com.mftcc.interior.pact.bean.PaymentPlan"/>
+<resultMap id="pactPaymentPlan_resultMap" class="pactPaymentPlan" >
+  <result column="PACT_ID" property="pactId" jdbcType="VARCHAR"/>
+  <result column="PAYMENT_COUNT" property="paymentCount" jdbcType="VARCHAR"/>
+  <result column="PAYMENT_PERCENT" property="paymentPercent" jdbcType="VARCHAR"/>
+  <result column="PAYMENT_START_DATE" property="paymentStartDate" jdbcType="VARCHAR"/>
+  <result column="PAYMENT_DAY" property="paymentDay" jdbcType="VARCHAR"/>
+  <result column="PAYMENT_STATE" property="paymentState" jdbcType="VARCHAR"/>
+</resultMap>
+
+<!--表字段-->
+<sql id="pactPaymentPlan_column">
+  PACT_ID,
+  PAYMENT_COUNT,
+  PAYMENT_PERCENT,
+  PAYMENT_START_DATE,
+  PAYMENT_DAY,
+  PAYMENT_STATE
+</sql>
+
+<!--查询条件-->
+<sql id="pactPaymentPlan_where">
+<dynamic prepend="where" >
+ <isNotNull prepend="and" property="pactId" >
+ PACT_ID = #pactId#
+ </isNotNull>
+ <isNotNull prepend="and" property="paymentCount" >
+ PAYMENT_COUNT = #paymentCount#
+ </isNotNull>
+ <isNotNull prepend="and" property="paymentPercent" >
+ PAYMENT_PERCENT = #paymentPercent#
+ </isNotNull>
+ <isNotNull prepend="and" property="paymentStartDate" >
+ PAYMENT_START_DATE = #paymentStartDate#
+ </isNotNull>
+ <isNotNull prepend="and" property="paymentDay" >
+ PAYMENT_DAY = #paymentDay#
+ </isNotNull>
+  <isNotNull prepend="and" property="paymentState" >
+ PAYMENT_STATE = #paymentState#
+ </isNotNull>
+ </dynamic>
+</sql>
+
+<!--新增-->
+<insert id="insertPactPaymentPlan"  parameterClass="pactPaymentPlan">
+ insert into ac_pact_payment_plan(
+<include refid="pactPaymentPlan_column"/>
+)values
+ (
+#pactId#,
+#paymentCount#,
+#paymentPercent#,
+#paymentStartDate#,
+#paymentDay#,
+#paymentState#
+)
+</insert>
+
+<!--删除-->
+<delete id="deletePactPaymentPlan">
+ DELETE FROM ac_pact_payment_plan
+<include refid="pactPaymentPlan_where" />
+</delete>
+
+<!--更新，在实施确认后，将收款开始时间为‘2’的改成实施确认的时间-->
+<update id="updatePactPaymentPlan" parameterClass="pactPaymentPlan">
+  update ac_pact_payment_plan
+ <dynamic prepend="set" >
+<isNotNull prepend="," property="paymentPercent" >
+  PAYMENT_PERCENT = #paymentPercent#
+</isNotNull>
+<isNotNull prepend="," property="paymentStartDate" >
+  PAYMENT_START_DATE = #paymentStartDate#
+</isNotNull>
+<isNotNull prepend="," property="paymentDay" >
+  PAYMENT_DAY = #paymentDay#
+</isNotNull>
+<isNotNull prepend="," property="paymentState" >
+  PAYMENT_STATE = #paymentState#
+</isNotNull>
+</dynamic>
+where PACT_ID = #pactId# and PAYMENT_COUNT = #paymentCount#
+</update>
+
+<!--查询-->
+<select id="selectPactPaymentPlan" resultMap="pactPaymentPlan_resultMap"  parameterClass="pactPaymentPlan">
+SELECT
+<include refid="pactPaymentPlan_column"/>
+	<![CDATA[
+	 FROM ac_pact_payment_plan
+]]>
+<include refid="pactPaymentPlan_where"/>
+ </select>
+
+</sqlMap>

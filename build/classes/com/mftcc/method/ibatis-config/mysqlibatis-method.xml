@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 
+	<!--表字段 -->
+	
+	<!--  表查询  最大 编号的值	 -->
+   	 <select id="getTableMaxNo"  resultClass="java.lang.String"  parameterClass="java.util.Map"  >
+        SELECT max($columnName$)  
+          FROM $tableName$
+     </select>
+     
+     <!--  表查询  通过id查询name	 -->
+   	 <select id="getTableNameByNo"  resultClass="java.lang.String"  parameterClass="java.util.Map"  >
+        SELECT  $columnName$   
+          FROM $tableName$
+          where  $columnNo$ =  $columnNoValue$
+     </select>
+</sqlMap>

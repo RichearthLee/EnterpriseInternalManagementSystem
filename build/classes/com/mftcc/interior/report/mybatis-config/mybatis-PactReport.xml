@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+						"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap> 
+	<typeAlias alias="pactInfo"  type="com.mftcc.interior.pact.bean.PactInfo"/>  
+	<typeAlias alias="pactReportBean" type="com.mftcc.interior.report.bean.PactReportBean"/>
+	<typeAlias alias="pactRuarterReportBean" type="com.mftcc.interior.report.bean.PactRuarterReportBean"/>
+	<typeAlias alias="pactOrgRuarterReportBean" type="com.mftcc.interior.report.bean.PactOrgRuarterReportBean"/>
+<!-- 	<resultMap id="pactInfo_resultMap1" class="pactInfo">
+		<result column="PACT_ID" property="pactId" jdbcType="VARCHAR" />
+		<result column="PACT_NAME" property="pactName" jdbcType="VARCHAR"/>
+		<result column="PACT_FEE" property="pactFee" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_MONEY" property="customerMoney" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME1" property="customerName" jdbcType="VARCHAR" />
+		<result column="PAYCOUNT_YET" property="paycountYet" jdbcType="VARCHAR" />
+		<result column="PAYFEE_YET" property="payfeeYet" jdbcType="VARCHAR" />
+		<result column="PAYPERCENT" property="paypercent" jdbcType="VARCHAR" />
+		<result column="PACT_STATE" property="pactState" jdbcType="VARCHAR" />
+		<result column="PACT_START_DATE" property="pactStartDate" jdbcType="VARCHAR" />
+		<result column="PACT_OVER_DATE" property="pactOverDate" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="FEE_DATE" property="feeDate" jdbcType="VARCHAR" />
+		<result column="MARKETER_ID" property="marketerId" jdbcType="VARCHAR" />
+		<result column="BEFORESALE" property="beforesale" jdbcType="VARCHAR" />
+		<result column="AFTERSALE" property="aftersale" jdbcType="VARCHAR" />
+		<result column="FOCUS_PERSION" property="focusPersion" jdbcType="VARCHAR" />
+		<result column="EXECUTE_PERSION" property="executePersion" jdbcType="VARCHAR" />
+		<result column="EXECUTE_START_DATE" property="executeStartDate" jdbcType="VARCHAR" />
+		<result column="EXECUTE_OVER_DATE" property="executeOverDate" jdbcType="VARCHAR" />
+		<result column="EXECUTE_RESULT" property="executeResult" jdbcType="VARCHAR" />
+		<result column="EXECUTE_FILEPATH" property="executeFilepath" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_RESULT" property="customerResult" jdbcType="VARCHAR" />
+		<result column="INVOICE_ALL" property="invoiceAll" jdbcType="VARCHAR" />
+		<result column="INVOICE_MONEY_YET" property="invoiceMoneyYet" jdbcType="VARCHAR" />
+		<result column="DATE_80PERCENT" property="date80Percent" jdbcType="VARCHAR" />
+		<result column="DATE_100PERCENT" property="date100Percent" jdbcType="VARCHAR" />
+		<result column="REGISTER_DATE" property="registerDate" jdbcType="VARCHAR" />
+		<result column="FLAG" property="flag" jdbcType="VARCHAR"/>
+	</resultMap> -->
+	<resultMap id="pactReportBean_resultMap" class="pactReportBean" >
+		<result column="pact_id" property="pactId" jdbcType="varchar"/>
+		<result column="pact_name" property="pactName" jdbcType="varchar"/>
+		<result column="pact_fee" property="pactFee" jdbcType="varchar"/>
+		<result column="customer_money" property="customerMoney" jdbcType="varchar"/>
+		<result column="product_name" property="productName" jdbcType="varchar"/>
+		<result column="customer_id" property="customerId" jdbcType="varchar"/>
+		<result column="customer_name" property="customerName" jdbcType="varchar"/>
+		<!-- <result column="customer_linkman" property="customerLinkman" jdbcType="varchar"/>
+		<result column="customer_linkman_title" property="customerLinkmanTitle" jdbcType="varchar"/>
+		<result column="customer_phone" property="customerPhone" jdbcType="varchar"/>
+		<result column="customer_email" property="customerEmail" jdbcType="varchar"/>
+		<result column="customer_province" property="customerProvince" jdbcType="varchar"/>
+		<result column="customer_city" property="customerCity" jdbcType="varchar"/>
+		<result column="customer_country" property="customerCountry" jdbcType="varchar"/>
+		<result column="customer_location" property="customerLocation" jdbcType="varchar"/> -->
+		<result column="paycount_yet" property="paycountYet" jdbcType="varchar"/>
+		<result column="payfee_yet" property="payfeeYet" jdbcType="varchar"/>
+		<result column="pay_percent" property="payPercent" jdbcType="varchar"/>
+		<result column="pact_state" property="pactState" jdbcType="varchar"/>
+		<result column="pact_start_date" property="pactStartDate" jdbcType="varchar"/>
+		<result column="pact_over_date" property="pactOverDate" jdbcType="varchar"/>
+		<result column="description" property="description" jdbcType="varchar"/>
+		<result column="fee_date" property="feeDate" jdbcType="varchar"/>
+		<result column="marketer_no" property="marketerNo" jdbcType="varchar"/>
+		<result column="marketer_name" property="marketerName" jdbcType="varchar"/>
+		<!-- <result column="br_no1" property="brNo1" jdbcType="varchar"/>
+		<result column="br_name1" property="brName1" jdbcType="varchar"/>
+		<result column="br_no2" property="brNo2" jdbcType="varchar"/>
+		<result column="br_name2" property="brName2" jdbcType="varchar"/>
+		<result column="br_province" property="brProvince" jdbcType="varchar"/>
+		<result column="br_city" property="brCity" jdbcType="varchar"/>
+		<result column="br_country" property="brCountry" jdbcType="varchar"/>
+		<result column="br_addr" property="brAddr" jdbcType="varchar"/>
+		<result column="br_post" property="brPost" jdbcType="varchar"/> -->
+		<result column="beforesale" property="beforeSale" jdbcType="varchar"/>
+		<result column="aftersale" property="afterSale" jdbcType="varchar"/>
+		<result column="focus_person" property="focusPerson" jdbcType="varchar"/>
+		<result column="execute_person" property="executePerson" jdbcType="varchar"/>
+		<result column="execute_start_date" property="executeStartDate" jdbcType="varchar"/>
+		<result column="execute_over_date" property="executeOverDate" jdbcType="varchar"/>
+		<result column="execute_result" property="executeResult" jdbcType="varchar"/>
+		<result column="execute_filepath" property="executeFilepath" jdbcType="varchar"/>
+		<result column="customer_result" property="customerResult" jdbcType="varchar"/>
+		<result column="invoice_all" property="invoiceAll" jdbcType="varchar"/>
+		<result column="invoice_money_yet" property="invoiceMoneyYet" jdbcType="varchar"/>
+		<result column="date_80percent" property="datePercent80" jdbcType="varchar"/>
+		<result column="date_100percent" property="datePercent100" jdbcType="varchar"/>
+		<result column="register_date" property="registerDate" jdbcType="varchar"/>
+	</resultMap>
+	<resultMap id="pactRuarterReportBean_resultMap" class="pactRuarterReportBean" >
+		<result property="pactId" column="pact_id"/>
+		<result property="pactFee" column="pact_fee"/>
+		<result property="customerMoney" column="customer_money"/>
+		<result property="payfeeYet" column="payfee_yet"/>
+		<result property="pactStartDate" column="pact_start_date"/>
+		<result property="marketerId" column="marketer_id"/>
+		<result property="marketerName" column="marketer_name"/>
+		<result property="brNo" column="br_no"/>
+		<result property="brName" column="br_name"/>
+	</resultMap>
+	<!-- ac_pact_info表字段 -->
+	<sql id="pactInfo_column1">
+		pact_id,
+		pact_name,
+		pact_fee,
+		customer_money,
+		product_name,
+		customer_id,
+		customer_name,
+		paycount_yet,
+		payfee_yet,
+		paypercent,
+		pact_state,
+		pact_start_date,
+		pact_over_date,
+		description,
+		fee_date,
+		marketer_id,
+		beforesale,
+		aftersale,
+		focus_persion,
+		execute_persion,
+		execute_start_date,
+		execute_over_date,
+		execute_result,
+		execute_filepath,
+		customer_result,
+		invoice_all,
+		invoice_money_yet,
+		date_80percent,
+		date_100percent,
+		register_date,
+		flag
+		
+	</sql>
+	<!-- ac_pact_report表字段 -->
+	<sql id="pact_report1">
+		pact_id,
+		pact_name,
+		pact_fee,
+		customer_money,
+		product_name,
+		customer_id,
+		customer_name,
+		<!-- 
+		customer_linkman
+		customer_linkman_title
+		customer_phone
+		customer_email
+		customer_province
+		customer_city
+		customer_country
+		customer_location -->
+		paycount_yet,
+		payfee_yet,
+		pay_percent,
+		pact_state,
+		pact_start_date,
+		pact_over_date,
+		description,
+		fee_date,
+		marketer_no,
+		marketer_name,
+		<!-- br_no1
+		br_name1
+		br_no2
+		br_name2
+		br_province
+		br_city
+		br_country
+		br_addr
+		br_post -->
+		beforesale,
+		aftersale,
+		focus_person,
+		execute_person,
+		execute_start_date,
+		execute_over_date,
+		execute_result,
+		execute_filepath,
+		customer_result,
+		invoice_all,
+		invoice_money_yet,
+		date_80percent,
+		date_100percent,
+		register_date
+	</sql>
+	<!-- 提取合同基本数据 -->
+	<!-- <select id="selectAllPactInfo" resultMap="pactInfo_resultMap1">
+		select 
+			<include refid="pactInfo_column1"/> 
+		from 
+			ac_pact_info 
+		where 
+			flag='0';
+	</select> -->
+	<!-- 提取合同和关联数据 -->
+	<select id="selectPactCusUser" resultMap="pactReportBean_resultMap">
+		SELECT
+			a.*, asu.op_name as marketer_name
+		FROM
+		(
+			SELECT
+				pact_id,
+				pact_name,
+				pact_fee,
+				customer_money,
+				product_name,
+				apin.customer_id,
+				apin.customer_name,
+				paycount_yet,
+				payfee_yet,
+				paypercent AS pay_percent,
+				pact_state,
+				pact_start_date,
+				pact_over_date,
+				description,
+				fee_date,
+				api.marketer_id AS marketer_no,
+				beforesale,
+				aftersale,
+				focus_persion AS focus_person,
+				execute_persion AS execute_person,
+				execute_start_date,
+				execute_over_date,
+				execute_result,
+				execute_filepath,
+				customer_result,
+				invoice_all,
+				invoice_money_yet,
+				date_80percent,
+				date_100percent,                               
+				register_date
+			FROM
+				ac_pact_info api
+			LEFT JOIN ac_pact_customer_info apin ON api.customer_id = apin.customer_id
+		) a
+		LEFT JOIN ac_sys_user asu ON a.marketer_no = asu.op_no 
+	</select>
+	<!-- 修改合同flag值（初始值为0），数据提取过后,flag值设为1 -->
+	<update id="updatePactInfoFlag">
+		update 
+			ac_pact_info 
+		set 
+			flag='1' 
+		where 
+			flag='0'
+	</update>
+	<!-- 插入数据到ac_pact_report表 -->
+	<insert id="insertPactCusUser" parameterClass="pactReportBean">
+		insert into 
+			ac_pact_report(<include refid="pact_report1"/>)
+		values(
+			#pactId#,
+	 		#pactName#,
+			#pactFee#,
+			#customerMoney#,
+			#productName#,
+			#customerId#,
+			#customerName#,
+			<!--
+			customerLinkman
+			customerLinkmanTitle
+			customerPhone
+			customerEmail
+			customerProvince
+			customerCity
+			customerCountry
+			customerLocation -->
+			#paycountYet#,
+			#payfeeYet#,
+			#payPercent#,
+			#pactState#,
+			#pactStartDate#,
+			#pactOverDate#,
+			#description#,
+			#feeDate#,
+			#marketerNo#,
+			#marketerName#,
+			<!-- brNo1
+			brName1
+			brNo2
+			brName2
+			brProvince
+			brCity
+			brCountry
+			brAddr
+			brPost -->
+			#beforeSale#,
+			#afterSale#,
+			#focusPerson#,
+			#executePerson#,
+			#executeStartDate#,
+			#executeOverDate#,
+			#executeResult#,
+			#executeFilepath#,
+			#customerResult#,
+			#invoiceAll#,
+			#invoiceMoneyYet#,
+			#datePercent80#,
+			#datePercent100#,
+			#registerDate#
+		)
+	</insert>
+	<!-- 通过no查询员工姓名 -->
+	<select id="selectEmployeeByNo" parameterClass="java.lang.String" resultClass="java.lang.String">
+		select op_name from ac_sys_user where op_no=#no#
+	</select>
+	<select id="selectPactDate" resultMap="pactRuarterReportBean_resultMap">
+		SELECT
+			pact_id,
+			pact_fee,
+			customer_money,
+			payfee_yet,
+			pact_start_date,
+			marketer_no AS marketer_id,
+			acr.marketer_name,
+			acr.br_no,
+			acr.br_name
+		FROM
+			ac_pact_report apr
+		LEFT JOIN ac_cus_report acr ON apr.customer_id = acr.customer_id
+	</select>
+	<insert id="insertPactDate" parameterClass="pactRuarterReportBean">
+		insert into ac_pact_quarter_report(pact_id,pact_fee,customer_money,payfee_yet,marketer_id,marketer_name,br_no,br_name,year,month) 
+		values(
+		 #pactId#,
+		 #pactFee#,
+		 #customerMoney#,
+		 #payfeeYet#,
+		 #marketerId#,
+		 #marketerName#,
+		 #brNo#,
+		 #brName#,
+		 #year#,
+		 #month#
+		)
+	</insert>
+	<delete id="deletePactRuarter">
+		DELETE FROM ac_pact_quarter_report
+	</delete>
+	<select id="selectPactUserRuarter" resultClass="pactRuarterReportBean">
+		SELECT
+			year,
+			marketer_id as marketerId,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 1
+				AND 3 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) one,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 1
+				AND 3 THEN
+					1
+				ELSE
+					0
+				END
+			) one_count,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 4
+				AND 6 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) two,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 4
+				AND 6 THEN
+					1
+				ELSE
+					0
+				END
+			) two_count,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 7
+				AND 9 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) three,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 7
+				AND 9 THEN
+					1
+				ELSE
+					0
+				END
+			) three_count,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 10
+				AND 12 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) four,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 10
+				AND 12 THEN
+					1
+				ELSE
+					0
+				END
+			) four_count
+		FROM
+			ac_pact_quarter_report
+		GROUP BY
+			YEAR,
+			marketerId
+	</select>
+	<select id="selectPactUserRuarterSum" resultClass="pactRuarterReportBean">
+		SELECT
+			year,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 1
+				AND 3 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) one_sum,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 1
+				AND 3 THEN
+					1
+				ELSE
+					0
+				END
+			) one_count_sum,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 4
+				AND 6 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) two_sum,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 4
+				AND 6 THEN
+					1
+				ELSE
+					0
+				END
+			) two_count_sum,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 7
+				AND 9 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) three_sum,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 7
+				AND 9 THEN
+					1
+				ELSE
+					0
+				END
+			) three_count_sum,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 10
+				AND 12 THEN
+					pact_fee
+				ELSE
+					0
+				END
+			) four_sum,
+			sum(
+				CASE
+				WHEN MONTH BETWEEN 10
+				AND 12 THEN
+					1
+				ELSE
+					0
+				END
+			) four_count_sum
+		FROM
+			ac_pact_quarter_report
+		GROUP BY
+			year 
+	</select>
+	<insert id="insertPactUserRuarterSum">
+		insert into ac_pact_user_quarter_report(
+		year,marketer_id,
+		one,one_percent,one_count,one_count_percent,
+		two,two_percent,two_count,two_count_percent,
+		three,three_percent,three_count,three_count_percent,
+		four,four_percent,four_count,four_count_percent)
+		values(
+		#year#,#marketerId#,
+		#one#,#one_percent#,#one_count#,#one_count_percent#,
+		#two#,#two_percent#,#two_count#,#two_count_percent#,
+		#three#,#three_percent#,#three_count#,#three_count_percent#,
+		#four#,#four_percent#,#four_count#,#four_count_percent#
+		)
+	</insert>
+	<!-- 按月抽取合同部门签约 -->
+	<select id="selectPactOrgRuarter" resultClass="pactOrgRuarterReportBean">
+		SELECT
+			CONCAT(YEAR, '-', MONTH) AS yearmonth,
+			year,
+			month,
+			br_no AS brNo,
+			br_name AS brName,
+			SUM(pact_fee) AS fee,
+			SUM(1) AS count
+		FROM
+			ac_pact_quarter_report
+		GROUP BY
+			yearmonth,
+			br_no
+		ORDER BY
+			yearmonth ASC
+	</select>
+</sqlMap>

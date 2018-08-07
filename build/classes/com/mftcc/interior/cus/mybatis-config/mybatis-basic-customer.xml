@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="customer" type="com.mftcc.interior.cus.bean.customer" />	
+
+	<resultMap id="customer_resultMap" class="customer">
+		<result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+		<result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+		<result column="customer_type" property="customerType" jdbcType="VARCHAR" />
+		<!-- <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+		<result column="linkman_title" property="linkmanTitle" jdbcType="VARCHAR" />
+		<result column="mobilephone" property="phone" jdbcType="VARCHAR" />
+		<result column="tetephone" property="telphone" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" /> -->
+		<result column="marketer_id" property="marketerId" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="area" property="country" jdbcType="VARCHAR" />
+		<result column="entry_date" property="entryDate" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 根据用户id查询客户 -->
+	<select id="selectByMarketer" resultMap="customer_resultMap" parameterClass="string">
+		select * from ac_pact_customer_info where marketer_id=#marketerId#
+	</select>
+	<!-- 根据客户id查询客户 -->
+	<select id="selectCusById" resultMap="customer_resultMap" parameterClass="String">
+		select * from ac_pact_customer_info where customer_id=#customerId#
+	</select>
+	<!-- 插入客户 -->
+	<insert id="insertCustomer" parameterClass="customer">
+		insert into ac_pact_customer_info(customer_id,customer_name,customer_type,marketer_id,province,city,area,entry_date,location)
+		values (#customerId#,#customerName#,#customerType#,#marketerId#,#province#,#city#,#country#,#entryDate#,#location#)
+	</insert>
+	<!-- 根据客户名搜索 -->
+	<!-- 这里还需要用户id  TODO -->
+	<select id="searchByName" resultMap="customer_resultMap" parameterClass="customer">
+		select * from ac_pact_customer_info where customer_name like concat('%',#customerName#,'%') and marketer_id=#marketerId#
+	</select>
+</sqlMap>

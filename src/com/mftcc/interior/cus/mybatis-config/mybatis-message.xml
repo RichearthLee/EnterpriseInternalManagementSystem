@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="message" type="com.mftcc.interior.cus.bean.message"/>
+	<resultMap id="message_resultMap" class="message">
+		<result column="cus_id" property="cusId" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<!-- 这里的userId2实际上存的是对应的followId -->
+		<result column="user_id2" property="userId2" jdbcType="VARCHAR" />
+		<result column="receive" property="receive" jdbcType="VARCHAR" />
+		<result column="date" property="date" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="looked" property="looked" jdbcType="VARCHAR" />
+		<result column="new_msg" property="newMsg" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 通过接收人查询所有的消息 -->
+	<select id="selectByRec" resultMap="message_resultMap" parameterClass="String">
+		select * from ac_cus_message where receive like concat('%',#user#,'%') order by date desc
+	</select>
+	<!-- 插入消息 -->
+	<insert id="cusInsertMsg" parameterClass="message">
+		insert into ac_cus_message(cus_id,user_id,user_id2,receive,date,content,looked,new_msg,type) 
+		values(#cusId#,#userId#,#userId2#,#receive#,#date#,#content#,#looked#,#newMsg#,#type#)
+	</insert>
+	<!-- 对已经推送过的消息进行更新 -->
+	<update id="updateNewMsg" parameterClass="String">
+		UPDATE ac_cus_message set new_msg='false' where receive like concat('%',#userId#,'%') and new_msg='true';
+	</update>
+	<!-- 根据followId和消息类型查询接收人-->
+	<select id="selectMsgByIT" parameterClass="message" resultMap="message_resultMap">
+		select * from ac_cus_message where user_id2=#userId2# and type="跟踪消息"
+	</select>
+</sqlMap>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	
+	<typeAlias alias="lowValueBean" type="com.mftcc.interior.oa.leave.bean.LowValueBean" />
+	<typeAlias alias="approveLowValueBean" type="com.mftcc.interior.oa.leave.bean.ApproveLowValueBean" />
+	<typeAlias alias="lowValueAmountBean" type="com.mftcc.interior.oa.leave.bean.LowValueAmountBean" />
+	
+	<resultMap id="lowValue_resultMap" class="lowValueBean">
+		<result column="lowValueNo" property="lowValueNo" jdbcType="VARCHAR"/>
+		<result column="opNo" property="opNo" jdbcType="VARCHAR"/>
+		<result column="opName" property="opName" jdbcType="VARCHAR"/>
+		<result column="brName" property="brName" jdbcType="VARCHAR" />
+		<result column="brNo" property="brNo" jdbcType="VARCHAR" />
+		<result column="lowValueType" property="lowValueType" jdbcType="VARCHAR" />
+		<result column="lowValueApplyTime" property="lowValueApplyTime" jdbcType="VARCHAR" />
+		<result column="lowValueApplyState" property="lowValueApplyState" jdbcType="VARCHAR" />
+		<result column="lowValueApplyDetail" property="lowValueApplyDetail" jdbcType="VARCHAR" />
+		<result column="lowValueApplyAmount" property="lowValueApplyAmount" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="approveLowValue_resultMap" class="approveLowValueBean">
+		
+		<result column="approveLowValueNo" property="approveLowValueNo" jdbcType="VARCHAR" />
+		<result column="lowValueApplyNo" property="lowValueApplyNo" jdbcType="VARCHAR" />
+		<result column="approveTime" property="approveTime" jdbcType="VARCHAR"/>	
+		<result column="approveDetail" property="approveDetail" jdbcType="VARCHAR"/>	
+		<result column="lowValueApplyState" property="approveState" jdbcType="VARCHAR" />
+		<result column="brNo" property="brNo" jdbcType="VARCHAR" />
+		<result column="brName" property="brName" jdbcType="VARCHAR" />
+		<result column="opNo" property="opNo" jdbcType="VARCHAR" />
+		<result column="opName" property="opName" jdbcType="VARCHAR" />
+		<result column="lowValueType" property="applyType" jdbcType="VARCHAR" />
+		<result column="lowValueApplyAmount" property="lowValueApplyAmount" jdbcType="VARCHAR" />
+		<result column="lowValueApplyTime" property="applyTime" jdbcType="VARCHAR" />
+		<result column="lowValueApplyDetail" property="applyDetail" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="lowValueAmount_resultMap" class="lowValueAmountBean">
+		
+		<result column="lowValueNo" property="lowValueNo" jdbcType="VARCHAR" />
+		<result column="lowValueName" property="lowValueName" jdbcType="VARCHAR" />
+		<result column="lowValueDate" property="lowValueDate" jdbcType="VARCHAR"/>	
+		<result column="lowValueAmount" property="lowValueAmount" jdbcType="VARCHAR"/>	
+		
+	</resultMap>
+	
+	
+	
+	<insert id="insert_lowvalue" parameterClass="lowValueBean" >
+		 
+ 		insert into ac_oa_lowvalue(
+		lowValueNo,
+		opNo,
+		opName,
+		brName,
+		brNo,
+		lowValueType,
+		lowValueApplyTime,
+		lowValueApplyState,
+		lowValueApplyDetail,
+		lowValueApplyAmount
+		)values
+		(
+		#lowValueNo#,
+		#opNo#,
+		#opName#,
+		#brName#,
+		#brNo#,
+		#lowValueType#,
+		#lowValueApplyTime#,
+		#lowValueApplyState#,
+		#lowValueApplyDetail#,
+		#lowValueApplyAmount#
+		)
+    
+	</insert>	
+	
+	<insert id="insert_approvelowvalue" parameterClass="approveLowValueBean" >
+		
+ 		insert into ac_oa_approvelowvalue(
+		approveLowValueNo,
+		lowValueApplyNo,
+		applyType
+		)values
+		(
+		#approveLowValueNo#,
+		#lowValueApplyNo#,
+		#applyType#
+
+		
+		)
+    
+	</insert>	
+	
+	
+	<!--查询 -->
+	<select id="selectLowValue" parameterClass="com.mftcc.method.bean.Ipage" resultMap="lowValue_resultMap" >
+
+		select * from ac_oa_lowvalue 
+		where opNo=#parm0# 
+		 
+ 		<isNotNull prepend="and" property="searchFiled">
+			 CONCAT(lowValueType,lowValueState) LIKE CONCAT('%',#searchFiled#,'%')
+		</isNotNull>
+		ORDER BY
+		ac_oa_lowvalue.lowValueApplyTime DESC
+	    LIMIT #searchStart#,#pageNumber#
+	    
+	</select>	
+	
+	<!-- 查询page -->
+ <select id="selectLowValueListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT  COUNT(*) FROM ac_oa_lowValue
+ 		where opNo=#parm0# 
+ 		<isNotNull prepend="and" property="searchFiled">
+			CONCAT(lowValueType,lowValueState) LIKE CONCAT('%',#searchFiled#,'%')
+		</isNotNull>
+ </select>
+	
+	
+	
+	
+	<!--删除 -->	
+	<delete id="delete_lowvalue" parameterClass="lowValueBean">
+		delete from ac_oa_lowvalue where lowValueNo=#lowValueNo#
+	</delete>
+	
+	<!--删除 -->	
+	<delete id="delete_approvelowvalue" parameterClass="lowValueBean">
+		delete from ac_oa_approvelowvalue where lowValueApplyNo=#lowValueNo#
+	</delete>
+	
+	
+	<!--按ID查找 -->
+	<select id="lowvalue_no" resultMap="lowValue_resultMap" parameterClass="lowValueBean">
+		select *from ac_oa_lowvalue
+		where lowValueNo=#lowValueNo#
+	</select>
+	
+	<!--更新 -->
+	<update id="update_lowvalue" parameterClass="lowValueBean" >
+		update ac_oa_lowvalue
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="lowValueType">
+				lowValueType = #lowValueType#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="lowValueApplyTime">
+				lowValueApplyTime = #lowValueApplyTime#
+			</isNotNull>
+			<isNotNull prepend="," property="lowValueApplyDetail">
+				lowValueApplyDetail = #lowValueApplyDetail#
+			</isNotNull>
+			<isNotNull prepend="," property="lowValueApplyAmount">
+				lowValueApplyAmount = #lowValueApplyAmount#
+			</isNotNull>
+			
+			
+			
+		</dynamic>
+		where lowValueNo=#lowValueNo#
+	</update>
+	
+	
+	<select id="selectApproveLowValue" parameterClass="com.mftcc.method.bean.Ipage" resultMap="approveLowValue_resultMap">
+		select 
+		approveLowValueNo,
+		lowValueApplyNo,
+		lowValueNo,
+		l.opName,
+		approveTime,
+		approveDetail,
+		l.opNo,
+		
+		l.brNo,
+		l.brName,
+		lowValueType,
+		lowValueApplyTime,
+		lowValueApplyState,
+		lowValueApplyDetail,
+		lowValueApplyAmount
+		
+		FROM ac_oa_approvelowvalue a,ac_oa_lowvalue l
+		WHERE a.lowValueApplyNo=l.lowValueNo
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(l.opName,lowValueType,LowValueApplyState) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+		
+		
+		
+	    LIMIT #searchStart#,#pageNumber#
+	    
+	</select>
+	
+	<select id="selectApproveLowValueListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT   COUNT(*) FROM 
+		(
+		select 
+		approveLowValueNo,
+		lowValueApplyNo,
+		lowValueNo,
+		l.opName,
+		approveTime,
+		approveDetail,
+		
+		l.opNo,
+		
+		l.brNo,
+		l.brName,
+		lowValueType,
+		lowValueApplyTime,
+		lowValueApplyState,
+		lowValueApplyDetail,
+		lowValueApplyAmount
+		
+		FROM ac_oa_approvelowvalue a,ac_oa_lowvalue l
+		WHERE a.lowValueApplyNo=l.lowValueNo
+		 
+		)a
+        
+
+ </select>
+	
+	<!--按ID查找 -->
+	<select id="approvelowvalue_no" resultMap="approveLowValue_resultMap" parameterClass="approveLowValueBean">
+		
+	select 
+		approveLowValueNo,
+		lowValueApplyNo,
+		lowValueNo,
+		l.opName,
+		approveTime,
+		approveDetail,
+		l.opNo,
+		
+		l.brNo,
+		l.brName,
+		lowValueType,
+		lowValueApplyTime,
+		lowValueApplyState,
+		lowValueApplyDetail,
+		lowValueApplyAmount
+		
+		FROM ac_oa_approvelowvalue a,ac_oa_lowvalue l
+		WHERE a.lowValueApplyNo=l.lowValueNo and approveLowValueNo=#approveLowValueNo#
+		
+	</select>
+	
+	<!--更新 -->
+	<update id="update_approvelowvalue" parameterClass="approveLowValueBean">
+		update ac_oa_lowvalue 
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="approveState">
+				lowValueApplyState = #approveState#
+			</isNotNull>
+				
+		</dynamic>
+		where lowValueNo= #lowValueApplyNo# 
+		
+	</update>
+	
+	<update id="update_approvelowvalue1" parameterClass="approveLowValueBean">
+		update ac_oa_approvelowvalue
+		<dynamic prepend="set">
+			
+			<isNotNull prepend="," property="opNo1">
+				opNo = #opNo1# 
+										
+				
+			</isNotNull>
+			<isNotNull prepend="," property="opName1">
+				opName = #opName1#
+			</isNotNull>
+			<isNotNull prepend="," property="approveDetail">
+				approveDetail = #approveDetail#
+			</isNotNull>	
+				</dynamic>
+		where approveLowValueNo= #approveLowValueNo# 
+		
+	</update>
+	
+	<!--查询 -->
+	<select id="selectLowValueAmount" parameterClass="com.mftcc.method.bean.Ipage" resultMap="lowValueAmount_resultMap" >
+
+		select * from ac_oa_lowvalueinfo
+		
+		 
+ 	
+	    LIMIT #searchStart#,#pageNumber#
+	    
+	</select>	
+	
+	<!-- 查询page -->
+ <select id="selectLowValueAmountListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT  COUNT(*) FROM ac_oa_lowvalueinfo
+ 		
+ </select>
+	
+	<!--按ID查找 -->
+	<select id="lowvalueamount_no" resultMap="lowValueAmount_resultMap" parameterClass="lowValueAmountBean">
+		select *from ac_oa_lowvalueinfo
+		where lowValueNo=#lowValueNo#
+	</select>
+	
+	<!--更新 -->
+	<update id="update_lowvalueamount" parameterClass="lowValueAmountBean" >
+		update ac_oa_lowvalueinfo
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="lowValueAmount">
+				lowValueAmount = #lowValueAmount#
+			</isNotNull>
+			<isNotNull prepend="," property="lowValueDate">
+				lowValueDate = #lowValueDate#
+			</isNotNull>
+			
+		</dynamic>
+		where lowValueNo=#lowValueNo#
+	</update>
+	
+	
+	
+</sqlMap>

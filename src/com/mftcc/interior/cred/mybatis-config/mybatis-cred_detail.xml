@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="credBean" type="com.mftcc.interior.cred.bean.CredBean" />
+	<resultMap id="cus_resultMap" class="credBean">
+		<result column="cusNo" property="cusNo" jdbcType="VARCHAR"/>
+		<result column="cusName" property="cusName" jdbcType="VARCHAR" />
+		<result column="cusPhone" property="cusPhone" jdbcType="VARCHAR" />
+		<result column="cusIdNumber" property="cusIdNumber" jdbcType="VARCHAR" />
+		<result column="cusSort" property="cusSort" jdbcType="VARCHAR" />
+		<result column="cusReport" property="cusReport" jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+
+	
+	
+	
+	
+	<!--添加 -->
+	 
+	<insert id="insert_cus" parameterClass="credBean" >
+		 
+ 		insert into ac_cred_cus(
+		cusNo,
+		cusName,
+		cusPhone,
+		cusIdNumber,
+		cusSort,
+		cusReport
+		)values
+		(
+		#cusNo#,
+		#cusName#,
+		#cusPhone#,
+		#cusIdNumber#,
+		#cusSort#,
+		#cusReport#
+		
+		)
+    
+	</insert>	
+	
+	
+	<!--查询 -->
+	<select id="selectCus" parameterClass="com.mftcc.method.bean.Ipage" resultMap="cus_resultMap" >
+
+		select * from ac_cred_cus 
+		<dynamic prepend="where">
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(cusNo,cusName,cusPhone,cusIdNumber,cusSort) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		</dynamic>
+		
+	    LIMIT #searchStart#,#pageNumber#
+	</select>	
+	
+	<!-- 查询page -->
+ <select id="selectCusListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT  COUNT(*) FROM ac_cred_cus
+ 		<dynamic prepend="where">
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(cusNo,cusName,cusPhone,cusIdNumber,cusSort) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		</dynamic>
+
+ </select>
+	
+	<!--删除 -->	
+	<delete id="delete_cus" parameterClass="credBean">
+		delete from ac_cred_cus where cusNo=#cusNo#
+	</delete>
+	<!--按ID查找 -->
+	<select id="cusNo" resultMap="cus_resultMap" parameterClass="credBean">
+		select *from ac_cred_cus 
+		where cusNo=#cusNo#
+	</select>
+	
+	<!--更新 -->
+	<update id="update_cus" parameterClass="credBean">
+		update ac_cred_cus
+		<dynamic prepend="set">
+			 
+			
+			<isNotNull prepend="," property="cusName">
+				cusName = #cusName#
+			</isNotNull>
+			<isNotNull prepend="," property="cusPhone">
+				cusPhone = #cusPhone#
+			</isNotNull>
+			<isNotNull prepend="," property="cusIdNumber">
+				cusIdNumber = #cusIdNumber#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="cusSort">
+				cusSort = #cusSort#
+			</isNotNull>
+			<isNotNull prepend="," property="cusReport">
+				cusReport = #cusReport#
+			</isNotNull>
+			
+		</dynamic>
+		where cusNo = #cusNo#
+	</update>
+
+</sqlMap>

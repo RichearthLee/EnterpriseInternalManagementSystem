@@ -1,0 +1,137 @@
+.info-content {
+	padding: 15px;
+}
+
+.info-block {
+	margin: 10px;
+}
+
+
+.bg-color1 {
+	background: #81B960;
+}
+
+.bg-color2 {
+	background: #5FC8DB;
+}
+
+.bg-color3 {
+	background: #FCB865;
+}
+
+.bg-color4 {
+	background: #8EAFE4;
+}
+
+.statistical-report .info-box.color1:hover {
+	border: 1px solid #81B960;
+	cursor: pointer;
+	background: #fff;
+}
+
+.statistical-report .info-box.color2:hover {
+	border: 1px solid #5FC8DB;
+	cursor: pointer;
+	background: #fff;
+}
+
+.statistical-report .info-box.color3:hover {
+	border: 1px solid #FCB865;
+	cursor: pointer;
+	background: #fff;
+}
+
+.statistical-report .info-box.color4:hover {
+	border: 1px solid #8EAFE4;
+	cursor: pointer;
+	background: #fff;
+}
+
+.analysis-report .info-box {
+	min-height: 150px;
+	border: none;
+	background: none;
+	width: 100%;
+	margin-bottom: 35px;
+}
+
+.analysis-report  .info-box-content {
+	padding: 5px 10px;
+	height: 150px;
+	margin-left: 50px;
+}
+
+.info-box-title {
+	text-align: center;
+	cursor: pointer;
+}
+
+.info-box-bacImag1 {
+	background: url("../images/shanxingtu.png");
+	background-size: 160px 147px;
+	background-repeat: no-repeat;
+}
+.info-box-bacImag2 {
+	background: url("../images/zhexiantu1.png");
+	background-size: 160px 147px;
+	background-repeat: no-repeat;
+}
+.info-box-bacImag3 {
+	background: url("../images/zhuzhuangtu1.png");
+	background-size: 160px 147px;
+	background-repeat: no-repeat;
+}
+
+.monitor-report .info-box-content {
+	padding: 5px 10px;
+	height: 255px;
+	margin-left: 0px;
+}
+
+.monitor-report .info-box {
+	min-height: 255px;
+	border: none;
+	background: none;
+	width: 100%;
+	margin-bottom: 35px;
+}
+
+.info-box-bacImag4 {
+	background: url("../images/yibiaopan1.png");
+	background-size: 370px 250px;
+	background-repeat: no-repeat;
+}
+.info-box-bacImag5 {
+	background: url("../images/yibiaopan2.png");
+	background-size: 370px 250px;
+	background-repeat: no-repeat;
+}
+
+@media (min-width: 992px){
+	.info-box-bacImag1 {
+		background: url("../images/shanxingtu.png");
+		background-size: contain;
+		
+		background-repeat: no-repeat;
+	}
+	.info-box-bacImag2 {
+		background: url("../images/zhexiantu1.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+	.info-box-bacImag3 {
+		background: url("../images/zhuzhuangtu1.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+	.info-box-bacImag4  {
+	   	background: url("../images/yibiaopan1.png");
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
+	.info-box-bacImag5 {
+		background: url("../images/yibiaopan2.png");
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
+}

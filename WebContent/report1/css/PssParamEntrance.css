@@ -1,0 +1,193 @@
+
+/* .box {
+	position: relative;
+	background: #F9F9F9;
+	width: 100%;
+	min-height: 100%;
+	padding:15px 30px 0px;
+} */
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.btn-app {
+	border-radius: 5px;
+	position: relative;
+	padding: 25px 5px;
+	margin: 50px 0 0 50px;
+	min-width: 190px;
+	height: 120px;
+	text-align: center;
+	color: #666;
+	border: 1px solid #ddd;
+	background-color: #fff;
+	font-size: 12px;
+	-webkit-box-shadow: -2px 4px 8px #ccc;
+	-moz-box-shadow: -2px 4px 8px #ccc;
+	box-shadow: -2px 4px 8px #ccc;
+}
+
+.btn-app:hover {
+	background: #f4f4f4;
+	color: #333;
+	border-color: #ccc;
+}
+
+
+/* .btn-app>.badge {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	font-size: 20px;
+	font-weight: 400;
+	border-radius: 20px;
+	padding: 3px;
+	min-width : 26px;
+}
+
+.badge i {
+	margin-right: 0px;
+}
+ */
+
+/* .btn-app .i {
+	margin-top: 10px;
+	font-size: 48px;
+	margin-right: 0px;
+}
+
+.btn-app div {
+	margin-top: 10px;
+}
+
+
+#kemu .i{
+	color: #EB7F7E;
+}
+
+#cwInitBal .i{
+	color: #43ADBD;
+}
+
+#proofWord .i{
+	color: #3DB599;
+}
+
+#gangwei .i{
+	color: #64A0EA;
+}
+
+#voucherPlate .i{
+	color: #64A0EA;
+}
+
+#voucherDozen .i{
+	color: #846EB0;
+}
+
+#sysParam .i{
+	color: #9E7EF0;
+}
+
+#voucherRemark .i{
+	color: #EC7EB8;
+}
+
+#fuzhuhesuan .i{
+	color: #EC9B80;
+}
+
+#CwCycleHst .i{
+	color: #E35554;
+}
+
+#reInit .i{
+	color: #846EB0;
+}
+
+#sysInit .i{
+	color: #846EB0;
+}
+
+#codeLenth .i{
+	color: #EFAD5E;
+}
+
+#cwVchRule .i{
+	color: #91B16C;
+}
+
+#cwAssetsClass .i{
+	color: #53B5C7;
+}
+#personManage .i{
+	color: #EC7EB8;
+}
+
+
+
+
+
+#notice span {
+	background-color: #EB7F7E;
+}
+
+#schedule span {
+	background-color: #43ADBD;
+}
+
+#trace span {
+	background-color: #3DB599;
+}
+
+#leave span {
+	background-color: #64A0EA;
+}
+
+#borrow span {
+	background-color: #9E7EF0;
+}
+
+#reimbursement span {
+	background-color: #EC7EB8;
+}
+
+#consumable span {
+	background-color: #EC9B80;
+}
+#consumableManage span {
+	background-color: #E35554;
+}
+
+#robot span {
+	background-color: #846EB0;
+}
+
+#wage span {
+	background-color: #EFAD5E;
+}
+
+#bbs span {
+	background-color: #91B16C;
+}
+
+#personnel span {
+	background-color: #53B5C7;
+} */

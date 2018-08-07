@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="SysRole" type="com.mftcc.interior.sys.bean.SysRole" />
+	<resultMap id="SysRole_resultMap" class="Sysrole">
+		<result column="role_no" property="roleNo" jdbcType="VARCHAR" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="role_type" property="roleType" jdbcType="VARCHAR" />
+		<result column="role_sts" property="roleSts" jdbcType="VARCHAR" />
+		<result column="role_lev" property="roleLev" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--表字段 -->
+	<sql id="sysrole_column">
+		role_no,
+		role_name,
+		role_lev,
+		role_type,
+		role_sts
+	</sql>
+
+	<!--查询条件 -->
+	<sql id="sysrole_where">
+		<dynamic prepend="where">
+			<isNotNull prepend="and" property="roleNo">
+				role_no = #roleNo#
+			</isNotNull>
+			<isNotNull prepend="and" property="roleName">
+				role_name = #roleName#
+			</isNotNull>
+			<isNotNull prepend="and" property="roleSts">
+				role_sts = #roleSts#
+			</isNotNull>
+			<isNotNull prepend="and" property="roleParent">
+				role_type = #roleType#
+			</isNotNull>
+		</dynamic>
+	</sql>
+	<!--查询 -->
+	<select id="selectSysRole" resultMap="SysRole_resultMap" parameterClass="SysRole">
+		SELECT
+		<include refid="sysrole_column" />
+		<![CDATA[
+			 FROM ac_sys_role
+		]]>
+		<include refid="sysrole_where" />
+	</select>
+	
+		<!--  表插入	 -->
+       <insert id="insertsysRole" parameterClass="sysRole">
+        insert into  ac_sys_role(
+         	role_no,
+			role_name,
+			role_lev,
+			role_type,
+			role_sts
+         )VALUES(
+	         #roleNo#,
+	         #roleName#,
+	         #roleLev#,
+	         #roleType#,
+	         #roleSts#
+         )
+    </insert>  
+    
+	
+	<select id="selectSysRoleCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_sys_role
+		  WHERE CONCAT(role_name) LIKE CONCAT('%',#parm1#,'%')
+	 </select>
+		
+	<select id="selectSysRolePage" parameterClass="com.mftcc.method.bean.Ipage" resultMap="SysRole_resultMap">
+		SELECT * FROM ac_sys_role 
+		 WHERE CONCAT(role_name) LIKE CONCAT('%',#parm1#,'%')
+		ORDER BY role_name DESC
+		LIMIT #searchStart#,#pageNumber# 
+	</select>
+	
+	
+</sqlMap>

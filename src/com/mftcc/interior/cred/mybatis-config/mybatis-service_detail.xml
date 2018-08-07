@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="serviceBean" type="com.mftcc.interior.cred.bean.ServiceBean" />
+	<resultMap id="service_resultMap" class="serviceBean">
+		<result column="serviceNo" property="serviceNo" jdbcType="VARCHAR"/>
+		<result column="serviceNumber" property="serviceNumber" jdbcType="VARCHAR"/>
+		<result column="serviceName" property="serviceName" jdbcType="VARCHAR" />
+		<result column="serviceProvider" property="serviceProvider" jdbcType="VARCHAR" />
+		<result column="serviceState" property="serviceState" jdbcType="VARCHAR" />
+		<result column="servicePrice" property="servicePrice" jdbcType="VARCHAR" />
+		<result column="serviceDate" property="serviceDate" jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+
+	
+	
+	
+	
+	<!--添加 -->
+	 
+	<insert id="insert_service" parameterClass="serviceBean" >
+		 
+ 		insert into ac_cred_servicelist(
+		serviceNo,
+		serviceNumber,
+		serviceName,
+		serviceProvider,
+		serviceState,
+		servicePrice,
+		serviceDate
+		)values
+		(
+		#serviceNo#,
+		#serviceNumber#,
+		#serviceName#,
+		#serviceProvider#,
+		#serviceState#,
+		#servicePrice#,
+		#serviceDate#
+		)
+    
+	</insert>	
+	
+	
+	<!--查询 -->
+	<select id="selectService" parameterClass="com.mftcc.method.bean.Ipage" resultMap="service_resultMap" >
+
+		select * from ac_cred_servicelist 
+		<dynamic prepend="where">
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(serviceNo,serviceNumber,serviceName,serviceProvider,serviceState,servicePrice,serviceDate) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		</dynamic>
+		
+	    LIMIT #searchStart#,#pageNumber#
+	</select>	
+	
+	<!-- 查询page -->
+ <select id="selectServiceListCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT  COUNT(*) FROM ac_cred_servicelist
+ 		<dynamic prepend="where">
+ 			<isNotNull prepend="and" property="searchFiled">
+					 CONCAT(serviceNo,serviceNumber,serviceName,serviceProvider,serviceState,servicePrice,serviceDate) LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+ 		</dynamic>
+
+ </select>
+	
+	<!--删除 -->	
+	<delete id="delete_service" parameterClass="serviceBean">
+		delete from ac_cred_servicelist where serviceNo=#serviceNo#
+	</delete>
+	<!--按ID查找 -->
+	<select id="serviceNo" resultMap="service_resultMap" parameterClass="serviceBean">
+		select *from ac_cred_servicelist 
+		where serviceNo=#serviceNo#
+	</select>
+	
+	<!--更新 -->
+	<update id="update_service" parameterClass="serviceBean">
+		update ac_cred_servicelist
+		<dynamic prepend="set">
+			 
+			<isNotNull prepend="," property="serviceNumber">
+				serviceNumber = #serviceNumber#
+			</isNotNull>
+			<isNotNull prepend="," property="serviceName">
+				serviceName = #serviceName#
+			</isNotNull>
+			<isNotNull prepend="," property="serviceProvider">
+				serviceProvider = #serviceProvider#
+			</isNotNull>
+			<isNotNull prepend="," property="serviceState">
+				serviceState = #serviceState#
+			</isNotNull>
+			
+			<isNotNull prepend="," property="servicePrice">
+				servicePrice = #servicePrice#
+			</isNotNull>
+			<isNotNull prepend="," property="serviceDate">
+				serviceDate = #serviceDate#
+			</isNotNull>
+			
+		</dynamic>
+		where serviceNo = #serviceNo#
+	</update>
+
+</sqlMap>

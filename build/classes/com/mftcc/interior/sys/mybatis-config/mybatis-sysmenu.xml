@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="SysMenu" type="com.mftcc.interior.sys.bean.SysMenu" />
+	<resultMap id="menus_resultMap" class="SysMenu">
+		<result column="menu_no" property="menuNo" jdbcType="VARCHAR" />
+		<result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+		<result column="menu_lev" property="menuLev" jdbcType="VARCHAR" />
+		<result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+		<result column="menu_sts" property="menuSts" jdbcType="VARCHAR" />
+		<result column="menu_parent" property="menuParent" jdbcType="VARCHAR" />
+		<result column="group_seq" property="groupSeq" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--表字段 -->
+	<sql id="sysmenu_column">
+		menu_no,
+		menu_name,
+		menu_lev,
+		menu_url,
+		menu_sts,
+		menu_parent,
+		group_seq
+	</sql>
+
+	<!--查询条件 -->
+	<sql id="sysmenu_where">
+		<dynamic prepend="where">
+			<isNotNull prepend="and" property="menuNo">
+				menu_no = #menuNo#
+			</isNotNull>
+			<isNotNull prepend="and" property="menuName">
+				menu_name = #menuName#
+			</isNotNull>
+			<isNotNull prepend="and" property="menuUrl">
+				menu_url = #menuUrl#
+			</isNotNull>
+			<isNotNull prepend="and" property="menuSts">
+				menu_sts = #menuSts#
+			</isNotNull>
+			<isNotNull prepend="and" property="menuParent">
+				menu_parent = #menuParent#
+			</isNotNull>
+			<isNotNull prepend="and" property="menuLev">
+				menu_lev = #menuLev#
+			</isNotNull>
+			<isNotNull prepend="and" property="groupSeq">
+				group_seq = #groupSeq#
+			</isNotNull>
+		</dynamic>
+	</sql>
+	<!--查询 -->
+	<select id="selectSysMenu" resultMap="menus_resultMap" parameterClass="SysMenu">
+		SELECT
+		<include refid="sysmenu_column" />
+		<![CDATA[
+			 FROM ac_sys_menu
+		]]>
+		<include refid="sysmenu_where" />
+	</select>
+
+	<!-- 查询用户可用状态的菜单   distinct 去除重复的  用户登录的主页面-->
+	<select id="selectMenusBySysUser" resultMap="menus_resultMap" parameterClass="java.lang.String">
+		SELECT DISTINCT m.*
+		<![CDATA[
+			 FROM ac_sys_menu m
+			 INNER JOIN ac_sys_menu_role rm on rm.menu_no = m.menu_no   
+			 INNER JOIN ac_sys_role r on r.role_no = rm.role_no
+			 INNER JOIN ac_sys_user u on u.role_no like CONCAT('%',r.role_no,'%')
+			 WHERE m.menu_sts = '1' AND u.op_no = #opNO#
+			 ORDER BY m.menu_no ;
+		]]>
+	</select>
+	
+		<!-- 查询用户可用状态的菜单   distinct 去除重复的  用户登录的主页面-->
+	<select id="selectMenusBySysRole" resultMap="menus_resultMap" parameterClass="java.lang.String">
+		SELECT DISTINCT m.*
+		<![CDATA[
+			 FROM ac_sys_menu m
+			 INNER JOIN ac_sys_menu_role rm on rm.menu_no = m.menu_no   
+			 INNER JOIN ac_sys_role r on r.role_no = rm.role_no
+			  WHERE r.role_no  = #roleNO#  ORDER BY m.menu_no;
+		]]>
+	</select>
+	
+<!-- 
+	 新增  
+	<insert id="insertMenus" parameterClass="menuBean">
+		insert into menus(
+		<include refid="menus_column" />
+		)values
+		(
+		#menuNo#,
+		#menuName#,
+		#url#,
+		#sortNo#,
+		#parentMenuNo#,
+		#manageFlag#,
+		#useFlag#
+		)
+	</insert>
+
+	删除
+	<delete id="deleteMenus">
+		DELETE FROM menus
+		<include refid="menus_where" />
+	</delete>
+
+	更新
+	<update id="updateMenus" parameterClass="menuBean">
+		update menus
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="menuNo">
+				MENU_NO = #menuNo#
+			</isNotNull>
+			<isNotNull prepend="," property="menuName">
+				MENU_NAME = #menuName#
+			</isNotNull>
+			<isNotNull prepend="," property="url">
+				URL = #url#
+			</isNotNull>
+			<isNotNull prepend="," property="sortNo">
+				SORT_NO = #sortNo#
+			</isNotNull>
+			<isNotNull prepend="," property="parentMenuNo">
+				PARENT_MENU_NO = #parentMenuNo#
+			</isNotNull>
+			<isNotNull prepend="," property="manageFlag">
+				MANAGE_FLAG = #manageFlag#
+			</isNotNull>
+			<isNotNull prepend="" property="useFlag">
+				USE_FLAG = #useFlag#
+			</isNotNull>
+		</dynamic>
+	</update>
+ -->
+	
+</sqlMap>

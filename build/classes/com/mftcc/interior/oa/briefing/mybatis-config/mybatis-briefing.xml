@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="briefingInfo" type="com.mftcc.interior.oa.briefing.bean.BriefingInfo" />	
+
+	<resultMap id="briefingInfo_resultMap" class="briefingInfo">
+		<result column="briefing_id" property="BriefingId" jdbcType="VARCHAR" />
+		<result column="briefing_name" property="BriefingName" jdbcType="VARCHAR" />
+		<result column="briefing_type" property="BriefingType" jdbcType="VARCHAR" />
+		<result column="briefing_user_no" property="BriefingUserNo" jdbcType="VARCHAR" />
+		<result column="briefing_user" property="BriefingUser" jdbcType="VARCHAR" />
+		<result column="briefing_state" property="BriefingState" jdbcType="VARCHAR" />
+		<result column="briefing_reviewer" property="BriefingReviewer" jdbcType="VARCHAR" />
+		<result column="briefing_reviewer_id" property="BriefingReviewerId" jdbcType="VARCHAR" />
+		<result column="briefing_insider" property="BriefingInsider" jdbcType="VARCHAR" />
+		<result column="briefing_insider_id" property="BriefingInsiderId" jdbcType="VARCHAR" />
+		<result column="briefing_content_id" property="BriefingContentId" jdbcType="VARCHAR" />
+		<result column="briefing_createtime" property="BriefingCreatetime" jdbcType="VARCHAR" /> 
+		<result column="briefing_createtime" property="BriefingReviewtime" jdbcType="VARCHAR" />
+		<result column="briefing_sign" property="BriefingSign" jdbcType="VARCHAR" />
+		<result column="briefing_sign_content" property="BriefingSignContent" jdbcType="VARCHAR" />
+		<result column="briefing_sign_state" property="BriefingSignState" jdbcType="VARCHAR" />
+		<result column="briefing_frequency" property="BriefingFrequency" jdbcType="VARCHAR" />
+		<result column="briefing_power" property="BriefingPower" jdbcType="VARCHAR" />
+		<result column="briefing_q1" property="BriefingQ1" jdbcType="VARCHAR" />
+		<result column="briefing_q2" property="BriefingQ2" jdbcType="VARCHAR" />
+		<result column="briefing_q3" property="BriefingQ3" jdbcType="VARCHAR" />
+		<result column="briefing_q4" property="BriefingQ4" jdbcType="VARCHAR" />	
+	</resultMap>
+	
+
+	<!-- 初始简报列表 -->	
+ 	<select id="selectBriefingInfoPage" parameterClass="com.mftcc.method.bean.Ipage" resultMap="briefingInfo_resultMap">
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_state ='未读'
+		ORDER BY briefing_id DESC
+		LIMIT #searchStart#,#pageNumber#
+	</select>
+	
+	<select id="selectBriefingUnreadInfoById" parameterClass="briefingInfo" resultMap="briefingInfo_resultMap">
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_state ='未读' and briefing_id =#BriefingId#
+	</select>
+	
+	<!-- 初始简报列表 -->	
+ 	<select id="selectBriefingDraftInfoPage" parameterClass="com.mftcc.method.bean.Ipage" resultMap="briefingInfo_resultMap">
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_state ='草稿'
+		ORDER BY briefing_id DESC
+		LIMIT #searchStart#,#pageNumber#
+	</select>
+	
+	<select id="selectBriefingDraftInfoById" parameterClass="briefingInfo" resultMap="briefingInfo_resultMap">
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_state ='草稿' and briefing_id =#BriefingId#
+	</select>
+	
+	<!-- 初始简报列表 -->	
+ 	<select id="selectBriefingReviewedInfoPage" parameterClass="com.mftcc.method.bean.Ipage" resultMap="briefingInfo_resultMap">
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_state ='已审阅'
+		ORDER BY briefing_id DESC
+		LIMIT #searchStart#,#pageNumber#
+	</select>
+	
+	<select id="selectBriefingReviewedInfoById" parameterClass="briefingInfo" resultMap="briefingInfo_resultMap">
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_state ='已审阅' and briefing_id =#BriefingId#
+	</select>
+	
+	<!-- 初始简报列表 -->	
+ 	<select id="selectBriefingResolvedInfoPage" parameterClass="com.mftcc.method.bean.Ipage" resultMap="briefingInfo_resultMap">
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_state ='已解决'
+		ORDER BY briefing_id DESC
+		LIMIT #searchStart#,#pageNumber#
+	</select>
+	
+	
+	
+	<!-- 查询简报通过ID -->
+ 	<select id="selectBriefingInfoById"  resultMap="briefingInfo_resultMap" parameterClass="java.lang.String" >
+		<!-- SELECT briefing_id,briefing_name ,briefing_type,briefing_user_no,briefing_user,
+		briefing_state,briefing_reviewer,briefing_reviewer_id,briefing_insider,briefing_insider_id FROM ac_oa_briefing -->
+		SELECT * FROM ac_oa_briefing
+		WHERE   briefing_id =#BriefingId#
+	</select>			
+
+
+    <!-- 插入简报信息 -->
+	<insert id="insertBriefingInfo" parameterClass="briefingInfo">
+	 insert into  ac_oa_briefing(
+		briefing_id,briefing_name,briefing_user_no,briefing_user,
+		briefing_reviewer,briefing_reviewer_id,briefing_insider,
+		briefing_insider_id,briefing_state,briefing_q1,briefing_q2,briefing_q3,briefing_q4
+		)values
+		(
+		#BriefingId#,
+		#BriefingName#,
+		#BriefingUserNo#,
+		#BriefingUser#,
+		#BriefingReviewer#,
+		#BriefingReviewerId#,
+		#BriefingInsider#,
+		#BriefingInsiderId#,
+		#BriefingState#,
+		#BriefingQ1#,
+		#BriefingQ2#,
+		#BriefingQ3#,
+		#BriefingQ4#
+		)
+	</insert>
+
+ 
+	
+	<!-- 更新简报  -->
+	<update id="updateBriefingInfo" parameterClass="briefingInfo">
+	 UPDATE ac_oa_briefing SET 
+		 briefing_name = #BriefingName#,
+		 briefing_state = #BriefingState#,
+		 briefing_reviewer = #BriefingReviewer#,
+		 briefing_reviewer_id =#BriefingReviewerId#,
+		 briefing_insider = #BriefingInsider#,
+		 briefing_insider_id = #BriefingInsiderId#,
+		 briefing_sign = #BriefingSign#,
+		 briefing_q1 = #BriefingQ1#,
+		 briefing_q2 = #BriefingQ2#,
+		 briefing_q3 = #BriefingQ3#,
+		 briefing_q4 = #BriefingQ4#
+		WHERE   briefing_id =#BriefingId#
+	</update>	
+	
+	
+	<!-- 删除简报通过ID  -->
+	<delete id="deleteBriefingInfo" >
+	DELETE FROM ac_oa_briefing  WHERE briefing_id = #BriefingId#
+	</delete> 
+	
+	
+	
+	 <select id="selectBriefingInfo"  resultMap="briefingInfo_resultMap" parameterClass="briefingInfo">
+		SELECT briefing_id FROM ac_oa_briefing 
+	</select> 
+
+
+	<select id="selectBriefingDraftInfoCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_oa_briefing
+		WHERE briefing_state ='草稿'
+	 </select>
+	 
+	 <select id="selectBriefingReviewedInfoCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_oa_briefing
+		WHERE briefing_state ='已审阅'
+	 </select>
+	 
+	  <select id="selectBriefingResolvedInfoCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_oa_briefing
+		WHERE briefing_state ='已解决'
+	 </select>
+		
+		<select id="selectBriefingInfoCount" parameterClass="com.mftcc.method.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_oa_briefing
+		WHERE briefing_state ='未读'
+	 </select>
+		
+		
+
+			
+ </sqlMap>

@@ -1,0 +1,154 @@
+.layoutTop .sysLog .logo_top .centerDiv .enterLogo {
+  width: 70px;
+  height: 60px;
+  background: url("../images/enterLogo.png") no-repeat;
+}
+
+body {
+    background: #F0F5FB;
+    margin: 0;
+    font-family: "Microsoft YaHei","Helvetica Neue", Helvetica, Arial, sans-serif;
+    height:100%;
+    font-size:14px;
+}
+
+.block-view{
+	border: 1px solid #32b5cb;
+	border-radius: 6px;
+	color: #32b5cb;
+	padding: 4px 12px;
+}
+.block-view:hover{
+	border: 1px solid #009db7;
+	color: #009db7;
+}
+.block-view + .block-view{
+	margin-top:8px;
+	margin-left: 5px;
+}
+
+/********************************* 保存关闭按钮相关 begin ************************************/
+
+.formRowCenter {
+	background-color: #f8f9fd;
+	border-top:1px solid #e5e5e5;
+	height:50px;
+	width: auto;
+	text-align: center;
+	padding: 5px 0px 0px 0px;
+	position: absolute;
+	bottom: 0px;
+	left:0px;
+	z-index: 100;
+	width: 100%;
+}
+.formRowCenter_undo {
+	background-color: #C0C0C0 !important;
+	border:1px solid #C0C0C0 !important;
+}
+/* 有些按钮不是用在底部悬浮，所以要去掉背景和边框 */
+.background-border-none {
+	background-color: inherit;
+	border-top:none;
+}
+
+.formRowCenter input[type="submit"],.formRowCenter input[type="button"] {
+	background: #32b5cb;
+	border: 1px solid #32b5cb;
+	width: 100px;
+	line-height: 35px;
+	font-size: 14px;
+	color: #fff;
+/* 	margin: 20px 5px; */
+	cursor: pointer;
+}
+
+.formRowCenter .cancel{
+	background: #ffffff !important;
+	color: #000000 !important;
+	border: 1px solid #d2d3d6 !important;
+	margin-left: 5px;
+}
+.formRowCenter .cancel:hover{
+	background: #e7e7e7 !important;
+	color: #000000 !important;
+}
+
+.formRowCenter input[type="submit"]:hover,.formRowCenter input[type="button"]:hover{
+	background: #009db7;
+}
+
+.formRowCenter input[type="submit"]:focus{
+	background: #008ccc;
+}
+/********************************* 保存关闭按钮相关 end ************************************/
+
+.overflowHidden{
+	overflow:hidden;
+}
+
+/* 滚动条样式 */
+.mCSB_dragger_bar{ background:#d2d1d1;}
+.mCSB_scrollTools{z-index:3;}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{ background:#ababab; width:5px; border-radius:3px;}
+.mCSB_scrollTools .mCSB_draggerRail{background:#f7f7f7; width:2px; border-radius:3px;}
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+	background-color: #b4b4b4; background-color: rgba(180,180,180,0.85);
+	filter: "alpha(opacity=85)"; -ms-filter: "alpha(opacity=85)"; 
+}
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+	background-color: #b4b4b4; background-color: rgba(180,180,180,0.90);
+	filter: "alpha(opacity=90)"; -ms-filter: "alpha(opacity=90)"; 
+}
+
+
+/********************************* 设为首页（个人中心和待办任务页面） begin ************************************/
+.homepage{
+	height:35px;
+	background:#FEF8E2;
+	display:none;
+	margin:0px;
+}
+.homebtn{
+	color: #fff; 
+	border: none;
+	background: #21A148;	
+}
+.i-x3{ 
+	font-size: 20px; 
+	font-weight: bold; 
+	color: #C1C1C1;
+	cursor: pointer;
+	float: right;
+}
+/********************************* 设为首页（个人中心和待办任务页面） end ************************************/
+
+.label_css {
+	display: inline-block;
+	height: 32px;
+	float: left;
+	margin-left: 30px;
+	position: relative;
+	border: 1px solid #ebebeb;
+	line-height: 32px;
+	background-color: #fff;
+	padding-left: 5px;
+	padding-right:5px;
+	text-align: center;
+	width:152px;
+}
+.label_css_select {
+	border: 1px solid #32b5cb;
+	color:#32b5cb;
+}
+
+.label_css i {
+	position:absolute;
+	right:0px;
+	bottom:-2px;		
+	font-size: 24px;
+	margin:0px;
+	margin-right:-3px;
+	margin-bottom:-2px;
+}

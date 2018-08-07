@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="pactInfo" type="com.mftcc.interior.pact.bean.PactInfo" />
+	<typeAlias alias="pactListInfo" type="com.mftcc.interior.pact.bean.PactListInfo" />
+	<typeAlias alias="pactFileInfo" type="com.mftcc.interior.pact.bean.PactFileInfo"/>
+	<typeAlias alias="pactExecuteBean" type="com.mftcc.interior.pact.bean.PactExecuteBean"/>
+	<resultMap id="pactInfo_resultMap" class="pactInfo">
+		<result column="PACT_ID" property="pactId" jdbcType="VARCHAR" />
+		<result column="PACT_NAME" property="pactName" jdbcType="VARCHAR"/>
+		<result column="PACT_FEE" property="pactFee" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_MONEY" property="customerMoney" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME1" property="customerName" jdbcType="VARCHAR" />
+		<result column="PAYCOUNT_YET" property="paycountYet" jdbcType="VARCHAR" />
+		<result column="PAYFEE_YET" property="payfeeYet" jdbcType="VARCHAR" />
+		<result column="PAYPERCENT" property="paypercent" jdbcType="VARCHAR" />
+		<result column="PACT_STATE" property="pactState" jdbcType="VARCHAR" />
+		<result column="PACT_START_DATE" property="pactStartDate" jdbcType="VARCHAR" />
+		<result column="PACT_OVER_DATE" property="pactOverDate" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="FEE_DATE" property="feeDate" jdbcType="VARCHAR" />
+		<result column="MARKETER_ID" property="marketerId" jdbcType="VARCHAR" />
+		<result column="BEFORESALE" property="beforesale" jdbcType="VARCHAR" />
+		<result column="AFTERSALE" property="aftersale" jdbcType="VARCHAR" />
+		<result column="FOCUS_PERSION" property="focusPersion" jdbcType="VARCHAR" />
+		<result column="EXECUTE_PERSION" property="executePersion" jdbcType="VARCHAR" />
+		<result column="EXECUTE_START_DATE" property="executeStartDate" jdbcType="VARCHAR" />
+		<result column="EXECUTE_OVER_DATE" property="executeOverDate" jdbcType="VARCHAR" />
+		<result column="EXECUTE_RESULT" property="executeResult" jdbcType="VARCHAR" />
+		<result column="EXECUTE_FILEPATH" property="executeFilepath" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_RESULT" property="customerResult" jdbcType="VARCHAR" />
+		<result column="INVOICE_ALL" property="invoiceAll" jdbcType="VARCHAR" />
+		<result column="INVOICE_MONEY_YET" property="invoiceMoneyYet" jdbcType="VARCHAR" />
+		<result column="DATE_80PERCENT" property="date80Percent" jdbcType="VARCHAR" />
+		<result column="DATE_100PERCENT" property="date100Percent" jdbcType="VARCHAR" />
+		<result column="REGISTER_DATE" property="registerDate" jdbcType="VARCHAR" />		
+	</resultMap>
+
+	<resultMap id="pactListInfo_resultMap" class="pactListInfo">
+		<result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+		<result column="LINK_NAME" property="linkman" jdbcType="VARCHAR" />
+		<result column="PACT_ID" property="pactId" jdbcType="VARCHAR" />
+		<result column="PAYPERCENT" property="paypercent" jdbcType="VARCHAR" />
+		<result column="PACT_START_DATE" property="pactStartDate" jdbcType="VARCHAR" />
+		<result column="PACT_OVER_DATE" property="pactOverDate" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+		<result column="MARKETER_NAME" property="marketerName" jdbcType="VARCHAR" />
+		<result column="PACT_FEE" property="pactFee" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_MONEY" property="customerMoney" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="pactExecute_resultMap" class="pactExecuteBean">
+		<result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+		<result column="PACT_ID" property="pactId" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+		<result column="MARKETER_NAME" property="marketerName" jdbcType="VARCHAR" />
+		<result column="EXECUTE_NAME" property="executeName" jdbcType="VARCHAR" />
+		<result column="PACT_STATE" property="pactState" jdbcType="VARCHAR" />
+		<result column="EXECUTE_START_DATE" property="executeStartDate" jdbcType="VARCHAR" />
+		<result column="EXECUTE_OVER_DATE" property="executeOverDate" jdbcType="VARCHAR" />
+		<result column="PACT_START_DATE" property="pactStartDate" jdbcType="VARCHAR" />
+		<result column="PACT_OVER_DATE" property="pactOverDate" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="pactFileInfo_resultMap" class="pactFileInfo" >
+	  <result column="PACT_ID" property="pactId" jdbcType="VARCHAR"/>
+	  <result column="PACT_FILEPATH" property="pactFilepath" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap class="com.mftcc.interior.pact.bean.PactWarningBean" id="pactWarning_resultMap">
+		<result column="PACT_ID" property="pactId" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+		<result column="MARKETER_NAME" property="marketerName" jdbcType="VARCHAR" />
+		<result column="PAYFEE_YET" property="payfeeYet" jdbcType="VARCHAR" />
+		<result column="PAYPERCENT" property="paypercent" jdbcType="VARCHAR" />
+		<result column="PACT_FEE" property="pactFee" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_MONEY" property="customerMoney" jdbcType="VARCHAR" />
+		<result column="PAYMENT_DAY" property="paymentDay" jdbcType="VARCHAR"/>
+		 <result column="PAYMENT_STATE" property="paymentState" jdbcType="VARCHAR"/>
+		 <result column="PAYMENT_PERCENT" property="paypercentPlan" jdbcType="VARCHAR"/>
+		 <result column="PAYMENT_COUNT" property="paymentCount" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap class="com.mftcc.interior.pact.bean.listBean.TichengPactBean" id="pactInfoBean_resultMap">
+		<result column="PACT_ID" property="pactId" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+		<result column="PACT_NAME" property="pactName" jdbcType="VARCHAR"/>
+		<result column="PACT_FEE" property="pactFee" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_MONEY" property="customerMoney" jdbcType="VARCHAR" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+		<result column="PAYFEE_YET" property="payfeeYet" jdbcType="VARCHAR" />
+		<result column="PAYPERCENT" property="paypercent" jdbcType="VARCHAR" />
+		<result column="MARKET_MONEY" property="lastMoney" jdbcType="VARCHAR" />
+		<result column="last_date" property="lastDate" jdbcType="VARCHAR" />
+		<result column="date80Percent" property="date80Percent" jdbcType="VARCHAR"/>
+		<result column="date100Percent" property="date100Percent" jdbcType="VARCHAR"/>
+		<result column="PACT_START_DATE" property="pactStartDate" jdbcType="VARCHAR" />
+		<result column="PACT_OVER_DATE" property="pactOverDate" jdbcType="VARCHAR" />
+		<result column="MARKETER_ID" property="marketer" jdbcType="VARCHAR" />
+		<result column="BEFORESALE" property="beforesale1" jdbcType="VARCHAR" />
+		<result column="AFTERSALE" property="aftersale" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--表字段 -->
+	<sql id="pactInfo_column">
+		PACT_ID,
+		PACT_NAME,
+		PACT_FEE,
+		CUSTOMER_MONEY,
+		PRODUCT_NAME,
+		CUSTOMER_ID,
+		CUSTOMER_NAME,
+		PAYCOUNT_YET,
+		PAYFEE_YET,
+		PAYPERCENT,
+		PACT_STATE,
+		PACT_START_DATE,
+		PACT_OVER_DATE,
+		
+		DESCRIPTION,
+		FEE_DATE,
+		MARKETER_ID,
+		BEFORESALE,
+		AFTERSALE,
+		FOCUS_PERSION,
+		EXECUTE_PERSION,
+		EXECUTE_START_DATE,
+		EXECUTE_OVER_DATE,
+		EXECUTE_RESULT,
+		EXECUTE_FILEPATH,
+		CUSTOMER_RESULT,
+		INVOICE_ALL,
+		INVOICE_MONEY_YET,
+		DATE_80PERCENT,
+		DATE_100PERCENT,
+		REGISTER_DATE
+	</sql>
+	
+	<sql id="pactFileInfo_column">
+	  PACT_ID,
+	  PACT_FILEPATH
+	</sql>
+	
+	<!--查询条件 -->
+	<sql id="pactInfo_where">
+		<dynamic prepend="where">
+			<isNotNull prepend="and" property="pactId">
+				PACT_ID = #pactId#
+			</isNotNull>
+			<isNotNull prepend="and" property="pactFee">
+				PACT_FEE = #pactFee#
+			</isNotNull>
+			<isNotNull prepend="and" property="customerMoney">
+				CUSTOMER_MONEY = #customerMoney#
+			</isNotNull>
+			<isNotNull prepend="and" property="productName">
+				PRODUCT_NAME = #productName#
+			</isNotNull>
+			<isNotNull prepend="and" property="customerId">
+				CUSTOMER_ID = #customerId#
+			</isNotNull>
+			<isNotNull prepend="and" property="customerName">
+				CUSTOMER_NAME = #customerName#
+			</isNotNull>
+			<isNotNull prepend="and" property="paycountYet">
+				PAYCOUNT_YET = #paycountYet#
+			</isNotNull>
+			<isNotNull prepend="and" property="payfeeYet">
+				PAYFEE_YET = #payfeeYet#
+			</isNotNull>
+			<isNotNull prepend="and" property="paypercent">
+				PAYPERCENT = #paypercent#
+			</isNotNull>
+			<isNotNull prepend="and" property="pactState">
+				PACT_STATE = #pactState#
+			</isNotNull>
+			<isNotNull prepend="and" property="pactStartDate">
+				PACT_START_DATE = #pactStartDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="pactOverDate">
+				PACT_OVER_DATE = #pactOverDate#	
+			</isNotNull>
+			<isNotNull prepend="and" property="description">
+				DESCRIPTION = #description#
+			</isNotNull>
+			<isNotNull prepend="and" property="feeDate">
+				FEE_DATE = #feeDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="marketerId">
+				MARKETER_ID = #marketerId#
+			</isNotNull>
+			<isNotNull prepend="and" property="beforesale">
+				BEFORESALE = #beforesale#
+			</isNotNull>
+			<isNotNull prepend="and" property="aftersale">
+				AFTERSALE = #aftersale#
+			</isNotNull>
+			<isNotNull prepend="and" property="focusPersion">
+				FOCUS_PERSION = #focusPersion#
+			</isNotNull>
+			<isNotNull prepend="and" property="executePersion">
+				EXECUTE_PERSION = #executePersion#
+			</isNotNull>
+			<isNotNull prepend="and" property="executeStartDate">
+				EXECUTE_START_DATE = #executeStartDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="executeOverDate">
+				EXECUTE_OVER_DATE = #executeOverDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="executeResult">
+				EXECUTE_RESULT = #executeResult#
+			</isNotNull>
+			<isNotNull prepend="and" property="customerResult">
+				CUSTOMER_RESULT = #customerResult#
+			</isNotNull>
+			<isNotNull prepend="and" property="invoiceAll">
+				INVOICE_ALL = #invoiceAll#
+			</isNotNull>
+			<isNotNull prepend="and" property="flag">
+				FLAG = #flag#
+			</isNotNull>
+			</dynamic>
+		
+	</sql>
+	
+	<!--新增合同附件存储路径-->
+	<insert id="insertPactFile" parameterClass="pactFileInfo">
+	      insert into ac_pact_file_info(
+	<include refid="pactFileInfo_column"/>
+	)values
+	 (
+	#pactId#,
+	#pactFilepath#
+	)
+	</insert>
+
+
+
+	<!--新增合同 -->
+	<insert id="insertPactInfo" parameterClass="pactInfo">
+		insert into ac_pact_info(
+		<include refid="pactInfo_column" />
+		)values
+		(
+		#pactId#,
+		#pactName#,
+		#pactFee#,
+		#customerMoney#,
+		#productName#,
+		#customerId#,
+		#customerName#,
+		#paycountYet#,
+		#payfeeYet#,
+		#paypercent#,
+		#pactState#,
+		#pactStartDate#,
+		#pactOverDate#,
+		#description#,
+		#feeDate#,
+		#marketerId#,
+		#beforesale#,
+		#aftersale#,
+		#focusPersion#,
+		#executePersion#,
+		#executeStartDate#,
+		#executeOverDate#,
+		#executeResult#,
+		#executeFilepath#,
+		#customerResult#,
+		#invoiceAll#,
+		#invoiceMoneyYet#,
+		#date80Percent#,
+		#date100Percent#,
+		#registerDate#
+		)
+	</insert>
+
+
+
+	<!--更新合同信息 -->
+	<update id="updatePactInfo" parameterClass="pactInfo">
+		update ac_pact_info
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="pactFee">
+				PACT_FEE = #pactFee#
+			</isNotNull>
+			<isNotNull prepend="," property="customerMoney">
+				CUSTOMER_MONEY = #customerMoney#
+			</isNotNull>
+			<isNotNull prepend="," property="pactName">
+				PACT_NAME = #pactName#
+			</isNotNull>
+			<isNotNull prepend="," property="productName">
+				PRODUCT_NAME = #productName#
+			</isNotNull>
+			<isNotNull prepend="," property="customerId">
+				CUSTOMER_ID = #customerId#
+			</isNotNull>
+			<isNotNull prepend="," property="customerName">
+				CUSTOMER_NAME = #customerName#
+			</isNotNull>
+			<isNotNull prepend="," property="paycountYet">
+				PAYCOUNT_YET = #paycountYet#
+			</isNotNull>
+			<isNotNull prepend="," property="payfeeYet">
+				PAYFEE_YET = #payfeeYet#
+			</isNotNull>
+			<isNotNull prepend="," property="paypercent">
+				PAYPERCENT = #paypercent#
+			</isNotNull>
+			<isNotNull prepend="," property="pactState">
+				PACT_STATE = #pactState#
+			</isNotNull>
+			<isNotNull prepend="and" property="pactStartDate">
+				PACT_START_DATE = #pactStartDate#
+			</isNotNull>
+			<isNotNull prepend="and" property="pactOverDate">
+				PACT_OVER_DATE = #pactOverDate#	
+				</isNotNull>
+			<isNotNull prepend="," property="description">
+				DESCRIPTION = #description#
+			</isNotNull>
+			<isNotNull prepend="," property="feeDate">
+				FEE_DATE = #feeDate#
+			</isNotNull>
+			<isNotNull prepend="," property="marketerId">
+				MARKETER_ID = #marketerId#
+			</isNotNull>
+			<isNotNull prepend="," property="beforesale">
+				BEFORESALE = #beforesale#
+			</isNotNull>
+			<isNotNull prepend="," property="aftersale">
+				AFTERSALE = #aftersale#
+			</isNotNull>
+			<isNotNull prepend="," property="focusPersion">
+				FOCUS_PERSION = #focusPersion#
+			</isNotNull>
+			<isNotNull prepend="," property="executePersion">
+				EXECUTE_PERSION = #executePersion#
+			</isNotNull>
+			<isNotNull prepend="," property="executeStartDate">
+				EXECUTE_START_DATE = #executeStartDate#
+			</isNotNull>
+			<isNotNull prepend="," property="executeOverDate">
+				EXECUTE_OVER_DATE = #executeOverDate#
+			</isNotNull>
+			<isNotNull prepend="," property="executeResult">
+				EXECUTE_RESULT = #executeResult#
+			</isNotNull>
+			<isNotNull prepend="," property="executeFilepath">
+				EXECUTE_FilePath = #executeFilepath#
+			</isNotNull>
+			<isNotNull prepend="," property="customerResult">
+				CUSTOMER_RESULT = #customerResult#
+			</isNotNull>
+			<isNotNull prepend="," property="invoiceAll">
+				INVOICE_ALL = #invoiceAll#
+			</isNotNull>
+			<isNotNull prepend="," property="invoiceMoneyYet">
+				INVOICE_MONEY_YET = #invoiceMoneyYet#
+			</isNotNull>
+			<isNotNull prepend="," property="date80Percent">
+				DATE_80PERCENT = #date80Percent#
+			</isNotNull>
+			<isNotEmpty prepend="," property="date100Percent">
+				DATE_100PERCENT = #date100Percent#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+		</dynamic>
+		where PACT_ID = #pactId#
+	</update>
+	
+<!--查询 某合同附件存储路径-->
+<select id="selectPactFileInfo" resultMap="pactFileInfo_resultMap"  parameterClass="java.lang.String">
+SELECT
+<include refid="pactFileInfo_column"/>
+	<![CDATA[
+	 FROM ac_pact_file_info where PACT_ID = #pactId#
+]]>
+ </select>
+
+
+	<!--查询 合同信息-->
+	<select id="selectPactInfo" resultMap="pactInfo_resultMap" parameterClass="pactInfo">
+		SELECT ac_pact_info.*,ac_pact_customer_info.CUSTOMER_NAME AS CUSTOMER_NAME1
+		FROM ac_pact_info
+		LEFT JOIN ac_pact_customer_info
+		ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="pactId">
+				PACT_ID = #pactId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	
+<!-- 检查 -->
+	<!--查询所有合同和所有客户的信息，查询结果只包含列表需要展示的地段 -->
+	<select id="selectPactListInfo" resultMap="pactListInfo_resultMap">
+		select ac_pact_customer_info.CUSTOMER_ID ,ac_pact_info.PRODUCT_NAME,
+		ac_pact_customer_info.CUSTOMER_NAME , ac_cus_linkman.LINK_NAME ,
+		ac_pact_info.PACT_ID , ac_pact_info.PAYPERCENT , ac_pact_info.PACT_START_DATE, ac_pact_info.PACT_OVER_DATE,ac_pact_info.PACT_FEE,ac_pact_info.CUSTOMER_MONEY
+		from ac_pact_customer_info
+		LEFT JOIN ac_pact_info
+		on ac_pact_customer_info.CUSTOMER_ID = ac_pact_info.CUSTOMER_ID
+		
+		LEFT JOIN ac_cus_linkman
+		on ac_pact_customer_info.CUSTOMER_ID = ac_cus_linkman.MARKETER_ID
+		ORDER BY PACT_ID , ac_pact_customer_info.CUSTOMER_ID , PACT_START_DATE ASC
+	</select>
+	
+	
+	
+	<select id="selectPactListPage" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultMap="pactListInfo_resultMap">
+		SELECT CUSTOMER_ID,PRODUCT_NAME,CUSTOMER_NAME,LINK_NAME,PACT_ID,PAYPERCENT,PACT_START_DATE, PACT_OVER_DATE, MARKETER_NAME,PACT_FEE, CUSTOMER_MONEY
+			FROM
+			( select ac_pact_customer_info.CUSTOMER_ID ,ac_pact_info.PRODUCT_NAME, ac_pact_customer_info.MARKETER_ID,users.name as 'MARKETER_NAME',
+				ac_pact_customer_info.CUSTOMER_NAME , ac_cus_linkman.LINK_NAME , ac_pact_info.PACT_FEE,ac_pact_info.CUSTOMER_MONEY,
+				ac_pact_info.PACT_ID , ac_pact_info.PAYPERCENT , ac_pact_info.PACT_START_DATE ,  ac_pact_info.PACT_OVER_DATE,
+				CONCAT(ac_pact_customer_info.CUSTOMER_NAME,ac_cus_linkman.LINK_NAME ,
+				ac_pact_customer_info.LOCATION,ac_pact_info.PRODUCT_NAME, ac_pact_info.PACT_START_DATE,  ac_pact_info.PACT_OVER_DATE, users.NAME
+				) AS newLine 
+			from ac_pact_customer_info
+				LEFT JOIN ac_pact_info	on ac_pact_customer_info.CUSTOMER_ID = ac_pact_info.CUSTOMER_ID
+				LEFT JOIN users on users.USER_NO =ac_pact_customer_info.MARKETER_ID
+				LEFT JOIN ac_cus_linkman on ac_pact_customer_info.CUSTOMER_ID = ac_cus_linkman.MARKETER_ID
+				
+			ORDER BY  PACT_START_DATE DESC
+			) AS newTable
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="and" property="searchFiled">
+				newTable.newLine LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curUserNo">
+				newTable.MARKETER_ID = #curUserNo#
+			</isNotEmpty> 
+			<!--查找收款逾期的合同  -->
+			<isNotEmpty prepend="and" property="softType">
+				newTable.PACT_ID IN (select PACT_ID from ac_pact_payment_plan
+									WHERE PAYMENT_START_DATE != '2' AND PAYMENT_STATE != '2' AND #softType# >= PAYMENT_DAY 
+									GROUP BY PACT_ID )
+			
+			</isNotEmpty>
+		</dynamic>
+		LIMIT #searchStart#,#pageNumber#
+	</select>
+	
+	<select id="selectPactListCount" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM
+			( select ac_pact_customer_info.CUSTOMER_ID ,ac_pact_info.PRODUCT_NAME, ac_pact_customer_info.MARKETER_ID,users.name as 'MARKETER_NAME',
+				ac_pact_customer_info.CUSTOMER_NAME , ac_cus_linkman.LINK_NAME ,ac_pact_info.PACT_FEE, ac_pact_info.CUSTOMER_MONEY,
+				ac_pact_info.PACT_ID , ac_pact_info.PAYPERCENT , ac_pact_info.PACT_START_DATE ,  ac_pact_info.PACT_OVER_DATE, 
+				CONCAT(ac_pact_customer_info.CUSTOMER_NAME, ac_cus_linkman.LINK_NAME ,
+				ac_pact_customer_info.LOCATION, ac_cus_linkman.PHONE, ac_cus_linkman.TELPHONE,ac_pact_info.PRODUCT_NAME, 
+				ac_pact_info.PACT_FEE,ac_pact_info.CUSTOMER_MONEY,ac_pact_info.PAYPERCENT,ac_pact_info.PACT_START_DATE,  ac_pact_info.PACT_OVER_DATE, ac_pact_info.FEE_DATE,ac_pact_info.DESCRIPTION, users.NAME
+				) AS newLine 
+			from ac_pact_customer_info
+				LEFT JOIN ac_pact_info	on ac_pact_customer_info.CUSTOMER_ID = ac_pact_info.CUSTOMER_ID
+				LEFT JOIN users on users.USER_NO =ac_pact_customer_info.MARKETER_ID
+				LEFT JOIN ac_cus_linkman on ac_pact_customer_info.CUSTOMER_ID = ac_cus_linkman.MARKETER_ID
+			ORDER BY  PACT_START_DATE DESC
+			) AS newTable
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="searchFiled">
+				newTable.newLine LIKE CONCAT('%',#searchFiled#,'%')
+			</isNotNull>
+			<isNotNull prepend="and" property="curUserNo">
+				newTable.MARKETER_ID = #curUserNo#
+			</isNotNull>
+			<isNotEmpty prepend="and" property="softType">
+				newTable.PACT_ID IN (select PACT_ID from ac_pact_payment_plan
+									WHERE PAYMENT_START_DATE != '2' AND PAYMENT_STATE != '2' AND #softType# >= PAYMENT_DAY 
+									GROUP BY PACT_ID )
+			<!-- 合同签订后，未还， -->
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<!--获得一页可实施或已实施的合同  -->
+	<select id="selectPactExecutePage" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultMap="pactExecute_resultMap">
+		SELECT * 
+		FROM(SELECT newTable.PACT_ID,
+				newTable.PRODUCT_NAME,
+				newTable.CUSTOMER_ID,
+				newTable.CUSTOMER_NAME,
+				newTable.PACT_STATE,
+				newTable.EXECUTE_NAME,
+				
+				newTable.EXECUTE_START_DATE,
+				newTable.EXECUTE_OVER_DATE,
+				newTable.PACT_START_DATE,
+				newTable.PACT_OVER_DATE,
+				users.NAME AS MARKETER_NAME
+				FROM (SELECT ac_pact_info.PACT_ID,
+						ac_pact_info.PRODUCT_NAME,
+						ac_pact_info.CUSTOMER_ID,
+						ac_pact_customer_info.CUSTOMER_NAME,	
+						ac_pact_info.PACT_STATE,	
+						ac_pact_info.MARKETER_ID,	
+						ac_pact_info.PACT_START_DATE,
+						ac_pact_info.PACT_OVER_DATE,
+						ac_pact_info.EXECUTE_START_DATE,
+						ac_pact_info.EXECUTE_OVER_DATE,
+						users.NAME AS EXECUTE_NAME
+					 from ac_pact_info
+					 LEFT JOIN ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+				     LEFT JOIN users ON ac_pact_info.EXECUTE_PERSION = users.USER_NO)As newTable
+		LEFT JOIN users
+		ON newTable.MARKETER_ID = users.USER_NO) AS pactExecuteTable
+	
+	 where pactExecuteTable.PACT_STATE >= '2' 
+	 <dynamic prepend="and">
+		 <isNotNull prepend="and" property="searchFiled">
+			CONCAT(pactExecuteTable.PRODUCT_NAME,pactExecuteTable.CUSTOMER_NAME,pactExecuteTable.MARKETER_NAME) LIKE CONCAT('%',#searchFiled#,'%')
+		</isNotNull>
+		<!--查找尚未实施的合同  -->
+		<isNotEmpty prepend="and" property="softType">
+			pactExecuteTable.EXECUTE_START_DATE IS NULL
+		</isNotEmpty>
+	 </dynamic>
+	ORDER BY pactExecuteTable.EXECUTE_NAME ASC
+	LIMIT #searchStart#,#pageNumber#
+	</select>
+	
+	<!--获得所有可实施或已实施的合同的总数  -->
+	<select id="selectPactExecuteCount" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM(SELECT newTable.PACT_ID,
+				newTable.PRODUCT_NAME,
+				newTable.CUSTOMER_ID,
+				newTable.CUSTOMER_NAME,
+				newTable.PACT_STATE,
+				newTable.EXECUTE_NAME,
+				newTable.EXECUTE_START_DATE,
+				newTable.EXECUTE_OVER_DATE,
+				newTable.PACT_START_DATE,
+				newTable.PACT_OVER_DATE,
+				users.NAME AS MARKETER_NAME
+			FROM (SELECT ac_pact_info.PACT_ID,
+				ac_pact_info.PRODUCT_NAME,
+				ac_pact_info.CUSTOMER_ID,
+				ac_pact_customer_info.CUSTOMER_NAME,	
+				ac_pact_info.PACT_STATE,	
+				ac_pact_info.MARKETER_ID,	
+				ac_pact_info.PACT_START_DATE,
+				ac_pact_info.PACT_OVER_DATE,
+				ac_pact_info.EXECUTE_START_DATE,	
+				ac_pact_info.EXECUTE_OVER_DATE,	
+				users.NAME AS EXECUTE_NAME
+			 from ac_pact_info
+			 LEFT JOIN ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+			 LEFT JOIN users ON ac_pact_info.EXECUTE_PERSION = users.USER_NO)As newTable
+		LEFT JOIN users
+		ON newTable.MARKETER_ID = users.USER_NO)pactExecuteTable
+	
+	 where pactExecuteTable.PACT_STATE >= '2' 
+	 <dynamic prepend="and">
+		 <isNotNull prepend="and" property="searchFiled">
+			CONCAT(pactExecuteTable.PRODUCT_NAME,pactExecuteTable.CUSTOMER_NAME,pactExecuteTable.MARKETER_NAME) LIKE CONCAT('%',#searchFiled#,'%')
+		</isNotNull>
+		<isNotEmpty prepend="and" property="softType">
+			pactExecuteTable.EXECUTE_START_DATE IS NULL
+		</isNotEmpty>
+	 </dynamic>
+	</select>
+	
+	<select id="selectPactStaPage" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultMap="pactInfo_resultMap">
+		SELECT ac_pact_info.*,ac_pact_customer_info.CUSTOMER_NAME AS CUSTOMER_NAME1
+		
+		FROM ac_pact_info 
+		LEFT JOIN ac_pact_customer_info
+		ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parm0">
+				PRODUCT_NAME = #parm0#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm1">
+				ac_pact_customer_info.CUSTOMER_NAME LIKE CONCAT('%',#parm1#,'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm2">
+				PACT_START_DATE >= #parm2#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm3">
+				#parm3# >= PACT_START_DATE
+			</isNotEmpty>
+		</dynamic>
+		LIMIT #searchStart#,#pageNumber#
+	</select>
+	
+	<select id="selectPactStaPageCount" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+		FROM ac_pact_info
+		LEFT JOIN ac_pact_customer_info
+		ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parm0">
+				PRODUCT_NAME = #parm0#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm1">
+				ac_pact_customer_info.CUSTOMER_NAME LIKE CONCAT('%',#parm1#,'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm2">
+				PACT_START_DATE >= #parm2#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm3">
+				#parm3# >= PACT_START_DATE
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!--导出时查询所有  -->
+	<select id="selectPactStaAll" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultMap="pactInfo_resultMap">
+		SELECT ac_pact_info.*,ac_pact_customer_info.CUSTOMER_NAME AS CUSTOMER_NAME1
+		FROM ac_pact_info 
+		LEFT JOIN ac_pact_customer_info
+		ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+		
+		FROM ac_pact_info
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parm0">
+				PRODUCT_NAME = #parm0#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm1">
+				ac_pact_customer_info.CUSTOMER_NAME LIKE CONCAT('%',#parm1#,'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm2">
+				PACT_START_DATE >= #parm2#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm3">
+				#parm3# >= PACT_START_DATE
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+<!-- 改到此处 -->	
+	<select id="selectPactWarningPage" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultMap="pactWarning_resultMap">
+	SELECT ac_pact_payment_plan.PACT_ID,ac_pact_payment_plan.PAYMENT_DAY,ac_pact_payment_plan.PAYMENT_COUNT,
+			ac_pact_payment_plan.PAYMENT_STATE,ac_pact_payment_plan.PAYMENT_PERCENT,ac_pact_info.PACT_FEE,ac_pact_info.CUSTOMER_MONEY,
+			ac_pact_info.PRODUCT_NAME,ac_pact_customer_info.CUSTOMER_NAME,
+			ac_pact_info.PAYPERCENT,ac_pact_info.PAYFEE_YET,users.NAME AS MARKETER_NAME
+	FROM ac_pact_payment_plan
+	LEFT JOIN ac_pact_info ON ac_pact_payment_plan.PACT_ID = ac_pact_info.PACT_ID
+	LEFT JOIN ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+	LEFT JOIN users ON users.USER_NO = ac_pact_info.MARKETER_ID
+	WHERE PAYMENT_START_DATE !='2' AND PAYMENT_STATE !='2' AND PAYMENT_PERCENT != '0%'
+	<dynamic prepend="and">
+		<isNotEmpty prepend="and" property="parm0">
+			CONCAT(ac_pact_customer_info.CUSTOMER_NAME,users.NAME) like CONCAT('%',#parm0#,'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="parm1">
+			#parm1# >= PAYMENT_DAY
+		</isNotEmpty>
+	</dynamic>
+	ORDER BY PAYMENT_DAY DESC,PACT_ID DESC
+	LIMIT #searchStart#,#pageNumber#
+	
+	</select>
+	
+	<select id="selectPactWarningCount" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultClass="java.lang.String">
+		SELECT COUNT(*)
+	FROM ac_pact_payment_plan
+	LEFT JOIN ac_pact_info ON ac_pact_payment_plan.PACT_ID = ac_pact_info.PACT_ID
+	LEFT JOIN ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+	LEFT JOIN users ON users.USER_NO = ac_pact_info.MARKETER_ID
+	WHERE PAYMENT_START_DATE !='2' AND PAYMENT_STATE !='2' AND PAYMENT_PERCENT != '0%'
+	<dynamic prepend="and">
+		<isNotEmpty prepend="and" property="parm0">
+			CONCAT(ac_pact_customer_info.CUSTOMER_NAME,users.NAME) LIKE CONCAT('%',#parm0#,'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="parm1">
+			#parm1# >= PAYMENT_DAY
+		</isNotEmpty>
+	</dynamic>
+	</select>
+	
+	<!--导出时查询所有  -->
+	<select id="selectPactWarningAll" parameterClass="com.mftcc.interior.pact.bean.Ipage" resultMap="pactWarning_resultMap">
+	SELECT ac_pact_payment_plan.PACT_ID,ac_pact_payment_plan.PAYMENT_DAY,ac_pact_payment_plan.PAYMENT_COUNT,
+			ac_pact_payment_plan.PAYMENT_STATE,ac_pact_payment_plan.PAYMENT_PERCENT,ac_pact_info.PACT_FEE,ac_pact_info.CUSTOMER_MONEY,
+			ac_pact_info.PRODUCT_NAME,ac_pact_info.CUSTOMER_NAME,
+			ac_pact_info.PAYPERCENT,ac_pact_info.PAYFEE_YET,users.NAME AS MARKETER_NAME
+	FROM ac_pact_payment_plan
+	LEFT JOIN ac_pact_info ON ac_pact_payment_plan.PACT_ID = ac_pact_info.PACT_ID
+	LEFT JOIN ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+	LEFT JOIN users ON users.USER_NO = ac_pact_info.MARKETER_ID
+	WHERE PAYMENT_START_DATE !='2' AND PAYMENT_STATE !='2' AND PAYMENT_PERCENT != '0%'
+	<dynamic prepend="and">
+		<isNotEmpty prepend="and" property="parm0">
+			CONCAT(ac_pact_customer_info.CUSTOMER_NAME,users.NAME) LIKE CONCAT('%',#parm0#,'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="parm1">
+			#parm1# >= PAYMENT_DAY
+		</isNotEmpty>
+	</dynamic>
+	ORDER BY PAYMENT_DAY DESC,PACT_ID DESC
+	</select>
+	
+	<!--查询在某段日期内付款比例达到80%尚未到100%的合同，及该时间段内的最后一次付款时间和金额  -->
+	<select id="get80PercentPact" resultMap="pactInfoBean_resultMap" parameterClass="com.mftcc.interior.pact.bean.Ipage">
+		select ac_pact_info.PACT_START_DATE, ac_pact_info.PACT_OVER_DATE, ac_pact_info.PACT_ID,ac_pact_info.PACT_NAME,ac_pact_customer_info.CUSTOMER_NAME,
+				ac_pact_info.PRODUCT_NAME,ac_pact_info.PACT_FEE,ac_pact_info.CUSTOMER_MONEY,ac_pact_info.PAYFEE_YET,ac_pact_info.PAYPERCENT,
+				newTable1.MARKET_MONEY,newTable1.last_date,ac_pact_info.DATE_80PERCENT AS date80Percent,
+				ac_pact_info.DATE_100PERCENT AS date100Percent,ac_pact_info.MARKETER_ID,ac_pact_info.BEFORESALE,ac_pact_info.AFTERSALE
+		FROM (SELECT PACT_ID,MAX(FINANCIAL_DATE) AS last_date ,MARKET_MONEY
+			FROM (SELECT * 
+					FROM ac_pact_payprogress 
+					<dynamic prepend="where">
+					<!--parm0是开始的日期，parm1是结束日期的下一月(格式："yyyy-MM")，比如查询2016-03到2016-05的合同，则parm0是2016-03，parm1是2016-06  -->
+						<isNotEmpty prepend="and" property="parm0">
+							FINANCIAL_DATE >= #parm0#
+						</isNotEmpty>
+						<isNotEmpty prepend="and" property="parm1">
+							#parm1# > FINANCIAL_DATE
+						</isNotEmpty>
+					</dynamic>
+					ORDER BY PACT_ID DESC ,PAYYET DESC
+				)AS newTable
+			GROUP BY PACT_ID) AS newTable1
+		LEFT JOIN  ac_pact_info ON ac_pact_info.PACT_ID = newTable1.PACT_ID
+		LEFT JOIN  ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parm0">
+				ac_pact_info.DATE_80PERCENT >= #parm0#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm1">
+				#parm1# > ac_pact_info.DATE_80PERCENT
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm1">
+				(ac_pact_info.DATE_100PERCENT >= #parm1# OR ac_pact_info.DATE_100PERCENT IS NULL)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<!--查询在某段日期内付款比例达到100%的合同（一种是既达到100%且该段日期达到80%，一种是达到100%但其他时间达到80%），及该时间段内的最后一次付款时间和金额  -->
+	<select id="get100PercentPact" resultMap="pactInfoBean_resultMap" parameterClass="com.mftcc.interior.pact.bean.Ipage">
+		select ac_pact_info.PACT_START_DATE,  ac_pact_info.PACT_OVER_DATE, ac_pact_info.PACT_ID,ac_pact_info.PACT_NAME,ac_pact_customer_info.CUSTOMER_NAME,
+				ac_pact_info.PRODUCT_NAME,ac_pact_info.PACT_FEE,ac_pact_info.CUSTOMER_MONEY,ac_pact_info.PAYFEE_YET,ac_pact_info.PAYPERCENT,
+				newTable1.MARKET_MONEY,newTable1.last_date,ac_pact_info.DATE_80PERCENT AS date80Percent,
+				ac_pact_info.DATE_100PERCENT AS date100Percent,ac_pact_info.MARKETER_ID,ac_pact_info.BEFORESALE,ac_pact_info.AFTERSALE
+		FROM (SELECT PACT_ID,MAX(FINANCIAL_DATE) AS last_date ,MARKET_MONEY
+			FROM (SELECT * 
+					FROM ac_pact_payprogress 
+					<dynamic prepend="where">
+	<!--parm0是开始的日期，parm1是结束日期的下一月(格式："yyyy-MM")，比如查询2016-03到2016-05的合同，则parm0是2016-03，parm1是2016-06  -->
+						<isNotEmpty prepend="and" property="parm0">
+							FINANCIAL_DATE >= #parm0#
+						</isNotEmpty>
+						<isNotEmpty prepend="and" property="parm1">
+							#parm1# > FINANCIAL_DATE
+						</isNotEmpty>
+					</dynamic>
+					ORDER BY PACT_ID DESC ,PAYYET DESC
+				)AS newTable
+			GROUP BY PACT_ID) AS newTable1
+		LEFT JOIN  ac_pact_info ON ac_pact_info.PACT_ID = newTable1.PACT_ID
+		LEFT JOIN  ac_pact_customer_info ON ac_pact_info.CUSTOMER_ID = ac_pact_customer_info.CUSTOMER_ID
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parm0">
+				ac_pact_info.DATE_100PERCENT >= #parm0#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="parm1">
+				#parm1# > ac_pact_info.DATE_100PERCENT
+			</isNotEmpty>
+		</dynamic>
+	</select>	
+</sqlMap>
